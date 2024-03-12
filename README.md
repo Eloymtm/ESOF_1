@@ -17,3 +17,13 @@ Funcionalidades:
 * Criar perfil 
 * Avaliar perfis
 * Registar com email faculdades
+
+# Requirements
+
+<Domain Model and Descritive text>
+
+## Architecture and Design 
+
+### Logical
+
+### Physical
