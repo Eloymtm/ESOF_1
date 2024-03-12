@@ -3,11 +3,12 @@
 # UNILIFT
 
 
-Descrição:
+<Product Vision > 
+Make it easy for students to share rides with each other on our platform. Students can request rides to destinations shared with others, making campus transportation convenient and efficient.  
 
 
 
-Funcionalidades:
+Features:
 
 * Criar viagens
 * Listar viagens
@@ -18,7 +19,7 @@ Funcionalidades:
 * Avaliar perfis
 * Registar com email faculdades
 
-# Requirements
+## Requirements
 
 <Domain Model and Descritive text>
 
