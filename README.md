@@ -34,11 +34,7 @@ Thank you!
 
 ### Product Vision
 <Product Vision > 
-1.For students who want to save money and travel comfortably to college , UniLift is a ?ridesharing? platform that simplifies the process of sharing rides among students.
-
-2. Make it easy for students to share rides with each other on our platform. Students can request rides to destinations shared with others, making campus transportation convenient and efficient.
-   
-3. For students who want to travel sustainably and comfortably to college, UniLift is a ridesharing platform that simplifies the process of sharing rides among students.
+For students who want to travel sustainably and comfortably to college, UniLift is a ridesharing platform that simplifies the process of sharing rides among students.
 
 ### Features and Assumptions
 
