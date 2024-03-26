@@ -64,7 +64,7 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
 ### Domain Model
 
 <p align="center" justify="center">
-  <img src="images/UML_UNILIFT.drawio2.png"
+  <img src="images/UmlUniLift.png"
 </p>
 
 
@@ -73,13 +73,13 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
 ### Logical
 
 <p align="center" justify="center">
-  <img src="images/Log Arch.drawio (1).png"
+  <img src="images/LogicalArchitecture.png"
 </p>
 
 ### Physical
 
 <p align="center" justify="center">
-  <img src="images/Physical_Architecture.drawio.png"
+  <img src="images/PhysicalArchitecture.png"
 </p>
 
 
