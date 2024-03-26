@@ -68,7 +68,7 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
 ### Domain Model
 
 <p align="center" justify="center">
-  <img src="images/UML_UNILIFT.drawio.png"
+  <img src="images/UML_UNILIFT2.drawio.png"
 </p>
 
 ## Architecture and Design 
