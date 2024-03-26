@@ -72,7 +72,8 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
 TBD..
 
 ### Physical
-TBD...
+![Physical_Architecture drawio](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/632ccf4c-f4f2-4539-9766-0a68607edf24)
+
 
 ### Vertical prototype
 TBD...
