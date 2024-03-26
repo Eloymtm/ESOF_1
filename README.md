@@ -63,16 +63,24 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
  
 ### Domain Model
 
-![UML_UNILIFT drawio2](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/c386ad32-5049-42e0-8cef-611081b61ea2)
+<p align="center" justify="center">
+  <img src="images/UML_UNILIFT.drawio2.png"
+</p>
 
 
 ## Architecture and Design 
 
 ### Logical
-TBD..
+
+<p align="center" justify="center">
+  <img src="images/Log Arch.drawio (1).png"
+</p>
 
 ### Physical
-![Physical_Architecture drawio](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/632ccf4c-f4f2-4539-9766-0a68607edf24)
+
+<p align="center" justify="center">
+  <img src="images/Physical_Architecture.drawio.png"
+</p>
 
 
 ### Vertical prototype
