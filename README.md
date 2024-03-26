@@ -64,15 +64,12 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
 ## Requirements
 
 <Domain Model and Descritive text>
-
-### User Stories
-
-??
  
 ### Domain Model
 
 <p align="center" justify="center">
-  <img src="images/UML_UNILIFT.drawio.png"
+  <img src="![UML_UNILIFT drawio](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/682aa2fa-a950-4865-bf07-513f35d82612)
+"
 </p>
 
 ## Architecture and Design 
