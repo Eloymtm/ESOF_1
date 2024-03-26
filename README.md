@@ -53,11 +53,11 @@ Thank you!
 
 ### Elevator Pitch
 
-Imagine an easy and safe way for college students to get around town: meet UniLift! UniLift is more than just a carpooling app, it's an exclusive community for college students to connect with others to share rides.
+Imagine an easy and safe way for college students to get around town: meet **UniLift**! UniLift is more than just a carpooling app, it's an **exclusive community for college students** to connect with others **to share rides**.
 
-With UniRide, you can forget about waiting for crowded buses or dealing with expensive parking. Simply open the app, input your route, and find other students heading in the same direction. It's a convenient way to save time, money, and, of course, reduce your carbon footprint.
+With UniLift, you can forget about waiting for crowded buses or dealing with expensive parking. Simply **open the app**, **input your route**, and **find other students heading in the same direction**. It's a convenient way to **save time**, **money**, and, of course, **reduce your carbon footprint**.
 
-And the best part? UniLift is designed with student safety in mind. All users are verified as college students, and you can see reviews from other colleagues before deciding on your ride.
+And the best part? UniLift is designed with student safety in mind. **All users are verified as college students**, and you can see reviews from other colleagues before deciding on your ride.
 
 Join the UniLift community and be part of a smarter, friendlier way to get around town.
 
