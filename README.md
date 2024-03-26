@@ -84,4 +84,7 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
 
 
 ### Vertical prototype
-TBD...
+
+<p align="center" justify="center">
+  <img src="images/VerticalPrototypeMap.png"
+</p>
