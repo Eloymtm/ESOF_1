@@ -93,7 +93,7 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
 
 You can find below information and references related with the project management in our team: 
 
-* Backlog management: Product backlog and Iteration backlog in a  ;
+* Backlog management: Product backlog and Iteration backlog in a [github projects board](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/28/views/1) ;
 * Release management: 
   * [v0.0]
    
