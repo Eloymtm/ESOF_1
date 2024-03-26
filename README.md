@@ -63,7 +63,9 @@ TBD...
  
 ### Domain Model
 
-TBD...
+<p align="center" justify="center">
+  <img src="images/UML_UNILIFT.drawio.png"
+</p>
 
 ## Architecture and Design 
 
