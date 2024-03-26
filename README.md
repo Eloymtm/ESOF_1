@@ -88,3 +88,35 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
 <p align="center" justify="center">
   <img src="images/VerticalPrototypeMap.png"
 </p>
+
+## Project management
+
+You can find below information and references related with the project management in our team: 
+
+* Backlog management: Product backlog and Iteration backlog in a  ;
+* Release management: 
+  * [v0.0]
+   
+
+* Sprint planning and retrospectives::
+
+> ## Iteration 0
+>
+> ### Plans:
+>
+>   > ### Development Board
+>   >
+>   >Beginning
+>   >
+>   >
+>   >
+>   >End
+>   >
+>   >
+>
+> ### Retrospectives: 
+>
+>  > This iteration does not introduce any new functionalities to the application. It serves as a vertical prototype aimed at testing the compatibility and effectiveness of various technologies for UniLift's intended purpose. <br>
+>
+
+<br>
