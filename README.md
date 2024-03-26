@@ -67,9 +67,8 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
  
 ### Domain Model
 
-<p align="center" justify="center">
-  <img src="images/UML_UNILIFT2.drawio.png"
-</p>
+![UML_UNILIFT drawio2](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/c386ad32-5049-42e0-8cef-611081b61ea2)
+
 
 ## Architecture and Design 
 
