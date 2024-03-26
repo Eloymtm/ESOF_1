@@ -9,7 +9,8 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  static const LatLng _pGooglePlex = LatLng((37.46223), -122.8848);
+  static const LatLng _pGooglePlex = LatLng(37.816667, -25.533056);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
