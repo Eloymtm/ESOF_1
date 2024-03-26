@@ -70,13 +70,13 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
 
 ## Architecture and Design 
 
-### Logical
+### Logical Architecture
 
 <p align="center" justify="center">
   <img src="images/LogicalArchitecture.png"
 </p>
 
-### Physical
+### Physical Architecture
 
 <p align="center" justify="center">
   <img src="images/PhysicalArchitecture.png"
