@@ -67,6 +67,10 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
   <img src="images/UmlUniLift.png"
 </p>
 
+The student is characterized by their name, course, email, and password. They can assume two distinct roles: driver or passenger. As a driver, they will be associated with one or more cars, containing information such as brand, model, fuel consumption per kilometer, year of manufacture, type of fuel (gasoline, diesel, electric), engine, and capacity. As a passenger, they can search for trips that meet their needs.
+
+As a driver, the user has the ability to create a trip, specifying origin, destination, departure time, and date. Each trip includes a chat where all members can communicate and make agreements, with the trip status being confirmed, pending, or canceled.
+
 
 ## Architecture and Design 
 
