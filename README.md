@@ -104,23 +104,23 @@ You can find below information and references related with the project managemen
 
 * Sprint planning and retrospectives::
 
-> ## Iteration 0
->
-> ### Plans:
->
->   > ### Development Board
->   >
->   >Beginning
->   >
->   >![DevelopmentBoard](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/9d3fdd3e-0d4a-4ec2-841b-ddc908f255fc)
->   > 
->   >End
->   >
->   >![DevelopmentBoard](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/a6c3419d-b842-40be-8b08-99fda363d9de)
->
-> ### Retrospectives: 
->
->  > This iteration does not introduce any new functionalities to the application. It serves as a vertical prototype aimed at testing the compatibility and effectiveness of various technologies for UniLift's intended purpose. <br>
->
+## Iteration 0
+
+### Plans:
+
+### Development Board
+
+Beginning
+
+![DevelopmentBoard](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/9d3fdd3e-0d4a-4ec2-841b-ddc908f255fc)
+
+End
+
+![DevelopmentBoard](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/a6c3419d-b842-40be-8b08-99fda363d9de)
+
+### Retrospectives: 
+
+This iteration does not introduce any new functionalities to the application. It serves as a vertical prototype aimed at testing the compatibility and effectiveness of various technologies for UniLift's intended purpose. <br>
+
 
 <br>
