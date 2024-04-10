@@ -67,16 +67,20 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
   <img src="images/UmlUniLift.png"
 </p>
 
+The student is characterized by their name, course, email, and password. They can assume two distinct roles: driver or passenger. As a driver, they will be associated with one or more cars, containing information such as brand, model, fuel consumption per kilometer, year of manufacture, type of fuel (gasoline, diesel, electric), engine, and capacity. As a passenger, they can search for trips that meet their needs.
+
+As a driver, the user has the ability to create a trip, specifying origin, destination, departure time, and date. Each trip includes a chat where all members can communicate and make agreements, with the trip status being confirmed, pending, or canceled.
+
 
 ## Architecture and Design 
 
-### Logical
+### Logical Architecture
 
 <p align="center" justify="center">
   <img src="images/LogicalArchitecture.png"
 </p>
 
-### Physical
+### Physical Architecture
 
 <p align="center" justify="center">
   <img src="images/PhysicalArchitecture.png"
@@ -84,4 +88,39 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
 
 
 ### Vertical prototype
-TBD...
+
+<p align="center" justify="center">
+  <img src="images/VerticalPrototypeMap.png"
+</p>
+
+## Project management
+
+You can find below information and references related with the project management in our team: 
+
+* Backlog management: Product backlog and Iteration backlog in a [github projects board](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/28/views/1) ;
+* Release management: 
+  * [v0.0]
+   
+
+* Sprint planning and retrospectives::
+
+## Iteration 0
+
+### Plans:
+
+### Development Board
+
+Beginning
+
+![DevelopmentBoard](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/9d3fdd3e-0d4a-4ec2-841b-ddc908f255fc)
+
+End
+
+![DevelopmentBoard](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/a6c3419d-b842-40be-8b08-99fda363d9de)
+
+### Retrospectives: 
+
+This iteration does not introduce any new functionalities to the application. It serves as a vertical prototype aimed at testing the compatibility and effectiveness of various technologies for UniLift's intended purpose. <br>
+
+
+<br>
