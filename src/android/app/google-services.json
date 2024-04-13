@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "898177747814",
+    "project_id": "unilift-72e26",
+    "storage_bucket": "unilift-72e26.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898177747814:android:03df2775a2258c6cc056a7",
+        "android_client_info": {
+          "package_name": "com.example.src"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtkaJDxCMIghNIK-OsMCS9nd_FX8izJ3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
