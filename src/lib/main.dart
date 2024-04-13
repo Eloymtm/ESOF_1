@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:src/pages/map_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -16,7 +21,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -24,8 +28,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
 
 class HomePage extends StatelessWidget {
   @override
@@ -42,7 +44,11 @@ class HomePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text("UniLift", style: TextStyle(color: const Color.fromRGBO(246, 161, 86, 1), fontSize: 50,fontWeight: FontWeight.w700)),
+                  Text("UniLift",
+                      style: TextStyle(
+                          color: const Color.fromRGBO(246, 161, 86, 1),
+                          fontSize: 50,
+                          fontWeight: FontWeight.w700)),
                   SizedBox(height: 30),
                 ],
               ),
@@ -70,7 +76,8 @@ class HomePage extends StatelessWidget {
                   SizedBox(height: 20),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Text("Forgot Password?", style: TextStyle(color: Colors.grey)),
+                    child: Text("Forgot Password?",
+                        style: TextStyle(color: Colors.grey)),
                   ),
                   SizedBox(height: 40),
                   MaterialButton(
@@ -81,7 +88,11 @@ class HomePage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
-                    child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20)),
+                    child: Text("Login",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20)),
                   ),
                 ],
               ),
