@@ -4,16 +4,16 @@ import 'package:flutter/widgets.dart';
 import 'package:src/pages/map_page.dart';
 import 'package:src/pages/register_page.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
 
-  LoginPage({super.key, required this.onTap});
+  RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final usernameController = TextEditingController();
 
   final passwordController = TextEditingController();
