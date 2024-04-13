@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
+/*
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -37,4 +37,4 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return LoginPage();
   }
-}
+}*/

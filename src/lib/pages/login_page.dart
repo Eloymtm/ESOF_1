@@ -19,13 +19,24 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   void signIn() async {
+    try{
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: usernameController.text, password: passwordController.text);
+
+    } on FirebaseAuthException catch (e){
+      if(e.code == 'user-not-found'){
+        print("User not found");
+      }
+
+      else if(e.code == 'wrong-password'){
+        print("Wrong password");
+      }
+    }
     MapPage();
   }
 
   void createaccount() {
-    RegisterPage();
+    //RegisterPage();
   }
 
   @override
@@ -42,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text("UniLift",
+                  Text("UNILIFT",
                       style: TextStyle(
                           color: Color.fromRGBO(246, 161, 86, 1),
                           fontSize: 50,
