@@ -21,35 +21,34 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmPasswordController = TextEditingController();
 
   void signUp() async {
-    if(passwordController.text == confirmPasswordController.text){
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: usernameController.text, password: passwordController.text);
-    }
-    else{
-      showErrorMessage("Passwords don't match");
+    try {
+      if (passwordController.text == confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: usernameController.text, password: passwordController.text);
+      } else {
+        showErrorMessage("Passwords don't match");
+      }
+    } on FirebaseAuthException catch (e) {
+      showErrorMessage(e.code);
     }
     MapPage();
   }
 
-
-  void showErrorMessage(String message){
+  void showErrorMessage(String message) {
     showDialog(
-      context: context, 
-      builder: (context){
+        context: context,
+        builder: (context) {
           return AlertDialog(
-            backgroundColor: Colors.orange,
-            title: Center(
-              child:Text (
-                message,
-                style : const TextStyle(color: Colors.white),
-              )
-            ,
-          )
-      );
-      }
-    );
+              backgroundColor: Colors.orange,
+              title: Center(
+                child: Text(
+                  message,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ));
+        });
   }
-  
+
   /*void createaccount() {
     RegisterPage();
   }*/
@@ -120,7 +119,6 @@ class _RegisterPageState extends State<RegisterPage> {
                               style: TextStyle(color: Colors.grey)),
                         ),
                       ),
-              
                     ],
                   ),
                   const SizedBox(height: 40),
