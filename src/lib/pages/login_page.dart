@@ -19,16 +19,13 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   void signIn() async {
-    try{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: usernameController.text, password: passwordController.text);
-
-    } on FirebaseAuthException catch (e){
-      if(e.code == 'user-not-found'){
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: usernameController.text, password: passwordController.text);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
         print("User not found");
-      }
-
-      else if(e.code == 'wrong-password'){
+      } else if (e.code == 'wrong-password') {
         print("Wrong password");
       }
     }

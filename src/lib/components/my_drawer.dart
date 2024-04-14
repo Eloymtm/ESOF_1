@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:src/pages/profile_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
+
+  void logOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +59,9 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.logout),
             title: Text("Log Out"),
+            onTap: () {
+              logOut();
+            },
           )
         ],
       ),

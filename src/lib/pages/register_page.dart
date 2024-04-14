@@ -31,7 +31,8 @@ class _RegisterPageState extends State<RegisterPage> {
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code);
     }
-    MapPage();
+    //Navigator.pop(context);
+    //MapPage();
   }
 
   void showErrorMessage(String message) {
