@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:src/pages/auth_page.dart';
 import 'package:src/pages/login_page.dart';
+import 'package:src/pages/map_page.dart';
+import 'package:src/pages/profile_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -26,6 +28,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      routes: {
+        '/profile_page': (context) => const ProfilePage(),
+        '/map_page': (context) => const MapPage(),
+      },
     );
   }
 }
