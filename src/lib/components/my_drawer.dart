@@ -38,7 +38,7 @@ class MyDrawer extends StatelessWidget {
             ),
             title: Text("Profile"),
             onTap: () {
-              //Profile Page
+              // Profile Page
               Navigator.pop(context);
               Navigator.pushNamed(context, '/profile_page');
             },
@@ -50,11 +50,11 @@ class MyDrawer extends StatelessWidget {
             ),
             title: Text("Settings"),
             onTap: () {
-              //n sei se vai existir mas caso exista -> Settings Page
+              // Settings Page
             },
           ),
-          const SizedBox(
-            height: 350,
+          Expanded(
+            child: Container(), // Empty container to occupy remaining space
           ),
           ListTile(
             leading: Icon(Icons.logout),
@@ -62,7 +62,7 @@ class MyDrawer extends StatelessWidget {
             onTap: () {
               logOut();
             },
-          )
+          ),
         ],
       ),
     );
