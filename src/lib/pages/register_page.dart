@@ -18,12 +18,38 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final passwordController = TextEditingController();
 
+  final confirmPasswordController = TextEditingController();
+
   void signUp() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
+    if(passwordController.text == confirmPasswordController.text){
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: usernameController.text, password: passwordController.text);
+    }
+    else{
+      showErrorMessage("Passwords don't match");
+    }
     MapPage();
   }
 
+
+  void showErrorMessage(String message){
+    showDialog(
+      context: context, 
+      builder: (context){
+          return AlertDialog(
+            backgroundColor: Colors.orange,
+            title: Center(
+              child:Text (
+                message,
+                style : const TextStyle(color: Colors.white),
+              )
+            ,
+          )
+      );
+      }
+    );
+  }
+  
   /*void createaccount() {
     RegisterPage();
   }*/
@@ -75,7 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 20),
                   TextField(
-                    controller: passwordController,
+                    controller: confirmPasswordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: "Confirm password",
