@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:src/pages/profile_page.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -16,7 +17,7 @@ class MyDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
             child: Icon(
-              Icons.car_rental_rounded,
+              FontAwesomeIcons.car,
               color: const Color.fromRGBO(246, 161, 86, 1),
             ),
           ),
