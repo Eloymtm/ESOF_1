@@ -21,14 +21,25 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "UniLift",
-          style: TextStyle(color: const Color.fromRGBO(246, 161, 86, 1)),
+        title: const Padding(
+          padding: EdgeInsets.symmetric(),
+          child: Text(
+            "UNILIFT",
+            style: TextStyle(
+                color: Color.fromRGBO(246, 161, 86, 1),
+                fontWeight: FontWeight.bold,
+                fontSize: 35),
+          ),
         ),
+        centerTitle: true,
         elevation: 2,
-        actions: [IconButton(onPressed: logout, icon: Icon(Icons.logout))],
+        actions: [
+          IconButton(
+              onPressed: logout,
+              icon: const Icon(Icons.dark_mode)) // mudar logout para darkmode
+        ],
       ),
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       body: GoogleMap(
         initialCameraPosition: CameraPosition(
           target: _pGooglePlex,

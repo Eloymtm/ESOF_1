@@ -48,6 +48,13 @@ class MyDrawer extends StatelessWidget {
               //n sei se vai existir mas caso exista -> Settings Page
             },
           ),
+          const SizedBox(
+            height: 350,
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text("Log Out"),
+          )
         ],
       ),
     );
