@@ -14,5 +14,12 @@ AppBar buildAppBar(BuildContext context){
           onPressed: () {  },
       ),
     ],
+    title: Container(
+      height: 100,
+      child: Image(
+        image: AssetImage('lib/images/logo.jpg'),
+      ),
+    ),
+    centerTitle: true,
   );
 }
