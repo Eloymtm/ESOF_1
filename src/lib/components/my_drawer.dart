@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:src/pages/profile_page.dart';
+import 'package:src/pages/profile/profile_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -34,6 +34,17 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
+              Icons.home,
+              color: const Color.fromRGBO(246, 161, 86, 1),
+            ),
+            title: Text("Lista"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/lift_page');
+            },
+          ),
+          ListTile(
+            leading: Icon(
               Icons.person,
               color: const Color.fromRGBO(246, 161, 86, 1),
             ),
@@ -41,7 +52,7 @@ class MyDrawer extends StatelessWidget {
             onTap: () {
               // Profile Page
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/profile_page');
+              Navigator.pushNamed(context, 'profile/profile_page');
             },
           ),
           ListTile(
