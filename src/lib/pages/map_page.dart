@@ -35,12 +35,12 @@ class _MapPageState extends State<MapPage> {
         elevation: 2,
         actions: [
           IconButton(
-              onPressed: logout,
+              onPressed: (){},
               icon: const Icon(Icons.dark_mode)) // mudar logout para darkmode
         ],
       ),
       drawer: const MyDrawer(),
-      body: GoogleMap(
+      body: const GoogleMap(
         initialCameraPosition: CameraPosition(
           target: _pGooglePlex,
           zoom: 13,

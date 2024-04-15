@@ -23,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: buildAppBar(context),
       body: ListView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             children: [
               const SizedBox(height: 40),
               ProfileWidget(
@@ -46,10 +46,10 @@ class _ProfilePageState extends State<ProfilePage> {
    children: [
       Text(
         user.name,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
       ),
      Text(user.email,
-     style: TextStyle(color: Colors.grey, fontSize: 17),
+     style: const TextStyle(color: Colors.grey, fontSize: 17),
      )
    ],
  );

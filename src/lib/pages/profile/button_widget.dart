@@ -15,14 +15,14 @@ class ButtonWidget extends StatelessWidget {
     padding: const EdgeInsets.symmetric(horizontal: 130.0),
     child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white, shape: StadiumBorder(),
+          foregroundColor: Colors.white, shape: const StadiumBorder(),
           backgroundColor: Colors.orange,
         ),
+        onPressed: onClicked,
         child: Text(
             text,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        onPressed: onClicked,
 
     ),
   );
