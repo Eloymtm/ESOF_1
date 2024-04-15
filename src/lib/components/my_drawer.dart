@@ -34,7 +34,7 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
-              Icons.home,
+              Icons.list,
               color: const Color.fromRGBO(246, 161, 86, 1),
             ),
             title: Text("Lista"),
