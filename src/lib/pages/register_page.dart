@@ -83,7 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: <Widget>[
                   TextField(
                     controller: usernameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "Enter your student email...",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(),
@@ -93,7 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   TextField(
                     controller: passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "Enter your password",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(),
@@ -103,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   TextField(
                     controller: confirmPasswordController,
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "Confirm password",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(),
@@ -114,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       GestureDetector(
                         onTap: widget.onTap,
-                        child: Align(
+                        child: const Align(
                           alignment: Alignment.centerRight,
                           child: Text("Already have an account?",
                               style: TextStyle(color: Colors.grey)),
