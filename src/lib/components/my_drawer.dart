@@ -33,7 +33,19 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(
+            leading: Icon(
+              Icons.home,
+              color: const Color.fromRGBO(246, 161, 86, 1),
+            ),
+            title: Text("Lista"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/lift_page');
+            },
+          ),
+          ListTile(
+            leading: Icon(
+
               Icons.person,
               color: Color.fromRGBO(246, 161, 86, 1),
             ),
