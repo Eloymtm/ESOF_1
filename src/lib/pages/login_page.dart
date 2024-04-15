@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialButton(
                     onPressed: signIn,
                     height: 50,
-                    minWidth: 200,
+                    minWidth: 150,
                     color: const Color.fromRGBO(246, 161, 86, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
