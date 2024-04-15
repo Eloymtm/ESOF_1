@@ -23,20 +23,22 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: buildAppBar(context),
       body: ListView(
-          physics: BouncingScrollPhysics(),
-          children: [
-            SizedBox(height: 40),
-            ProfileWidget(
-              imagePath: user.imagePath,
-              onClicked: () async {},
-            ),
-            const SizedBox(height: 24),
-            buildName(user),
-            const SizedBox(height: 24),
-            //Center(child: buildUpgradeButton()),
-            NumbersWidget(),
-          ],
-      ),
+            physics: const BouncingScrollPhysics(),
+            children: [
+              const SizedBox(height: 40),
+              ProfileWidget(
+                imagePath: user.imagePath,
+                onClicked: () async {},
+              ),
+              const SizedBox(height: 24),
+              buildName(user),
+              const SizedBox(height: 24),
+              NumbersWidget(),
+              const SizedBox(height: 24),
+              buildUpgradeButton(),
+            ],
+        ),
+
     );
   }
 
@@ -44,19 +46,23 @@ class _ProfilePageState extends State<ProfilePage> {
    children: [
       Text(
         user.name,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
       ),
      Text(user.email,
-     style: TextStyle(color: Colors.grey),
+     style: const TextStyle(color: Colors.grey, fontSize: 17),
      )
    ],
  );
 
   Widget buildUpgradeButton() => ButtonWidget(
-        text: 'Upgrade To PRO',
+        text: 'Edit Profile',
         onClicked: () {},
   );
 
+
+  void editProfile() {
+    print("merda pra ti");
+  }
 }
 
 

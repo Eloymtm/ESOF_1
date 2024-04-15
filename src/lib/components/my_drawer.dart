@@ -15,18 +15,18 @@ class MyDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             child: Icon(
               FontAwesomeIcons.car,
               color: const Color.fromRGBO(246, 161, 86, 1),
             ),
           ),
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.home,
-              color: const Color.fromRGBO(246, 161, 86, 1),
+              color: Color.fromRGBO(246, 161, 86, 1),
             ),
-            title: Text("Home"),
+            title: const Text("Home"),
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/map_page');
@@ -45,8 +45,9 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
+
               Icons.person,
-              color: const Color.fromRGBO(246, 161, 86, 1),
+              color: Color.fromRGBO(246, 161, 86, 1),
             ),
             title: Text("Profile"),
             onTap: () {
@@ -56,11 +57,11 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.settings,
-              color: const Color.fromRGBO(246, 161, 86, 1),
+              color: Color.fromRGBO(246, 161, 86, 1),
             ),
-            title: Text("Settings"),
+            title: const Text("Settings"),
             onTap: () {
               // Settings Page
             },
@@ -69,8 +70,8 @@ class MyDrawer extends StatelessWidget {
             child: Container(), // Empty container to occupy remaining space
           ),
           ListTile(
-            leading: Icon(Icons.logout),
-            title: Text("Log Out"),
+            leading: const Icon(Icons.logout),
+            title: const Text("Log Out"),
             onTap: () {
               logOut();
             },
