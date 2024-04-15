@@ -32,7 +32,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/map_page');
             },
           ),
-          ListTile(
+        /*  ListTile(
             leading: Icon(
               Icons.list,
               color: const Color.fromRGBO(246, 161, 86, 1),
@@ -42,7 +42,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/lift_page');
             },
-          ),
+          ), */
           ListTile(
             leading: Icon(
 

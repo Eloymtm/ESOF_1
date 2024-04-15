@@ -1,33 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/physics.dart';
 import 'package:src/components/my_drawer.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 
-class LiftPage extends StatelessWidget {
+class LiftPage extends StatefulWidget {
 
     const LiftPage({super.key});
 
-
-
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Lista de Itens',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: ItemListPage(),
-    );
-  }
+  State<LiftPage> createState() => LiftPageState();
 }
-class ItemListPage extends StatelessWidget {
+class LiftPageState extends State<LiftPage> {
   final LatLng _pGooglePlex = const LatLng(37.422, -122.084);
 
-  @override
+  void logout() {
+    FirebaseAuth.instance.signOut();
+  }
+
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -83,4 +75,5 @@ class ItemListPage extends StatelessWidget {
       ),
     );
   }
+
 }

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:src/components/my_drawer.dart';
+import 'profile/button_widget.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -16,6 +17,15 @@ class _MapPageState extends State<MapPage> {
   void logout() {
     FirebaseAuth.instance.signOut();
   }
+
+  @override
+  Widget buildUpgradeButton() => ButtonWidget(
+        text: 'Lift',
+        onClicked: () {
+          Navigator.pop(context);
+              Navigator.pushNamed(context, '/lift_page');
+        },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +56,7 @@ class _MapPageState extends State<MapPage> {
           zoom: 13,
         ),
       ),
+      floatingActionButton: buildUpgradeButton(),
     );
   }
 }
