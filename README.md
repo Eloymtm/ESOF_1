@@ -124,3 +124,29 @@ This iteration does not introduce any new functionalities to the application. It
 
 
 <br>
+
+## Iteration 1
+
+### Plans:
+
+### Development Board
+
+Beginning
+
+![image](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/eec23886-6090-4ec1-ab6a-9c8c4f99a2c3)
+
+End
+
+![image](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/7a06fb4b-5e1f-485a-b5ec-90a8d68bee4d)
+
+### Retrospectives:
+
+As we started working on the app, we focused our first iteration on learning the basics of the flutter engine, implementing the first pages.
+We have already developed the following pages: Login, Create Account, Profile and Lift Page. <br>
+In this iteration, we also:
+- Explored and implemented the basic structure of navigation between pages;
+- Learned and applied fundamental Flutter concepts such as widgets, layouts, and state management;
+- Began to understand the overall architecture of the application and how each page integrates into the user flow. <br>
+
+
+<br>
