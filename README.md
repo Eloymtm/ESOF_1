@@ -137,7 +137,8 @@ Beginning
 
 End
 
-![image](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/7a06fb4b-5e1f-485a-b5ec-90a8d68bee4d)
+![Captura de ecrã de 2024-04-16 10-01-50](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/a1c0b979-80d4-42d9-abb1-12d3983fc5bf)
+
 
 ### Retrospectives:
 
