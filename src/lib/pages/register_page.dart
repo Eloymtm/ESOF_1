@@ -5,7 +5,6 @@ import 'package:src/pages/map_page.dart';
 import 'package:src/pages/register_page.dart';
 
 class RegisterPage extends StatefulWidget {
-
   RegisterPage({super.key});
 
   @override
@@ -14,6 +13,8 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final usernameController = TextEditingController();
+
+  final nameController = TextEditingController();
 
   final passwordController = TextEditingController();
 
@@ -24,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
       if (passwordController.text == confirmPasswordController.text) {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: usernameController.text, password: passwordController.text);
-            Navigator.pushNamed(context, '/map_page');
+        Navigator.pushNamed(context, '/map_page');
       } else {
         showErrorMessage("Passwords don't match");
       }
@@ -73,7 +74,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           color: Color.fromRGBO(246, 161, 86, 1),
                           fontSize: 50,
                           fontWeight: FontWeight.w700)),
-                  SizedBox(height: 30),
                 ],
               ),
             ),
@@ -90,6 +90,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
+                  TextField(
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      hintText: "Enter your name...",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   TextField(
                     controller: passwordController,
                     obscureText: true,
@@ -113,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pushNamed(context, '/login_page');
                         },
                         child: const Align(
