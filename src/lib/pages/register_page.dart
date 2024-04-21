@@ -5,9 +5,8 @@ import 'package:src/pages/map_page.dart';
 import 'package:src/pages/register_page.dart';
 
 class RegisterPage extends StatefulWidget {
-  final Function()? onTap;
 
-  RegisterPage({super.key, required this.onTap});
+  RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -25,6 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
       if (passwordController.text == confirmPasswordController.text) {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: usernameController.text, password: passwordController.text);
+            Navigator.pushNamed(context, '/map_page');
       } else {
         showErrorMessage("Passwords don't match");
       }
@@ -113,7 +113,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: widget.onTap,
+                        onTap: (){
+                          Navigator.pushNamed(context, '/login_page');
+                        },
                         child: const Align(
                           alignment: Alignment.centerRight,
                           child: Text("Already have an account?",

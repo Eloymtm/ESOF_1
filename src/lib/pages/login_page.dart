@@ -5,9 +5,7 @@ import 'package:src/pages/map_page.dart';
 import 'package:src/pages/register_page.dart';
 
 class LoginPage extends StatefulWidget {
-  final Function()? onTap;
-
-  LoginPage({super.key, required this.onTap});
+  LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -22,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
+          Navigator.pushNamed(context, '/map_page');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("User not found");
@@ -29,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
         print("Wrong password");
       }
     }
-    MapPage();
   }
 
   void createaccount() {
@@ -85,7 +83,9 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: widget.onTap,
+                        onTap: (){
+                          Navigator.pushNamed(context, '/register_page');
+                          },
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Text("Create account",

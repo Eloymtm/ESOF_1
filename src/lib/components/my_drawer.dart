@@ -4,10 +4,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:src/pages/profile/profile_page.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({super.key});
+  final BuildContext context;
 
-  void logOut() async {
-    await FirebaseAuth.instance.signOut();
+  const MyDrawer({
+    required this.context,
+  });
+
+  Future<void> logOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.pop(context); // Fechar o drawer
+      Navigator.pushNamedAndRemoveUntil(context, '/login_page', (route) => false); // Redirecionar para a tela de login e remover todas as rotas anteriores
+    } catch (e) {
+      print("Erro ao fazer logout: $e");
+    }
   }
 
   @override

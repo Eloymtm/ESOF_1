@@ -49,7 +49,7 @@ class _MapPageState extends State<MapPage> {
               icon: const Icon(Icons.dark_mode)) // mudar logout para darkmode
         ],
       ),
-      drawer: const MyDrawer(),
+      drawer: MyDrawer(context: context),
       body: const GoogleMap(
         initialCameraPosition: CameraPosition(
           target: _pGooglePlex,

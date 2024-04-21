@@ -46,7 +46,7 @@ class LiftPageState extends State<LiftPage> {
           )
         ],
       ),
-      drawer: const MyDrawer(),
+      drawer: MyDrawer(context: context),
       body: Column(
         children: [
           Expanded(
