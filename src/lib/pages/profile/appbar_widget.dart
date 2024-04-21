@@ -14,11 +14,12 @@ AppBar buildAppBar(BuildContext context){
           onPressed: () {  },
       ),
     ],
-    title: Container(
-      height: 100,
-      child: Image(
-        image: AssetImage('lib/images/logo.jpg'),
-      ),
+    title: Text(
+      "Profile",
+      style: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 35),
     ),
     centerTitle: true,
   );

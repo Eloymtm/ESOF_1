@@ -14,14 +14,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
 
   void signIn() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: usernameController.text, password: passwordController.text);
+          email: emailController.text, password: passwordController.text);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("User not found");
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: <Widget>[
                   TextField(
-                    controller: usernameController,
+                    controller: emailController,
                     decoration: InputDecoration(
                       hintText: "Enter your student email...",
                       hintStyle: TextStyle(color: Colors.grey),
@@ -93,9 +93,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 85),
+                        padding: EdgeInsets.only(left: 130),
                         child: Align(
-                          alignment: Alignment.centerLeft,
                           child: Text(
                             "Forgot Password?",
                             style: TextStyle(color: Colors.grey),

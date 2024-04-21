@@ -36,6 +36,14 @@ class _ProfilePageState extends State<ProfilePage> {
               NumbersWidget(),
               const SizedBox(height: 24),
               buildUpgradeButton(),
+              ///MENU
+              const Divider(endIndent: 50, indent: 50),
+              const SizedBox(height: 10),
+
+              profile_widget(title: "Settings", icon: Icons.settings, onPress: (){},),
+              profile_widget(title: "Historic", icon: Icons.history, onPress: (){}),
+              const Divider(endIndent: 50, indent: 50),
+              profile_widget(title: "Logout", icon: Icons.logout, onPress: (){}, endIcon: false, textColor: Colors.red),
             ],
         ),
 
@@ -62,6 +70,53 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void editProfile() {
     print("merda pra ti");
+  }
+}
+
+class profile_widget extends StatelessWidget {
+  const profile_widget({
+    Key? key,
+    required this.title,
+    required this.icon,
+    required this.onPress,
+    this.endIcon = true,
+    this.textColor,
+
+  }) : super(key: key);
+
+  final String title;
+  final IconData icon;
+  final VoidCallback onPress;
+  final bool endIcon;
+  final Color? textColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+      child: ListTile(
+        onTap: onPress,
+        leading: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              color: Colors.orange.withOpacity(0.1),
+            ),
+            child: Icon(icon, color: Color.fromRGBO(246, 161, 86, 1), size: 24,),
+          ),
+        title: Text(title , style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400)?.apply(color: textColor)),
+        trailing: endIcon? Container(
+          width: 30,
+          height: 30,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            color: Colors.grey.withOpacity(0.1),
+          ),
+          child: Icon(Icons.chevron_right),
+        ) : null,
+      ),
+    );
   }
 }
 
