@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:src/pages/profile/appbar_widget.dart';
@@ -16,9 +17,22 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  Future<void> logOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.pop(context); // Fechar o drawer
+      Navigator.pushNamedAndRemoveUntil(context, '/login_page', (route) => false); // Redirecionar para a tela de login e remover todas as rotas anteriores
+    } catch (e) {
+      print("Erro ao fazer logout: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = UserPreferences.myUser;
+
+    final currentUser = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       appBar: buildAppBar(context),
@@ -31,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onClicked: () async {},
               ),
               const SizedBox(height: 24),
-              buildName(user),
+              buildName(currentUser),
               const SizedBox(height: 24),
               NumbersWidget(),
               const SizedBox(height: 24),
@@ -43,20 +57,23 @@ class _ProfilePageState extends State<ProfilePage> {
               profile_widget(title: "Settings", icon: Icons.settings, onPress: (){},),
               profile_widget(title: "Historic", icon: Icons.history, onPress: (){}),
               const Divider(endIndent: 50, indent: 50),
-              profile_widget(title: "Logout", icon: Icons.logout, onPress: (){}, endIcon: false, textColor: Colors.red),
+              profile_widget(title: "Logout", icon: Icons.logout, onPress: logOut, endIcon: false, textColor: Colors.red),
             ],
         ),
 
     );
   }
 
- Widget buildName(User user) => Column(
+ Widget buildName(currentUser) => Column(
    children: [
       Text(
-        user.name,
+        //user.name,
+        "Martim Manhã",
         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
       ),
-     Text(user.email,
+     Text(
+       //user.email,
+       currentUser.email,
      style: const TextStyle(color: Colors.grey, fontSize: 17),
      )
    ],
