@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,7 +6,6 @@ import 'package:src/pages/map_page.dart';
 import 'package:src/pages/register_page.dart';
 
 class RegisterPage extends StatefulWidget {
-
   RegisterPage({super.key});
 
   @override
@@ -13,18 +13,23 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+
+  final nameController = TextEditingController();
 
   final passwordController = TextEditingController();
 
   final confirmPasswordController = TextEditingController();
 
-  void signUp() async {
+  Future signUp() async {
     try {
       if (passwordController.text == confirmPasswordController.text) {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: usernameController.text, password: passwordController.text);
-            Navigator.pushNamed(context, '/map_page');
+            email: emailController.text, password: passwordController.text);
+        print(nameController.text);
+        print(emailController.text);
+        addUserDetails(nameController.text, emailController.text);
+        Navigator.pushNamed(context, '/map_page');
       } else {
         showErrorMessage("Passwords don't match");
       }
@@ -34,6 +39,16 @@ class _RegisterPageState extends State<RegisterPage> {
     //Navigator.pop(context);
     //MapPage();
   }
+
+ Future addUserDetails(String name, String email) async{
+    await FirebaseFirestore.instance.collection('User').doc(email).set(
+        {
+          'Name' : name,
+          'Email' : email,
+          'ImagePath' : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Fblank-profile-picture-mystery-man-973460%2F&psig=AOvVaw3pKsfr7vZU0v3182dwClwp&ust=1713887173722000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPiE0LuV1oUDFQAAAAAdAAAAABAE',
+        }
+    );
+ }
 
   void showErrorMessage(String message) {
     showDialog(
@@ -73,7 +88,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           color: Color.fromRGBO(246, 161, 86, 1),
                           fontSize: 50,
                           fontWeight: FontWeight.w700)),
-                  SizedBox(height: 30),
                 ],
               ),
             ),
@@ -82,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 children: <Widget>[
                   TextField(
-                    controller: usernameController,
+                    controller: emailController,
                     decoration: const InputDecoration(
                       hintText: "Enter your student email...",
                       hintStyle: TextStyle(color: Colors.grey),
@@ -90,6 +104,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
+                  TextField(
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      hintText: "Enter your name...",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   TextField(
                     controller: passwordController,
                     obscureText: true,
@@ -113,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pushNamed(context, '/login_page');
                         },
                         child: const Align(
