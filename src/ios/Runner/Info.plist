@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<string>NSLocationWhenInUseUsageDescription</string>
+	<key>To Display and track location</key>
 	<key>CFBundleDisplayName</key>
 	<string>Src</string>
 	<key>CFBundleExecutable</key>

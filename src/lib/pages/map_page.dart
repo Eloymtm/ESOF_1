@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:src/components/my_drawer.dart';
 import 'profile/button_widget.dart';
+import 'package:location/location.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -16,6 +17,17 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   static const LatLng _pGooglePlex = LatLng(37.816667, -25.533056);
   static const LatLng _dest = LatLng(37.81, -25.533056);
+
+  LatLng? currentPosition;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) async => await fetchLocationUpdates());
+  }
+
+  final locationController = Location();
 
   void logout() {
     FirebaseAuth.instance.signOut();
@@ -32,13 +44,6 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    Completer<GoogleMapController> _controllerGoogleMap = Completer();
-    GoogleMapController mapController;
-
-    void onCreated(GoogleMapController controller) {
-      _controllerGoogleMap.complete();
-    }
-
     final Set<Marker> _markers = {};
 
     return Scaffold(
@@ -63,7 +68,6 @@ class _MapPageState extends State<MapPage> {
       ),
       drawer: MyDrawer(context: context),
       body: GoogleMap(
-        onMapCreated: onCreated,
         markers: {
           const Marker(
               markerId: MarkerId('User'),
@@ -85,5 +89,36 @@ class _MapPageState extends State<MapPage> {
       ),
       floatingActionButton: buildUpgradeButton(),
     );
+  }
+
+  Future<void> fetchLocationUpdates() async {
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+
+    serviceEnabled = await locationController.serviceEnabled();
+    if (serviceEnabled) {
+      serviceEnabled = await locationController.requestService();
+    } else {
+      return;
+    }
+
+    permissionGranted = await locationController.hasPermission();
+
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await locationController.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+    locationController.onLocationChanged.listen((currentLocation) {
+      if (currentLocation.latitude != null &&
+          currentLocation.longitude != null) {
+        setState(() {
+          currentPosition =
+              LatLng(currentLocation.latitude!, currentLocation.longitude!);
+        });
+        print(currentPosition);
+      }
+    });
   }
 }
