@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,12 +25,22 @@ class _MapPageState extends State<MapPage> {
         text: 'Lift',
         onClicked: () {
           Navigator.pop(context);
-              Navigator.pushNamed(context, '/lift_page');
+          Navigator.pushNamed(context, '/lift_page');
         },
-  );
+      );
 
   @override
   Widget build(BuildContext context) {
+
+    Completer<GoogleMapController> _controllerGoogleMap = Completer();
+    GoogleMapController mapController;
+
+    void onCreated(GoogleMapController controller) {
+      _controllerGoogleMap.complete()
+    }
+
+    final Set<Marker> _markers = {};
+
     return Scaffold(
       appBar: AppBar(
         title: const Padding(
@@ -45,13 +57,24 @@ class _MapPageState extends State<MapPage> {
         elevation: 2,
         actions: [
           IconButton(
-              onPressed: (){},
+              onPressed: () {},
               icon: const Icon(Icons.dark_mode)) // mudar logout para darkmode
         ],
       ),
       drawer: MyDrawer(context: context),
-      body: const GoogleMap(
-        initialCameraPosition: CameraPosition(
+      body: GoogleMap(
+        onMapCreated: onCreated,
+        markers: {
+          const Marker(
+            markerId: MarkerId('User'),
+            position: _pGooglePlex,
+            icon: BitmapDescriptor.defaultMarker
+          )
+        },
+        compassEnabled: true,
+        myLocationEnabled: true,
+        mapType: MapType.hybrid,
+        initialCameraPosition: const CameraPosition(
           target: _pGooglePlex,
           zoom: 13,
         ),
