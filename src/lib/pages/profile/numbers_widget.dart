@@ -7,7 +7,7 @@ class NumbersWidget extends StatelessWidget {
     required this.rating,
 }) : super(key: key);
 
-  final double rating;
+  final String rating;
   @override
   Widget build(BuildContext context) => Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -17,7 +17,7 @@ class NumbersWidget extends StatelessWidget {
     ],
   );
 
-  Widget buildButton(BuildContext context, double value, String text) =>
+  Widget buildButton(BuildContext context, String value, String text) =>
       MaterialButton(
         padding: const EdgeInsets.symmetric(vertical: 4),
         onPressed: () {},

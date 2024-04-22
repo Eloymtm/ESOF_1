@@ -48,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
           'Name' : name,
           'Email' : email,
           'ImagePath' : 'https://publicdomainvectors.org/tn_img/abstract-user-flat-4.webp',
-          'Rating' : 0.0,
+          'Rating' : "0.0",
         }
     );
  }

@@ -100,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  NumbersWidget(rating: double.parse(userData['Rating'])),
+                  NumbersWidget(rating: (userData['Rating'])),
                   const SizedBox(height: 24),
                   buildEditButton(),
                   ///MENU

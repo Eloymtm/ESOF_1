@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:src/components/my_bot_bar.dart';
 import 'package:src/components/my_drawer.dart';
 import 'profile/button_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -19,6 +21,23 @@ class _MapPageState extends State<MapPage> {
   void logout() {
     FirebaseAuth.instance.signOut();
   }
+
+  //verificar se isto funciona 
+ Future createTrip(String Partida, String Destino, Timestamp time) async {
+  final currentUser = FirebaseAuth.instance.currentUser!;
+  final String uid = currentUser.uid;
+
+  
+  DocumentReference userDocRef = FirebaseFirestore.instance.collection('User').doc(uid);
+
+  await userDocRef.collection('Ride').add(
+    {
+      'Partida': Partida,
+      'Destino': Destino,
+      'HoraPartida': time,
+    },
+  );
+}
 
   @override
   Widget buildUpgradeButton() => ButtonWidget(
@@ -41,7 +60,20 @@ class _MapPageState extends State<MapPage> {
 
     final Set<Marker> _markers = {};
 
+    int _selectedIndex = 0;
+
+    void navigateBottomBar(int index) {
+      setState(() {
+        _selectedIndex = index;
+    });
+  }
+
+  //final List<> _pages = [LiftPage(), CreateLiftPage];
+
     return Scaffold(
+      bottomNavigationBar: MyBotBar(
+        onTabChange: (index) => navigateBottomBar(index),
+      ),
       appBar: AppBar(
         title: const Padding(
           padding: EdgeInsets.symmetric(),
