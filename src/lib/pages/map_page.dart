@@ -15,6 +15,7 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   static const LatLng _pGooglePlex = LatLng(37.816667, -25.533056);
+  static const LatLng _dest = LatLng(37.81, -25.533056);
 
   void logout() {
     FirebaseAuth.instance.signOut();
@@ -31,12 +32,11 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-
     Completer<GoogleMapController> _controllerGoogleMap = Completer();
     GoogleMapController mapController;
 
     void onCreated(GoogleMapController controller) {
-      _controllerGoogleMap.complete()
+      _controllerGoogleMap.complete();
     }
 
     final Set<Marker> _markers = {};
@@ -66,10 +66,14 @@ class _MapPageState extends State<MapPage> {
         onMapCreated: onCreated,
         markers: {
           const Marker(
-            markerId: MarkerId('User'),
-            position: _pGooglePlex,
-            icon: BitmapDescriptor.defaultMarker
-          )
+              markerId: MarkerId('User'),
+              position: _pGooglePlex,
+              icon: BitmapDescriptor.defaultMarker),
+          Marker(
+              markerId: MarkerId('Destination'),
+              position: _dest,
+              icon: BitmapDescriptor.defaultMarkerWithHue(
+                  BitmapDescriptor.hueYellow))
         },
         compassEnabled: true,
         myLocationEnabled: true,
