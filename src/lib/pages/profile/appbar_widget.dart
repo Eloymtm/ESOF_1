@@ -9,10 +9,6 @@ AppBar buildAppBar(BuildContext context){
     backgroundColor: Colors.transparent,
     elevation: 0,
     actions: [
-      IconButton(
-          icon: const Icon(Icons.dark_mode),
-          onPressed: () {  },
-      ),
     ],
     title: Text(
       "Profile",

@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
   final VoidCallback onClicked;
+  final bool showIcon;
 
   const ProfileWidget({
     Key? key,
     required this.imagePath,
     required this.onClicked,
+    required this.showIcon,
   }) : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class ProfileWidget extends StatelessWidget {
       child: Stack(
         children: [
           buildImage(),
-          Positioned(
+           if (showIcon) Positioned(
             bottom: 0,
             right: 4,
             child: buidEditIcon(color),

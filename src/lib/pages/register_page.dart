@@ -41,11 +41,14 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
  Future addUserDetails(String name, String email) async{
-    await FirebaseFirestore.instance.collection('User').doc(email).set(
+   final currentUser = FirebaseAuth.instance.currentUser!;
+   final String uid = currentUser.uid;
+    await FirebaseFirestore.instance.collection('User').doc(uid).set(
         {
           'Name' : name,
           'Email' : email,
-          'ImagePath' : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Fblank-profile-picture-mystery-man-973460%2F&psig=AOvVaw3pKsfr7vZU0v3182dwClwp&ust=1713887173722000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPiE0LuV1oUDFQAAAAAdAAAAABAE',
+          'ImagePath' : 'https://publicdomainvectors.org/tn_img/abstract-user-flat-4.webp',
+          'Rating' : 0.0,
         }
     );
  }

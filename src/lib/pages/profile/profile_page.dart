@@ -5,10 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:src/pages/map_page.dart';
 import 'package:src/pages/profile/appbar_widget.dart';
+import 'package:src/pages/profile/edit_profile_page.dart';
 import 'package:src/pages/profile/get_username.dart';
 import 'package:src/pages/profile/profile_widget.dart';
-import 'package:src/pages/profile/user.dart';
-import 'package:src/pages/profile/user_preferences.dart';
 import 'package:src/components/my_drawer.dart';
 
 import 'button_widget.dart';
@@ -74,7 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: buildAppBar(context),
       body:StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance.collection('User').doc(currentUser.email).snapshots(),
+          stream: FirebaseFirestore.instance.collection('User').doc(currentUser.uid).snapshots(),
           builder: (context, snapshot) {
             if(snapshot.hasData){
               final userData = snapshot.data!.data() as Map<String, dynamic>;
@@ -85,6 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ProfileWidget(
                     imagePath: userData['ImagePath'],
                     onClicked: () async {},
+                    showIcon: false,
                   ),
                   const SizedBox(height: 24),
                   Column(
@@ -100,9 +100,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  NumbersWidget(),
+                  NumbersWidget(rating: double.parse(userData['Rating'])),
                   const SizedBox(height: 24),
-                  buildUpgradeButton(),
+                  buildEditButton(),
                   ///MENU
                   const Divider(endIndent: 50, indent: 50),
                   const SizedBox(height: 10),
@@ -125,9 +125,14 @@ class _ProfilePageState extends State<ProfilePage> {
       ));
   }
 
-  Widget buildUpgradeButton() => ButtonWidget(
+  Widget buildEditButton() => ButtonWidget(
         text: 'Edit Profile',
-        onClicked: () {},
+        onClicked: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => EditProfileScreen()),
+          );
+        },
   );
 }
 

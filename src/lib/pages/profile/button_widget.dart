@@ -17,12 +17,12 @@ class ButtonWidget extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white, shape: const StadiumBorder(),
           backgroundColor: Colors.orange,
-          minimumSize: Size(double.infinity, 55),
+          minimumSize: Size(double.infinity, 45),
         ),
         onPressed: onClicked,
         child: Text(
             text,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
 
     ),
