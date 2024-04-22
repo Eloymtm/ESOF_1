@@ -15,6 +15,8 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  Location location = Location();
+
   static const LatLng _pGooglePlex = LatLng(37.816667, -25.533056);
   static const LatLng _dest = LatLng(37.81, -25.533056);
 
@@ -44,8 +46,6 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Set<Marker> _markers = {};
-
     return Scaffold(
       appBar: AppBar(
         title: const Padding(
@@ -93,29 +93,35 @@ class _MapPageState extends State<MapPage> {
 
   Future<void> fetchLocationUpdates() async {
     bool serviceEnabled;
-    PermissionStatus permissionGranted;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
 
-    serviceEnabled = await locationController.serviceEnabled();
+    serviceEnabled = await location.serviceEnabled();
+
     if (serviceEnabled) {
-      serviceEnabled = await locationController.requestService();
-    } else {
-      return;
-    }
-
-    permissionGranted = await locationController.hasPermission();
-
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await locationController.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
+      serviceEnabled = await location.requestService();
+      if (serviceEnabled) {
         return;
       }
     }
-    locationController.onLocationChanged.listen((currentLocation) {
-      if (currentLocation.latitude != null &&
-          currentLocation.longitude != null) {
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await location.getLocation();
+
+    location.enableBackgroundMode(enable: true);
+
+    locationController.onLocationChanged.listen((_locationData) {
+      if (_locationData.latitude != null && _locationData.longitude != null) {
         setState(() {
           currentPosition =
-              LatLng(currentLocation.latitude!, currentLocation.longitude!);
+              LatLng(_locationData.latitude!, _locationData.longitude!);
         });
         print(currentPosition);
       }
