@@ -4,20 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:src/pages/profile/profile_page.dart';
 
 class MyDrawer extends StatelessWidget {
-  final BuildContext context;
+  const MyDrawer({super.key, required BuildContext context});
 
-  const MyDrawer({
-    required this.context,
-  });
-
-  Future<void> logOut() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-      Navigator.pop(context); // Fechar o drawer
-      Navigator.pushNamedAndRemoveUntil(context, '/login_page', (route) => false); // Redirecionar para a tela de login e remover todas as rotas anteriores
-    } catch (e) {
-      print("Erro ao fazer logout: $e");
-    }
+  void logOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 
   @override
@@ -42,7 +32,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/map_page');
             },
           ),
-        /*  ListTile(
+          /*  ListTile(
             leading: Icon(
               Icons.list,
               color: const Color.fromRGBO(246, 161, 86, 1),
@@ -55,7 +45,6 @@ class MyDrawer extends StatelessWidget {
           ), */
           ListTile(
             leading: Icon(
-
               Icons.person,
               color: Color.fromRGBO(246, 161, 86, 1),
             ),

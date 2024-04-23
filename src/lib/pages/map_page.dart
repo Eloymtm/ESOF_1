@@ -17,27 +17,28 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   static const LatLng _pGooglePlex = LatLng(37.816667, -25.533056);
+  static const LatLng _dest = LatLng(37.8, -25.533056);
 
   void logout() {
     FirebaseAuth.instance.signOut();
   }
 
-  //verificar se isto funciona 
- Future createTrip(String Partida, String Destino, Timestamp time) async {
-  final currentUser = FirebaseAuth.instance.currentUser!;
-  final String uid = currentUser.uid;
+  //verificar se isto funciona
+  Future createTrip(String Partida, String Destino, Timestamp time) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+    final String uid = currentUser.uid;
 
-  
-  DocumentReference userDocRef = FirebaseFirestore.instance.collection('User').doc(uid);
+    DocumentReference userDocRef =
+        FirebaseFirestore.instance.collection('User').doc(uid);
 
-  await userDocRef.collection('Ride').add(
-    {
-      'Partida': Partida,
-      'Destino': Destino,
-      'HoraPartida': time,
-    },
-  );
-}
+    await userDocRef.collection('Ride').add(
+      {
+        'Partida': Partida,
+        'Destino': Destino,
+        'HoraPartida': time,
+      },
+    );
+  }
 
   @override
   Widget buildUpgradeButton() => ButtonWidget(
@@ -50,7 +51,6 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-
     Completer<GoogleMapController> _controllerGoogleMap = Completer();
     GoogleMapController mapController;
 
@@ -65,10 +65,10 @@ class _MapPageState extends State<MapPage> {
     void navigateBottomBar(int index) {
       setState(() {
         _selectedIndex = index;
-    });
-  }
+      });
+    }
 
-  //final List<> _pages = [LiftPage(), CreateLiftPage];
+    //final List<> _pages = [LiftPage(), CreateLiftPage];
 
     return Scaffold(
       bottomNavigationBar: MyBotBar(
@@ -98,10 +98,13 @@ class _MapPageState extends State<MapPage> {
         onMapCreated: onCreated,
         markers: {
           const Marker(
-            markerId: MarkerId('User'),
-            position: _pGooglePlex,
-            icon: BitmapDescriptor.defaultMarker
-          )
+              markerId: MarkerId('User'),
+              position: _pGooglePlex,
+              icon: BitmapDescriptor.defaultMarker),
+          const Marker(
+              markerId: MarkerId('dest'),
+              position: _dest,
+              icon: BitmapDescriptor.defaultMarker)
         },
         compassEnabled: true,
         myLocationEnabled: true,
