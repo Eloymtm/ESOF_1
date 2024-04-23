@@ -6,6 +6,7 @@ import 'package:src/pages/map_page.dart';
 import 'package:src/pages/lift_page.dart';
 import 'package:src/pages/profile/profile_page.dart';
 import 'package:src/pages/register_page.dart';
+import 'package:src/pages/mainPage.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
           '/lift_page': (context) => const LiftPage(),
           '/login_page': (context) => LoginPage(),
           '/register_page': (context) => RegisterPage(),
+          '/main_page':(context) => const MainPage(),
         });
   }
 }

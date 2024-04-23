@@ -29,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
         print(nameController.text);
         print(emailController.text);
         addUserDetails(nameController.text, emailController.text);
-        Navigator.pushNamed(context, '/map_page');
+        Navigator.pushNamed(context, '/main_page');
       } else {
         showErrorMessage("Passwords don't match");
       }

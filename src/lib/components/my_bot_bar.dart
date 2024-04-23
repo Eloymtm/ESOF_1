@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:src/pages/mainPage.dart';
 
 class MyBotBar extends StatelessWidget {
   void Function(int)? onTabChange;
@@ -39,6 +40,7 @@ class MyBotBar extends StatelessWidget {
             icon: FontAwesomeIcons.user,
           )
         ],
+        selectedIndex: selectedIndex,
       ),
     );
   }

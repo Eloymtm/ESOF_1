@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
-          Navigator.pushNamed(context, '/map_page');
+          Navigator.pushNamed(context, '/main_page');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("User not found");

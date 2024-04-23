@@ -78,9 +78,7 @@ class _MapPageState extends State<MapPage> {
     }
 
     return Scaffold(
-      bottomNavigationBar: MyBotBar(
-        onTabChange: (index) => navigateBottomBar(index),
-      ),
+    
       appBar: AppBar(
         title: const Padding(
           padding: EdgeInsets.symmetric(),
