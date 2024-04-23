@@ -35,6 +35,9 @@ class MyBotBar extends StatelessWidget {
             icon: FontAwesomeIcons.eye,
             iconColor: Colors.black,
           ),
+          GButton(
+            icon: FontAwesomeIcons.user,
+          )
         ],
       ),
     );

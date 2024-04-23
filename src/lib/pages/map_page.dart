@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:src/components/my_bot_bar.dart';
 import 'package:src/components/my_drawer.dart';
+import 'package:src/pages/lift_page.dart';
+import 'package:src/pages/profile/profile_page.dart';
 import 'profile/button_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -18,6 +22,21 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   static const LatLng _pGooglePlex = LatLng(37.816667, -25.533056);
   static const LatLng _dest = LatLng(37.8, -25.533056);
+
+  int _selectedIndex = 0;
+
+  void navigateBottomBar(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  final List<Widget> _pages = [
+    const MapPage(),
+    const LiftPage(),
+    //const CreateLiftPage(),
+    const ProfilePage(),
+  ];
 
   void logout() {
     FirebaseAuth.instance.signOut();
@@ -58,18 +77,6 @@ class _MapPageState extends State<MapPage> {
       _controllerGoogleMap.complete();
     }
 
-    final Set<Marker> _markers = {};
-
-    int _selectedIndex = 0;
-
-    void navigateBottomBar(int index) {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-
-    //final List<> _pages = [LiftPage(), CreateLiftPage];
-
     return Scaffold(
       bottomNavigationBar: MyBotBar(
         onTabChange: (index) => navigateBottomBar(index),
@@ -89,8 +96,9 @@ class _MapPageState extends State<MapPage> {
         elevation: 2,
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.dark_mode)) // mudar logout para darkmode
+              onPressed: logout,
+              icon: const Icon(FontAwesomeIcons
+                  .arrowRightFromBracket)) // mudar logout para darkmode
         ],
       ),
       drawer: MyDrawer(context: context),

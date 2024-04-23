@@ -23,21 +23,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const AuthPage(),
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      routes: {
-        'profile/profile_page': (context) => const ProfilePage(),
-        '/map_page': (context) => const MapPage(),
-        '/lift_page': (context) => const LiftPage(),
-        '/login_page': (context) => LoginPage(),
-        '/register_page': (context) => RegisterPage(),
-  });
-}
+        debugShowCheckedModeBanner: false,
+        home: const AuthPage(),
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        routes: {
+          'profile/profile_page': (context) => const ProfilePage(),
+          '/map_page': (context) => const MapPage(),
+          '/lift_page': (context) => const LiftPage(),
+          '/login_page': (context) => LoginPage(),
+          '/register_page': (context) => RegisterPage(),
+        });
+  }
 }
 /*
 class HomePage extends StatelessWidget {
