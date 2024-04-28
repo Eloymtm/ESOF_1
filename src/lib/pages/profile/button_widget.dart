@@ -16,7 +16,7 @@ class ButtonWidget extends StatelessWidget {
     child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white, shape: const StadiumBorder(),
-          backgroundColor: Colors.orange,
+          backgroundColor: Color.fromRGBO(246, 161, 86, 1),
           minimumSize: Size(double.infinity, 45),
         ),
         onPressed: onClicked,

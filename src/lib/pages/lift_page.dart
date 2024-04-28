@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:src/components/my_drawer.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:src/helper/helper_method.dart';
 
@@ -39,17 +38,8 @@ class LiftPageState extends State<LiftPage> {
       ),
       centerTitle: true,
       elevation: 2,
-      actions: [
-        IconButton(
-          onPressed: () {
-            // Função de alternância de modo escuro
-            print('Modo escuro ativado');
-          },
-          icon: const Icon(Icons.dark_mode),
-        )
-      ],
+      
     ),
-    drawer: MyDrawer(context: context),
     body: Column(
       children: [
         Expanded(

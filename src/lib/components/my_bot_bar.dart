@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:src/pages/mainPage.dart';
+import 'package:src/helper/globalVariables.dart';
 
 class MyBotBar extends StatelessWidget {
   void Function(int)? onTabChange;
@@ -25,19 +26,22 @@ class MyBotBar extends StatelessWidget {
         onTabChange: (value) => onTabChange!(value),
         tabs: const [
           GButton(
-            icon: Icons.home,
+            iconSize: 25,
+            icon: homeIcon,
             iconColor: Colors.black,
           ),
           GButton(
-            icon: Icons.add,
+            icon: pulsIcon,
             iconColor: Colors.black,
           ),
           GButton(
-            icon: FontAwesomeIcons.eye,
+            iconSize: 18,
+            icon: eyeIcon,
             iconColor: Colors.black,
           ),
           GButton(
-            icon: FontAwesomeIcons.user,
+            icon: profileIcon,
+            iconColor: Colors.black,
           )
         ],
         selectedIndex: selectedIndex,
