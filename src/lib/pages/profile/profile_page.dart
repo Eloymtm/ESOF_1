@@ -8,7 +8,6 @@ import 'package:src/pages/profile/appbar_widget.dart';
 import 'package:src/pages/profile/edit_profile_page.dart';
 import 'package:src/pages/profile/get_username.dart';
 import 'package:src/pages/profile/profile_widget.dart';
-import 'package:src/components/my_drawer.dart';
 
 import 'button_widget.dart';
 import 'numbers_widget.dart';

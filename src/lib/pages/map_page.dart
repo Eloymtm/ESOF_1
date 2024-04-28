@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:src/components/my_bot_bar.dart';
-import 'package:src/components/my_drawer.dart';
 import 'package:src/pages/lift_page.dart';
 import 'package:src/pages/profile/profile_page.dart';
 import 'profile/button_widget.dart';
@@ -60,15 +59,6 @@ class _MapPageState extends State<MapPage> {
   }
 
   @override
-  Widget buildUpgradeButton() => ButtonWidget(
-        text: 'Lift',
-        onClicked: () {
-          Navigator.pop(context);
-          Navigator.pushNamed(context, '/lift_page');
-        },
-      );
-
-  @override
   Widget build(BuildContext context) {
     Completer<GoogleMapController> _controllerGoogleMap = Completer();
     GoogleMapController mapController;
@@ -99,7 +89,6 @@ class _MapPageState extends State<MapPage> {
                   .arrowRightFromBracket)) // mudar logout para darkmode
         ],
       ),
-      drawer: MyDrawer(context: context),
       body: GoogleMap(
         onMapCreated: onCreated,
         markers: {
@@ -120,7 +109,6 @@ class _MapPageState extends State<MapPage> {
           zoom: 13,
         ),
       ),
-      floatingActionButton: buildUpgradeButton(),
     );
   }
 }
