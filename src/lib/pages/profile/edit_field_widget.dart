@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:src/helper/globalVariables.dart';
 
 class EditableNameField extends StatelessWidget {
   final String ?labelText;
@@ -42,7 +43,7 @@ class EditableNameField extends StatelessWidget {
           child: Icon(prefIcon),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 2.0, color: Color.fromRGBO(246, 161, 86, 1)),
+          borderSide: const BorderSide(width: 2.0, color: primaryColor),
           borderRadius: BorderRadius.circular(5),
         ),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
@@ -72,7 +73,7 @@ class EditableNameField extends StatelessWidget {
           ),
         ),
       ),
-      cursorColor: const Color.fromRGBO(246, 161, 86, 1),
+      cursorColor: primaryColor,
     );
   }
 }

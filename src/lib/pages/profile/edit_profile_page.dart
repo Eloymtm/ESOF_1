@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:src/helper/globalVariables.dart';
 import 'package:src/pages/profile/profile_widget.dart';
 
 import 'button_widget.dart';
@@ -124,7 +125,7 @@ class _EditProfileState extends State<EditProfileScreen> {
                                   controller: emailController,
                                 ),
 
-                                const Divider(height: 80, thickness: 5, color: Colors.orange,),
+                                const Divider(height: 80, thickness: 5, color: primaryColor,),
 
                                 EditableNameField(
                                   labelText: 'Old Pass',
