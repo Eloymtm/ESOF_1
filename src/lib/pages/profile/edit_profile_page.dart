@@ -6,16 +6,80 @@ import 'package:flutter/painting.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:src/pages/profile/profile_widget.dart';
 
-class EditProfileScreen extends StatelessWidget {
+import 'button_widget.dart';
+import 'edit_field_widget.dart';
+
+
+
+class EditProfileScreen extends StatefulWidget {
+  EditProfileScreen({super.key});
+
+  @override
+  State<EditProfileScreen> createState() => _EditProfileState();
+}
+
+
+class _EditProfileState extends State<EditProfileScreen> {
 
   final currentUser = FirebaseAuth.instance.currentUser!;
+
+
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final oldPasswordController = TextEditingController();
+  final newPasswordController = TextEditingController();
+  /*Future signUp() async {
+    try {
+      if (passwordController.text == confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text);
+        print(nameController.text);
+        print(emailController.text);
+        addUserDetails(nameController.text, emailController.text);
+        Navigator.pushNamed(context, '/main_page');
+      } else {
+        showErrorMessage("Passwords don't match");
+      }
+    } on FirebaseAuthException catch (e) {
+      showErrorMessage(e.code);
+    }
+  }
+
+  Future addUserDetails(String name, String email) async{
+    final currentUser = FirebaseAuth.instance.currentUser!;
+    final String uid = currentUser.uid;
+    await FirebaseFirestore.instance.collection('User').doc(uid).set(
+        {
+          'Name' : name,
+          'Email' : email,
+          'ImagePath' : 'https://publicdomainvectors.org/tn_img/abstract-user-flat-4.webp',
+          'Rating' : "0.0",
+        }
+    );
+  }
+
+  void showErrorMessage(String message) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+              backgroundColor: Colors.orange,
+              title: Center(
+                child: Text(
+                  message,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ));
+        });
+  }*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
 
-        leading: BackButton(),
+        leading: const BackButton(),
         title: Text("Edit Profile", style: Theme.of(context).textTheme.headline4),
         centerTitle: true,
       ),
@@ -39,57 +103,69 @@ class EditProfileScreen extends StatelessWidget {
                             child: Column(
                               children: [
                                 const SizedBox(height: 30),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    label: const Text('Name'),
-                                    prefix: const Padding(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Icon(FontAwesomeIcons.user),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(width: 2.0, color: Color.fromRGBO(246, 161, 86, 1),
-                                      ),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                                  ),
-                                  cursorColor: const Color.fromRGBO(246, 161, 86, 1),
+                                Text(userData['Name'], style: TextStyle(fontSize: 20),),
+                                EditableNameField(
+                                  labelText: 'Name',
+                                  //initialValue: userData['Name'], // Valor inicial do campo
+                                  onEditPressed: () {},
+                                  prefIcon: FontAwesomeIcons.user,
+                                  bottonText: 'Edit Name',
+                                  controller: nameController,
                                 ),
+
                                 const SizedBox(height: 30),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                      label: const Text('Email'),
-                                      prefix: const Padding(
-                                        padding: EdgeInsets.only(right: 10),
-                                        child: Icon(FontAwesomeIcons.envelope),
-                                      ),
-                                      focusedBorder:  OutlineInputBorder(
-                                          borderSide: const BorderSide(width: 2.0, color: Color.fromRGBO(246, 161, 86, 1),
-                                          ),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                                  ),
-                                  cursorColor: const Color.fromRGBO(246, 161, 86, 1),
+                                Text(userData['Email'], style: TextStyle(fontSize: 20),),
+                                EditableNameField(
+                                  labelText: 'Email',
+                                  //initialValue: userData['Email'], // Valor inicial do campo
+                                  onEditPressed: () {},
+                                  prefIcon: FontAwesomeIcons.envelope,
+                                  bottonText: 'Edit Email',
+                                  controller: emailController,
                                 ),
-                                const SizedBox(height: 30),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    label: const Text('Password'),
-                                    prefix: const Padding(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Icon(FontAwesomeIcons.fingerprint),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(width: 2.0, color: Color.fromRGBO(246, 161, 86, 1),
-                                      ),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                                  ),
-                                  cursorColor: const Color.fromRGBO(246, 161, 86, 1),
+
+                                const Divider(height: 80, thickness: 5, color: Colors.orange,),
+
+                                EditableNameField(
+                                  labelText: 'Old Pass',
+                                  onEditPressed: () {},
+                                  prefIcon: FontAwesomeIcons.fingerprint,
+                                  showSuffixButton: false,
+                                  sufixIcon: FontAwesomeIcons.eye,
+                                  watch: false,
+                                  controller: oldPasswordController,
                                 ),
+
                                 const SizedBox(height: 30),
+
+                                EditableNameField(
+                                  labelText: 'New Pass',
+                                  onEditPressed: () {},
+                                  prefIcon: FontAwesomeIcons.fingerprint,
+                                  showSuffixButton: false,
+                                  sufixIcon: FontAwesomeIcons.eye,
+                                  watch: false,
+                                  controller: newPasswordController,
+                                ),
+
+                                const SizedBox(height: 30),
+
+                                EditableNameField(
+                                  labelText: 'Confirm New Pass',
+                                  onEditPressed: () {},
+                                  prefIcon: FontAwesomeIcons.fingerprint,
+                                  showSuffixButton: false,
+                                  sufixIcon: FontAwesomeIcons.eye,
+                                  watch: false,
+                                  controller: confirmPasswordController,
+                                ),
+
+                                const SizedBox(height: 10),
+                                ButtonWidget(
+                                  text: 'Change',
+                                  onClicked: () {},
+                                  padH: 60,
+                                ),
                               ],
                             ),
                         )
@@ -107,6 +183,11 @@ class EditProfileScreen extends StatelessWidget {
           }
 
     },
-      ));
+
+      ),
+    );
   }
+
+
+
 }

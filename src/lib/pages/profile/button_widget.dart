@@ -3,16 +3,20 @@ import 'package:flutter/material.dart';
 class ButtonWidget extends StatelessWidget {
   final String text;
   final VoidCallback onClicked;
+  final double padH;
+  final double padV;
 
   const ButtonWidget({
     Key? key,
     required this.text,
     required this.onClicked,
+    this.padH = 110,
+    this.padV = 20,
 }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 110.0, vertical: 20),
+    padding: EdgeInsets.symmetric(horizontal: padH, vertical: padV),
     child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white, shape: const StadiumBorder(),
