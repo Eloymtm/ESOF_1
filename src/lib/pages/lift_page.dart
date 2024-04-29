@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:src/components/lift_card.dart';
 import 'package:src/helper/helper_method.dart';
 
 
@@ -63,20 +64,9 @@ class LiftPageState extends State<LiftPage> {
                     final partida = ride['Partida'];
                     final destino = ride['Destino'];
                     final horaPartida = formatData(ride['HoraPartida']);
-                    final nomeCondutor = ride['Driver'];
+                    //final nomeCondutor = ride['Driver'];
                     
-                    return Card(
-                      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                      child: ListTile(
-                        title: Text(
-                          'De: $partida\nPara: $destino\nHora de Partida: $horaPartida\nCondutor: $nomeCondutor',
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                        onTap: () {
-                          ;
-                        },
-                      ),
-                    );
+                    return Lift_card(destino: destino, partida: partida, horaPartida: horaPartida);
                   },
                 );
               }

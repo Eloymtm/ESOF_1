@@ -99,6 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 children: <Widget>[
                   TextField(
+                    key: const Key("emailField"),
                     controller: emailController,
                     decoration: const InputDecoration(
                       hintText: "Enter your student email...",
@@ -108,6 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 20),
                   TextField(
+                    key: const Key("nameField"),
                     controller: nameController,
                     decoration: const InputDecoration(
                       hintText: "Enter your name...",
@@ -119,6 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20,
                   ),
                   TextField(
+                    key: const Key("passwordField"),
                     controller: passwordController,
                     obscureText: true,
                     decoration: const InputDecoration(
@@ -129,6 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 20),
                   TextField(
+                    key: const Key("confirmPasswordField"),
                     controller: confirmPasswordController,
                     obscureText: true,
                     decoration: const InputDecoration(
