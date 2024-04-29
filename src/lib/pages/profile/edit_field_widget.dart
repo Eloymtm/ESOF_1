@@ -13,6 +13,7 @@ class EditableNameField extends StatelessWidget {
   final bool showSuffixButton;
   final IconData ?sufixIcon;
   final bool watch;
+  final String ?initialV;
   final TextEditingController ?controller;
 
   const EditableNameField({
@@ -26,6 +27,7 @@ class EditableNameField extends StatelessWidget {
     this.sufixIcon,
     this.watch = false,
     required this.controller,
+    this.initialV,
 
   }) : super(key: key);
 
@@ -33,6 +35,7 @@ class EditableNameField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      initialValue: initialV,
       obscureText: watch,
       //initialValue: initialValue ?? '',
       decoration: InputDecoration(

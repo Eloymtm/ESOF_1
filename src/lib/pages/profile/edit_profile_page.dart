@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,50 +31,70 @@ class _EditProfileState extends State<EditProfileScreen> {
   final confirmPasswordController = TextEditingController();
   final oldPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
-  /*Future signUp() async {
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+  }
+
+  Future<void> getUserData() async {
     try {
-      if (passwordController.text == confirmPasswordController.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text);
-        print(nameController.text);
-        print(emailController.text);
-        addUserDetails(nameController.text, emailController.text);
-        Navigator.pushNamed(context, '/main_page');
+      final userDataSnapshot = await FirebaseFirestore.instance
+          .collection('User')
+          .doc(currentUser.uid)
+          .get();
+
+      if (userDataSnapshot.exists) {
+        final userData = userDataSnapshot.data() as Map<String, dynamic>;
+        setState(() {
+          nameController.text = userData['Name'] ?? '';
+          emailController.text = userData['Email'] ?? '';
+        });
       } else {
-        showErrorMessage("Passwords don't match");
+        // Caso o documento do usuário não exista no Firestore
+        // Você pode tratar isso aqui, por exemplo, redirecionando o usuário para a tela de login
       }
-    } on FirebaseAuthException catch (e) {
-      showErrorMessage(e.code);
+    } catch (e) {
+      // Lidar com erros, como falta de conexão com a internet
+      print('Error getting user data: $e');
     }
   }
 
-  Future addUserDetails(String name, String email) async{
-    final currentUser = FirebaseAuth.instance.currentUser!;
-    final String uid = currentUser.uid;
-    await FirebaseFirestore.instance.collection('User').doc(uid).set(
-        {
-          'Name' : name,
-          'Email' : email,
-          'ImagePath' : 'https://publicdomainvectors.org/tn_img/abstract-user-flat-4.webp',
-          'Rating' : "0.0",
-        }
-    );
+
+
+  Future<void> updateUserInformation(String newValue, bool isName) async {
+    try {
+      if (isName){
+        //await currentUser.updateDisplayName(newValue);
+        await FirebaseFirestore.instance
+            .collection('User')
+            .doc(currentUser.uid)
+            .update({'Name': newValue});
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Name updated successfully!'),
+          duration: Duration(seconds: 2),
+        ));
+      } else {
+        //await currentUser.verifyBeforeUpdateEmail('pedrodsspedro@gmail.com');
+        //await currentUser.sendEmailVerification();
+        await FirebaseFirestore.instance
+            .collection('User')
+            .doc(currentUser.uid)
+            .update({'Email': newValue});
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Email updated successfully!'),
+          duration: Duration(seconds: 2),
+        ));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Failed to update. Please try again later.'),
+        duration: Duration(seconds: 2),
+      ));
+    }
   }
 
-  void showErrorMessage(String message) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-              backgroundColor: Colors.orange,
-              title: Center(
-                child: Text(
-                  message,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ));
-        });
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -103,23 +124,41 @@ class _EditProfileState extends State<EditProfileScreen> {
                         Form(
                             child: Column(
                               children: [
-                                const SizedBox(height: 30),
-                                Text(userData['Name'], style: TextStyle(fontSize: 20),),
+                                const SizedBox(height: 15),
                                 EditableNameField(
                                   labelText: 'Name',
                                   //initialValue: userData['Name'], // Valor inicial do campo
-                                  onEditPressed: () {},
+                                  onEditPressed: () {
+                                    String newName = nameController.text.trim();
+                                    if (newName.isNotEmpty ) {
+                                      updateUserInformation(newName, true);
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        content: Text('Please enter a valid email.'),
+                                        duration: Duration(seconds: 2),
+                                      ));
+                                    }
+                                  },
                                   prefIcon: FontAwesomeIcons.user,
                                   bottonText: 'Edit Name',
                                   controller: nameController,
                                 ),
 
                                 const SizedBox(height: 30),
-                                Text(userData['Email'], style: TextStyle(fontSize: 20),),
                                 EditableNameField(
                                   labelText: 'Email',
                                   //initialValue: userData['Email'], // Valor inicial do campo
-                                  onEditPressed: () {},
+                                  onEditPressed: () {
+                                    String newEmail = emailController.text.trim();
+                                    if (newEmail.isNotEmpty && EmailValidator.validate(newEmail)) {
+                                      updateUserInformation(newEmail, false);
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        content: Text('Please enter a valid email.'),
+                                        duration: Duration(seconds: 2),
+                                      ));
+                                    }
+                                  },
                                   prefIcon: FontAwesomeIcons.envelope,
                                   bottonText: 'Edit Email',
                                   controller: emailController,
@@ -133,7 +172,7 @@ class _EditProfileState extends State<EditProfileScreen> {
                                   prefIcon: FontAwesomeIcons.fingerprint,
                                   showSuffixButton: false,
                                   sufixIcon: FontAwesomeIcons.eye,
-                                  watch: false,
+                                  watch: true,
                                   controller: oldPasswordController,
                                 ),
 
@@ -145,7 +184,7 @@ class _EditProfileState extends State<EditProfileScreen> {
                                   prefIcon: FontAwesomeIcons.fingerprint,
                                   showSuffixButton: false,
                                   sufixIcon: FontAwesomeIcons.eye,
-                                  watch: false,
+                                  watch: true,
                                   controller: newPasswordController,
                                 ),
 
@@ -157,7 +196,7 @@ class _EditProfileState extends State<EditProfileScreen> {
                                   prefIcon: FontAwesomeIcons.fingerprint,
                                   showSuffixButton: false,
                                   sufixIcon: FontAwesomeIcons.eye,
-                                  watch: false,
+                                  watch: true,
                                   controller: confirmPasswordController,
                                 ),
 
@@ -188,7 +227,4 @@ class _EditProfileState extends State<EditProfileScreen> {
       ),
     );
   }
-
-
-
 }
