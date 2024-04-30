@@ -127,7 +127,7 @@ class _EditProfileState extends State<EditProfileScreen> {
                                 const SizedBox(height: 15),
                                 EditableNameField(
                                   labelText: 'Name',
-                                  //initialValue: userData['Name'], // Valor inicial do campo
+                                  initialValue: userData['Name'], // Valor inicial do campo
                                   onEditPressed: () {
                                     String newName = nameController.text.trim();
                                     if (newName.isNotEmpty ) {
@@ -147,7 +147,7 @@ class _EditProfileState extends State<EditProfileScreen> {
                                 const SizedBox(height: 30),
                                 EditableNameField(
                                   labelText: 'Email',
-                                  //initialValue: userData['Email'], // Valor inicial do campo
+                                  initialValue: userData['Email'], // Valor inicial do campo
                                   onEditPressed: () {
                                     String newEmail = emailController.text.trim();
                                     if (newEmail.isNotEmpty && EmailValidator.validate(newEmail)) {
