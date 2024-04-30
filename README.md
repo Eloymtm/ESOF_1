@@ -64,7 +64,7 @@ Join the UniLift community and be part of a smarter, friendlier way to get aroun
 ### Domain Model
 
 <p align="center" justify="center">
-  <img src="images/UmlUniLift.png"
+  <img src="images/UML_UNILIFT.png"
 </p>
 
 The student is characterized by their name, course, email, and password. They can assume two distinct roles: driver or passenger. As a driver, they will be associated with one or more cars, containing information such as brand, model, fuel consumption per kilometer, year of manufacture, type of fuel (gasoline, diesel, electric), engine, and capacity. As a passenger, they can search for trips that meet their needs.

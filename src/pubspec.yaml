@@ -43,6 +43,9 @@ dependencies:
   cloud_firestore: ^4.17.0
   geolocator: ^11.0.0
   mockito: ^5.0.0
+  email_validator: ^2.0.1
+  google_maps_webservice: ^0.0.15
+
 
 
 dev_dependencies:

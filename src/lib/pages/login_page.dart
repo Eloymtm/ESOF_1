@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:src/helper/globalVariables.dart';
 import 'package:src/pages/map_page.dart';
 import 'package:src/pages/register_page.dart';
 
@@ -50,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   Text("UNILIFT",
                       style: TextStyle(
-                          color: Color.fromRGBO(246, 161, 86, 1),
+                          color: primaryColor,
                           fontSize: 50,
                           fontWeight: FontWeight.w700)),
                   SizedBox(height: 30),
@@ -109,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: signIn,
                     height: 50,
                     minWidth: 150,
-                    color: const Color.fromRGBO(246, 161, 86, 1),
+                    color: primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),

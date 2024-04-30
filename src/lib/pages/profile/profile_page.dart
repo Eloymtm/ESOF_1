@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:src/helper/globalVariables.dart';
 import 'package:src/pages/map_page.dart';
 import 'package:src/pages/profile/appbar_widget.dart';
 import 'package:src/pages/profile/edit_profile_page.dart';
@@ -166,7 +167,7 @@ class profile_widget extends StatelessWidget {
           ),
           child: Icon(
             icon,
-            color: Color.fromRGBO(246, 161, 86, 1),
+            color: primaryColor,
             size: 24,
           ),
         ),
