@@ -80,7 +80,7 @@ class _EditProfileState extends State<EditProfileScreen> {
       appBar: AppBar(
 
         leading: const BackButton(),
-        title: Text("Edit Profile", style: Theme.of(context).textTheme.headline4),
+        //title: Text("Edit Profile", style: Theme.of(context).textTheme.headline4),
         centerTitle: true,
       ),
       body: StreamBuilder<DocumentSnapshot>(
