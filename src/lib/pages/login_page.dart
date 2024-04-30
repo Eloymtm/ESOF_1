@@ -24,9 +24,9 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.pushNamed(context, '/main_page');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print("User not found");
+        print("Email não encontrado");
       } else if (e.code == 'wrong-password') {
-        print("Wrong password");
+        print("Palavra-passe incorreta");
       }
     }
   }
@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                   TextField(
                     controller: emailController,
                     decoration: InputDecoration(
-                      hintText: "Enter your student email...",
+                      hintText: "Insere o email de estudante...",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(),
                     ),
@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                      hintText: "Enter your password",
+                      hintText: "Insere a palavra-passe...",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(),
                     ),
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         child: Align(
                           alignment: Alignment.centerRight,
-                          child: Text("Create account",
+                          child: Text("Criar conta",
                               style: TextStyle(color: Colors.grey)),
                         ),
                       ),
@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                         padding: EdgeInsets.only(left: 130),
                         child: Align(
                           child: Text(
-                            "Forgot Password?",
+                            "Esqueceu a password?",
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),

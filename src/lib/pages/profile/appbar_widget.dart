@@ -9,8 +9,8 @@ AppBar buildAppBar(BuildContext context){
     elevation: 0,
     actions: [
     ],
-    title: Text(
-      "Profile",
+    title: const Text(
+      "Prerfil",
       style: TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,
