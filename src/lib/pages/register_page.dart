@@ -31,7 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
         addUserDetails(nameController.text, emailController.text);
         Navigator.pushNamed(context, '/main_page');
       } else {
-        showErrorMessage("Passwords don't match");
+        showErrorMessage("As palavras-passe não correspondem");
       }
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code);
@@ -102,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     key: const Key("emailField"),
                     controller: emailController,
                     decoration: const InputDecoration(
-                      hintText: "Enter your student email...",
+                      hintText: "Insere email de estudante..",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(),
                     ),
@@ -112,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     key: const Key("nameField"),
                     controller: nameController,
                     decoration: const InputDecoration(
-                      hintText: "Enter your name...",
+                      hintText: "Insere o seu nome...",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(),
                     ),
@@ -125,7 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: passwordController,
                     obscureText: true,
                     decoration: const InputDecoration(
-                      hintText: "Enter your password",
+                      hintText: "Insere uma palavra-passe...",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(),
                     ),
@@ -136,7 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: confirmPasswordController,
                     obscureText: true,
                     decoration: const InputDecoration(
-                      hintText: "Confirm password",
+                      hintText: "Confirmar palavra-passe...",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(),
                     ),
@@ -150,7 +150,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                         child: const Align(
                           alignment: Alignment.centerRight,
-                          child: Text("Already have an account?",
+                          child: Text("Já tem conta?",
                               style: TextStyle(color: Colors.grey)),
                         ),
                       ),
@@ -165,7 +165,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
-                    child: const Text("Create account",
+                    child: const Text("Sign up",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

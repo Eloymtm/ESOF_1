@@ -107,8 +107,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   const Divider(endIndent: 50, indent: 50),
                   const SizedBox(height: 10),
 
-                  profile_widget(title: "Settings", icon: Icons.settings, onPress: (){}),
-                  profile_widget(title: "Historic", icon: Icons.history, onPress: (){}),
+                  profile_widget(title: "Definições", icon: Icons.settings, onPress: (){}),
+                  profile_widget(title: "Histórico", icon: Icons.history, onPress: (){}),
                   const Divider(endIndent: 50, indent: 50),
                   profile_widget(title: "Logout", icon: Icons.logout, onPress: logOut, endIcon: false, textColor: Colors.red),
                 ],
@@ -126,7 +126,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildEditButton() => ButtonWidget(
-        text: 'Edit Profile',
+        text: 'Editar profil',
         onClicked: () {
           Navigator.push(
             context,

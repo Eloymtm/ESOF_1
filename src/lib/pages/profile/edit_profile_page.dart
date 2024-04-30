@@ -14,7 +14,7 @@ import 'edit_field_widget.dart';
 
 
 class EditProfileScreen extends StatefulWidget {
-  EditProfileScreen({super.key});
+  const EditProfileScreen({super.key});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileState();
@@ -82,7 +82,7 @@ class _EditProfileState extends State<EditProfileScreen> {
             .collection('User')
             .doc(currentUser.uid)
             .update({'Email': newValue});
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Email updated successfully!'),
           duration: Duration(seconds: 2),
         ));
@@ -102,7 +102,7 @@ class _EditProfileState extends State<EditProfileScreen> {
       appBar: AppBar(
 
         leading: const BackButton(),
-        //title: Text("Edit Profile", style: Theme.of(context).textTheme.headline4),
+        title: Text("Editar Perfil", style: Theme.of(context).textTheme.headline4),
         centerTitle: true,
       ),
       body: StreamBuilder<DocumentSnapshot>(
@@ -126,21 +126,21 @@ class _EditProfileState extends State<EditProfileScreen> {
                               children: [
                                 const SizedBox(height: 15),
                                 EditableNameField(
-                                  labelText: 'Name',
+                                  labelText: 'Nome',
                                   initialValue: userData['Name'], // Valor inicial do campo
                                   onEditPressed: () {
                                     String newName = nameController.text.trim();
                                     if (newName.isNotEmpty ) {
                                       updateUserInformation(newName, true);
                                     } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                        content: Text('Please enter a valid email.'),
+                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                        content: Text('Por favor inserir um email valido.'),
                                         duration: Duration(seconds: 2),
                                       ));
                                     }
                                   },
                                   prefIcon: FontAwesomeIcons.user,
-                                  bottonText: 'Edit Name',
+                                  bottonText: 'Editar Nome',
                                   controller: nameController,
                                 ),
 
@@ -153,21 +153,21 @@ class _EditProfileState extends State<EditProfileScreen> {
                                     if (newEmail.isNotEmpty && EmailValidator.validate(newEmail)) {
                                       updateUserInformation(newEmail, false);
                                     } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                        content: Text('Please enter a valid email.'),
+                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                        content: Text('Por favor inserir um email valido.'),
                                         duration: Duration(seconds: 2),
                                       ));
                                     }
                                   },
                                   prefIcon: FontAwesomeIcons.envelope,
-                                  bottonText: 'Edit Email',
+                                  bottonText: 'Editar Email',
                                   controller: emailController,
                                 ),
 
                                 const Divider(height: 80, thickness: 5, color: primaryColor,),
 
                                 EditableNameField(
-                                  labelText: 'Old Pass',
+                                  labelText: 'Antiga palavra-passe...',
                                   onEditPressed: () {},
                                   prefIcon: FontAwesomeIcons.fingerprint,
                                   showSuffixButton: false,
@@ -179,7 +179,7 @@ class _EditProfileState extends State<EditProfileScreen> {
                                 const SizedBox(height: 30),
 
                                 EditableNameField(
-                                  labelText: 'New Pass',
+                                  labelText: 'Nova palavra_passe...',
                                   onEditPressed: () {},
                                   prefIcon: FontAwesomeIcons.fingerprint,
                                   showSuffixButton: false,
@@ -191,7 +191,7 @@ class _EditProfileState extends State<EditProfileScreen> {
                                 const SizedBox(height: 30),
 
                                 EditableNameField(
-                                  labelText: 'Confirm New Pass',
+                                  labelText: 'Confirmar nova palavra-passe...',
                                   onEditPressed: () {},
                                   prefIcon: FontAwesomeIcons.fingerprint,
                                   showSuffixButton: false,
@@ -202,7 +202,7 @@ class _EditProfileState extends State<EditProfileScreen> {
 
                                 const SizedBox(height: 10),
                                 ButtonWidget(
-                                  text: 'Change',
+                                  text: 'Alterar',
                                   onClicked: () {},
                                   padH: 60,
                                 ),
