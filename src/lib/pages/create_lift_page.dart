@@ -16,7 +16,9 @@ class CreateLiftPage extends StatefulWidget {
 
 class _CreateLiftPageState extends State<CreateLiftPage> {
 
-  final test = TextEditingController();
+  final LocalPartida= TextEditingController();
+  final LocalDestino = TextEditingController();
+  final DataPartida = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +28,15 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
       elevation: 0,
       actions: [],
       title: const Padding(
-        padding: const EdgeInsets.only(top:12.0),
+        padding: EdgeInsets.symmetric(),
         child: Text(
-                "CREATE LIFT",
-                style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 35),
-              ),
+          "UNILIFT",
+          style: TextStyle(
+            color: Color.fromRGBO(246, 161, 86, 1),
+            fontWeight: FontWeight.bold,
+            fontSize: 35,
+          ),
+        ),
       ),
       centerTitle: true,
       ),
@@ -41,30 +44,48 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              SizedBox(height: 60,),
-              Text("Local de partida"),
-              EditableNameField(
-                sufixIcon: FontAwesomeIcons.locationDot,
-                showSuffixButton: false,
-                controller: test,
-              ),
-              SizedBox(height: 60,),
-              Text("Local de origem"),
-              EditableNameField(
-                sufixIcon: FontAwesomeIcons.locationDot,
-                showSuffixButton: false,
-                controller: test,
-              ),
-              SizedBox(height: 60,),
-              Text("Data de partida"),
-              EditableNameField(
-                sufixIcon: FontAwesomeIcons.clock,
-                showSuffixButton: false,
-                controller: test,
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal:20),
+            child: Column(
+              children: [
+                SizedBox(height: 60,),
+                Text("Local de partida"),
+                EditableNameField(
+                  sufixIcon: FontAwesomeIcons.locationDot,
+                  showSuffixButton: false,
+                  controller: LocalPartida,
+                ),
+                SizedBox(height: 60,),
+                Text("Local de origem"),
+                EditableNameField(
+                  sufixIcon: FontAwesomeIcons.locationDot,
+                  showSuffixButton: false,
+                  controller: LocalDestino,
+                ),
+                SizedBox(height: 60,),
+                Text("Data de partida"),
+                EditableNameField(
+                  sufixIcon: FontAwesomeIcons.clock,
+                  showSuffixButton: false,
+                  controller: DataPartida,
+                ),
+                 SizedBox(height: 60,),
+                Text("Escolhe o teu carro"),
+                EditableNameField(
+                  sufixIcon: FontAwesomeIcons.clock,
+                  showSuffixButton: false,
+                  controller: DataPartida,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top:20),
+                  child: ButtonWidget(
+                      text: 'Criar viagem',
+                      onClicked: () {},
+                      padH: 120,
+                      ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
