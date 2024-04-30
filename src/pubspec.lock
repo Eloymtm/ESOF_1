@@ -105,6 +105,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.17"
+
   fake_async:
     dependency: transitive
     description:
@@ -158,6 +159,7 @@ packages:
     description:
       name: firebase_core_web
       sha256: "67f2fcc600fc78c2f731c370a3a5e6c87ee862e3a2fba6f951eca6d5dafe5c29"
+
       url: "https://pub.dev"
     source: hosted
     version: "2.16.0"
@@ -169,6 +171,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+
   flutter:
     dependency: "direct main"
     description: flutter
