@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -13,6 +15,22 @@ class CreateLiftPage extends StatefulWidget {
   @override
   State<CreateLiftPage> createState() => _CreateLiftPageState();
 }
+
+
+ Future createRide(String destino, String partida,String DataPartida) async{
+   final currentUser = FirebaseAuth.instance.currentUser!;
+
+   final rideId = FirebaseFirestore.instance.collection('Ride').doc().id; //gerar id
+    final userRef = FirebaseFirestore.instance.collection('User').doc(currentUser.uid); //ir buscar o user
+    await FirebaseFirestore.instance.collection('Ride').doc(rideId).set(
+        {
+          'Driver' : userRef,
+          'Destino' :destino,
+          'Partida' : partida,
+          
+        }
+    );
+ }
 
 class _CreateLiftPageState extends State<CreateLiftPage> {
 
@@ -77,13 +95,21 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
                   controller: DataPartida,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top:20),
-                  child: ButtonWidget(
-                      text: 'Criar viagem',
-                      onClicked: () {},
-                      padH: 120,
-                      ),
-                ),
+  padding: const EdgeInsets.only(top:20),
+  child: ButtonWidget(
+    text: 'Criar viagem',
+    onClicked: () {
+      createRide(LocalDestino.text, LocalPartida.text, DataPartida.text);
+      // Mostra uma mensagem de sucesso
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Viagem criada com sucesso')),
+      );
+      // Redireciona para outra página
+      //Navigator.pushNamed(context, '');
+    },
+    padH: 100,
+  ),
+),
               ],
             ),
           ),
