@@ -19,30 +19,26 @@ void main() {
     });
 
     /*testWidgets('Login Button Pressed', (WidgetTester tester) async {
-      final mockFirebaseAuth = MockFirebaseAuth();
-      mockFirebaseAuth?.createUserWithEmailAndPassword(
-        email: '123456@gmail.com',
-        password: '123456', 
-      );
+      late FirebaseAuth realFirebaseAuth;
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: LoginPage(),
-        ),
-      );
+    setUp(() {
+      // Inicializando a instância do FirebaseAuth
+      realFirebaseAuth = FirebaseAuth.instance;
+    });
 
-      await tester.enterText(find.text('Enter your student email...'), '123456@gmail.com');
-      await tester.enterText(find.text('Enter your password'), '123456');
-      await tester.tap(find.text('Login'));
-      await tester.pump();
+    test('Sign in with email and password', () async {
+      // Configurando a instância do FirebaseAuth para retornar um usuário autenticado
+      FirebaseAuth.instance = MockFirebaseAuth();
 
-      // Verifica se signInWithEmailAndPassword foi chamado
-      verify(mockFirebaseAuth.signInWithEmailAndPassword(
-        email: '123456@gmail.com',
-        password: '123456',
-      )).called(1);
-    });*/
+      // Chamando o método de autenticação
+      final result = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: 'test@example.com', password: 'password123');
 
+      // Verificando se o resultado é o esperado
+      expect(result.user!.email, 'test@example.com');
+    });
+    });
+*/
     testWidgets('Create Account Button Pressed', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
