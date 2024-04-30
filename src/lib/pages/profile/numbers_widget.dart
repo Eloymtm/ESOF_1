@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NumbersWidget extends StatelessWidget {
+  const NumbersWidget({
+    Key? key,
+    required this.rating,
+}) : super(key: key);
 
+  final String rating;
   @override
   Widget build(BuildContext context) => Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children:
     <Widget>[
-      buildButton(context, '4.8', ''),
+      buildButton(context, rating, ''),
     ],
   );
 
@@ -21,7 +26,7 @@ class NumbersWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              value,
+              value.toString(),
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             ),
             const SizedBox(width: 10),

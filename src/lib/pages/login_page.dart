@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:src/helper/globalVariables.dart';
 import 'package:src/pages/map_page.dart';
 import 'package:src/pages/register_page.dart';
 
 class LoginPage extends StatefulWidget {
-  final Function()? onTap;
-
-  LoginPage({super.key, required this.onTap});
+  LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -22,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
+          Navigator.pushNamed(context, '/main_page');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("User not found");
@@ -29,7 +29,6 @@ class _LoginPageState extends State<LoginPage> {
         print("Wrong password");
       }
     }
-    MapPage();
   }
 
   void createaccount() {
@@ -52,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   Text("UNILIFT",
                       style: TextStyle(
-                          color: Color.fromRGBO(246, 161, 86, 1),
+                          color: primaryColor,
                           fontSize: 50,
                           fontWeight: FontWeight.w700)),
                   SizedBox(height: 30),
@@ -83,9 +82,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 20),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                        onTap: widget.onTap,
+                        onTap: (){
+                          Navigator.pushNamed(context, '/register_page');
+                          },
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Text("Create account",
@@ -108,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: signIn,
                     height: 50,
                     minWidth: 150,
-                    color: const Color.fromRGBO(246, 161, 86, 1),
+                    color: primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),

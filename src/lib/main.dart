@@ -5,6 +5,8 @@ import 'package:src/pages/login_page.dart';
 import 'package:src/pages/map_page.dart';
 import 'package:src/pages/lift_page.dart';
 import 'package:src/pages/profile/profile_page.dart';
+import 'package:src/pages/register_page.dart';
+import 'package:src/pages/mainPage.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -22,19 +24,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const AuthPage(),
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      routes: {
-        'profile/profile_page': (context) => const ProfilePage(),
-        '/map_page': (context) => const MapPage(),
-        '/lift_page': (context) => const LiftPage(),
-      },
-    );
+        debugShowCheckedModeBanner: false,
+        home: const AuthPage(),
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        routes: {
+          'profile/profile_page': (context) => const ProfilePage(),
+          '/map_page': (context) => const MapPage(),
+          '/lift_page': (context) => const LiftPage(),
+          '/login_page': (context) => LoginPage(),
+          '/register_page': (context) => RegisterPage(),
+          '/main_page':(context) => const MainPage(),
+        });
   }
 }
 /*

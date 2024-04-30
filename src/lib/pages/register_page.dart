@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,26 +6,30 @@ import 'package:src/pages/map_page.dart';
 import 'package:src/pages/register_page.dart';
 
 class RegisterPage extends StatefulWidget {
-  final Function()? onTap;
-
-  RegisterPage({super.key, required this.onTap});
+  RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+
+  final nameController = TextEditingController();
 
   final passwordController = TextEditingController();
 
   final confirmPasswordController = TextEditingController();
 
-  void signUp() async {
+  Future signUp() async {
     try {
       if (passwordController.text == confirmPasswordController.text) {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: usernameController.text, password: passwordController.text);
+            email: emailController.text, password: passwordController.text);
+        print(nameController.text);
+        print(emailController.text);
+        addUserDetails(nameController.text, emailController.text);
+        Navigator.pushNamed(context, '/main_page');
       } else {
         showErrorMessage("Passwords don't match");
       }
@@ -34,6 +39,19 @@ class _RegisterPageState extends State<RegisterPage> {
     //Navigator.pop(context);
     //MapPage();
   }
+
+ Future addUserDetails(String name, String email) async{
+   final currentUser = FirebaseAuth.instance.currentUser!;
+   final String uid = currentUser.uid;
+    await FirebaseFirestore.instance.collection('User').doc(uid).set(
+        {
+          'Name' : name,
+          'Email' : email,
+          'ImagePath' : 'https://publicdomainvectors.org/tn_img/abstract-user-flat-4.webp',
+          'Rating' : "0.0",
+        }
+    );
+ }
 
   void showErrorMessage(String message) {
     showDialog(
@@ -73,7 +91,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           color: Color.fromRGBO(246, 161, 86, 1),
                           fontSize: 50,
                           fontWeight: FontWeight.w700)),
-                  SizedBox(height: 30),
                 ],
               ),
             ),
@@ -82,7 +99,8 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 children: <Widget>[
                   TextField(
-                    controller: usernameController,
+                    key: const Key("emailField"),
+                    controller: emailController,
                     decoration: const InputDecoration(
                       hintText: "Enter your student email...",
                       hintStyle: TextStyle(color: Colors.grey),
@@ -91,6 +109,19 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 20),
                   TextField(
+                    key: const Key("nameField"),
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      hintText: "Enter your name...",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextField(
+                    key: const Key("passwordField"),
                     controller: passwordController,
                     obscureText: true,
                     decoration: const InputDecoration(
@@ -101,6 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 20),
                   TextField(
+                    key: const Key("confirmPasswordField"),
                     controller: confirmPasswordController,
                     obscureText: true,
                     decoration: const InputDecoration(
@@ -113,7 +145,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: widget.onTap,
+                        onTap: () {
+                          Navigator.pushNamed(context, '/login_page');
+                        },
                         child: const Align(
                           alignment: Alignment.centerRight,
                           child: Text("Already have an account?",
