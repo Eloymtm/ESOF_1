@@ -24,7 +24,7 @@ class _MapPageState extends State<MapPage> {
   static const LatLng _pGooglePlex = LatLng(37.816667, -25.533056);
   static const LatLng _dest = LatLng(37.8, -25.533056);
 
-  Position? _currentLocation;
+  late Position _currentLocation;
   late bool servicePermission = false;
   late LocationPermission permission;
 
@@ -42,9 +42,9 @@ class _MapPageState extends State<MapPage> {
     return await Geolocator.getCurrentPosition();
   }
 
-  void setCurrent() async{
+  void setCurrentLocation() async {
     setState(() {
-      _currentLocation = _getCurrentLocation() as Position?;
+      _currentLocation = _getCurrentLocation() as Position;
     });
   }
 
@@ -91,7 +91,7 @@ class _MapPageState extends State<MapPage> {
 
     void onCreated(GoogleMapController controller) {
       _controllerGoogleMap.complete();
-      setCurrent();
+      setCurrentLocation();
     }
 
     return Scaffold(
@@ -127,9 +127,12 @@ class _MapPageState extends State<MapPage> {
               position: _dest,
               icon: BitmapDescriptor.defaultMarker),
           Marker(
-              markerId: MarkerId("location"),
-              position: LatLng(_currentLocation.latitude, _currentLocation.longitude);
-          )
+            markerId: MarkerId("location"),
+            position:
+                LatLng(_currentLocation.latitude, _currentLocation.longitude),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                BitmapDescriptor.hueYellow),
+          ),
         },
         compassEnabled: true,
         myLocationEnabled: true,
