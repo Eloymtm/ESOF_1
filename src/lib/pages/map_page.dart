@@ -3,7 +3,9 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:src/components/my_bot_bar.dart';
 import 'package:src/pages/lift_page.dart';
@@ -21,6 +23,30 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   static const LatLng _pGooglePlex = LatLng(37.816667, -25.533056);
   static const LatLng _dest = LatLng(37.8, -25.533056);
+
+  Position? _currentLocation;
+  late bool servicePermission = false;
+  late LocationPermission permission;
+
+  String currentAdress = "";
+
+  Future<Position> _getCurrentLocation() async {
+    servicePermission = await Geolocator.isLocationServiceEnabled();
+    if (!servicePermission) {
+      print("aa");
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+    return await Geolocator.getCurrentPosition();
+  }
+
+  void setCurrent() async{
+    setState(() {
+      _currentLocation = _getCurrentLocation() as Position?;
+    });
+  }
 
   int _selectedIndex = 0;
 
@@ -65,10 +91,10 @@ class _MapPageState extends State<MapPage> {
 
     void onCreated(GoogleMapController controller) {
       _controllerGoogleMap.complete();
+      setCurrent();
     }
 
     return Scaffold(
-    
       appBar: AppBar(
         title: const Padding(
           padding: EdgeInsets.symmetric(),
@@ -99,7 +125,11 @@ class _MapPageState extends State<MapPage> {
           const Marker(
               markerId: MarkerId('dest'),
               position: _dest,
-              icon: BitmapDescriptor.defaultMarker)
+              icon: BitmapDescriptor.defaultMarker),
+          Marker(
+              markerId: MarkerId("location"),
+              position: LatLng(_currentLocation.latitude, _currentLocation.longitude);
+          )
         },
         compassEnabled: true,
         myLocationEnabled: true,

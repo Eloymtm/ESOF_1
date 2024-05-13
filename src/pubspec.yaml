@@ -45,6 +45,7 @@ dependencies:
   mockito: ^5.0.0
   email_validator: ^2.0.1
   google_maps_webservice: ^0.0.15
+  geocoding: ^3.0.0
 
 
 

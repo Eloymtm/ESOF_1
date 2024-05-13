@@ -13,9 +13,9 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _tempPageState();
 }
 
-int selectedIndex=0;
+int selectedIndex = 0;
+
 class _tempPageState extends State<MainPage> {
-   
   void navigateBottomBar(int index) {
     setState(() {
       selectedIndex = index;
@@ -32,8 +32,9 @@ class _tempPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MyBotBar(onTabChange: (index) => navigateBottomBar(index)),
-      body:_pages[selectedIndex]
+      bottomNavigationBar:
+          MyBotBar(onTabChange: (index) => navigateBottomBar(index)),
+      body: _pages[selectedIndex],
     );
   }
 }
