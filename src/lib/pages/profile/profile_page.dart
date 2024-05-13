@@ -126,7 +126,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildEditButton() => ButtonWidget(
-        text: 'Editar profil',
+        text: 'Editar perfil',
         onClicked: () {
           Navigator.push(
             context,

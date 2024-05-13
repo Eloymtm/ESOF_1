@@ -10,7 +10,7 @@ AppBar buildAppBar(BuildContext context){
     actions: [
     ],
     title: const Text(
-      "Prerfil",
+      "Perfil",
       style: TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,
