@@ -28,7 +28,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> logOut() async {
     try {
       await FirebaseAuth.instance.signOut();
-      Navigator.of(context).pop; // Fechar o drawer
+      Navigator.pop(context); // Fechar o drawer
+      Navigator.pushNamedAndRemoveUntil(context, '/login_page', (route) => false); // Redirecionar para a tela de login e remover todas as rotas anteriores
     } catch (e) {
       print("Erro ao fazer logout: $e");
     }

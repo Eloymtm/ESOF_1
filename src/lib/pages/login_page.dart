@@ -31,8 +31,19 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void createaccount() {
-    //RegisterPage();
+  Future<void> sendResetPasswordEmail(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('E-mail de redefinição de senha enviado com sucesso!'),
+        duration: Duration(seconds: 2),
+      ));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Falha ao enviar e-mail de redefinição de senha. Por favor, tente novamente mais tarde.'),
+        duration: Duration(seconds: 2),
+      ));
+    }
   }
 
   @override
@@ -94,7 +105,28 @@ class _LoginPageState extends State<LoginPage> {
                               style: TextStyle(color: Colors.grey)),
                         ),
                       ),
-                      Padding(
+                      GestureDetector(
+                        onTap: (){
+                          String email = emailController.text.trim();
+
+                          if (email.isEmpty){
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                              content: Text('Por favor, preencha o campo de email e volte a tocar no esqueceu password.'),
+                              duration: Duration(seconds: 4),
+                            ));
+                            return;
+                          }
+                          sendResetPasswordEmail(email);
+                        },
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Esqueceu a password?",
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                      )
+                      /*Padding(
                         padding: EdgeInsets.only(left: 130),
                         child: Align(
                           child: Text(
@@ -102,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                   const SizedBox(height: 40),
