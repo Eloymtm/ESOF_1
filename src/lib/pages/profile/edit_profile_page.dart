@@ -61,11 +61,48 @@ class _EditProfileState extends State<EditProfileScreen> {
     }
   }
 
-
-
-  Future<void> updateUserInformation(String newValue, bool isName) async {
+  Future<void> updatePassword(String oldPassword, String newPassword, String confirmPassword) async {
     try {
-      if (isName){
+      // Verificar se a nova senha é igual à confirmação da senha
+      if (newPassword != confirmPassword) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('A nova senha e a confirmação da senha não coincidem.'),
+          duration: Duration(seconds: 2),
+        ));
+        return;
+      }
+
+      // Autenticar o usuário com a senha antiga
+      final credential = EmailAuthProvider.credential(email: currentUser.email!, password: oldPassword);
+      try {
+        await currentUser.reauthenticateWithCredential(credential);
+      } catch (e) {
+        // Se a reautenticação falhar, isso significa que a senha antiga fornecida está incorreta
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('A senha antiga está incorreta.'),
+          duration: Duration(seconds: 2),
+        ));
+        return;
+      }
+
+      // Atualizar a senha do usuário
+      await currentUser.updatePassword(newPassword);
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Senha atualizada com sucesso!'),
+        duration: Duration(seconds: 2),
+      ));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('A senha deve ter no minimo 6 caracteres.'),
+        duration: Duration(seconds: 2),
+      ));
+    }
+  }
+
+
+  Future<void> updateUserInformation(String newValue) async {
+    try {
         //await currentUser.updateDisplayName(newValue);
         await FirebaseFirestore.instance
             .collection('User')
@@ -75,18 +112,7 @@ class _EditProfileState extends State<EditProfileScreen> {
           content: Text('Name updated successfully!'),
           duration: Duration(seconds: 2),
         ));
-      } else {
-        //await currentUser.verifyBeforeUpdateEmail('pedrodsspedro@gmail.com');
-        //await currentUser.sendEmailVerification();
-        await FirebaseFirestore.instance
-            .collection('User')
-            .doc(currentUser.uid)
-            .update({'Email': newValue});
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Email updated successfully!'),
-          duration: Duration(seconds: 2),
-        ));
-      }
+
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Failed to update. Please try again later.'),
@@ -131,7 +157,7 @@ class _EditProfileState extends State<EditProfileScreen> {
                                   onEditPressed: () {
                                     String newName = nameController.text.trim();
                                     if (newName.isNotEmpty ) {
-                                      updateUserInformation(newName, true);
+                                      updateUserInformation(newName);
                                     } else {
                                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                         content: Text('Por favor inserir um email valido.'),
@@ -145,23 +171,31 @@ class _EditProfileState extends State<EditProfileScreen> {
                                 ),
 
                                 const SizedBox(height: 30),
-                                EditableNameField(
-                                  labelText: 'Email',
-                                  initialValue: userData['Email'], // Valor inicial do campo
-                                  onEditPressed: () {
-                                    String newEmail = emailController.text.trim();
-                                    if (newEmail.isNotEmpty && EmailValidator.validate(newEmail)) {
-                                      updateUserInformation(newEmail, false);
-                                    } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                        content: Text('Por favor inserir um email valido.'),
-                                        duration: Duration(seconds: 2),
-                                      ));
-                                    }
-                                  },
-                                  prefIcon: FontAwesomeIcons.envelope,
-                                  bottonText: 'Editar Email',
-                                  controller: emailController,
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey), // Adiciona uma borda cinza
+                                    borderRadius: BorderRadius.circular(15), // Borda arredondada
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      // Ícone do email à esquerda
+                                      const Icon(
+                                        FontAwesomeIcons.envelope,
+                                        color: Colors.black,
+                                      ),
+                                      const SizedBox(width: 15), // Espaçamento entre o ícone e o texto
+                                      // Texto do email do usuário
+                                      Text(
+                                        userData['Email'], // Email do usuário
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+
+                                  ),
                                 ),
 
                                 const Divider(height: 80, thickness: 5, color: primaryColor,),
@@ -203,7 +237,21 @@ class _EditProfileState extends State<EditProfileScreen> {
                                 const SizedBox(height: 10),
                                 ButtonWidget(
                                   text: 'Alterar',
-                                  onClicked: () {},
+                                  onClicked: () {
+                                    String oldPassword = oldPasswordController.text.trim();
+                                    String newPassword = newPasswordController.text.trim();
+                                    String confirmPassword = confirmPasswordController.text.trim();
+
+                                    if (oldPassword.isEmpty || newPassword.isEmpty || confirmPassword.isEmpty) {
+                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                        content: Text('Por favor, preencha todos os campos.'),
+                                        duration: Duration(seconds: 2),
+                                      ));
+                                      return;
+                                    }
+
+                                    updatePassword(oldPassword, newPassword, confirmPassword);
+                                  },
                                   padH: 60,
                                 ),
                               ],

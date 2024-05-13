@@ -26,6 +26,7 @@ class LiftPageState extends State<LiftPage> {
  Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
+      automaticallyImplyLeading: false,
       title: const Padding(
         padding: EdgeInsets.symmetric(),
         child: Text(
