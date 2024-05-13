@@ -28,8 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> logOut() async {
     try {
       await FirebaseAuth.instance.signOut();
-      Navigator.pop(context); // Fechar o drawer
-      Navigator.pushNamedAndRemoveUntil(context, '/login_page', (route) => false); // Redirecionar para a tela de login e remover todas as rotas anteriores
+      Navigator.of(context).pop; // Fechar o drawer
     } catch (e) {
       print("Erro ao fazer logout: $e");
     }
@@ -71,7 +70,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar:
+      buildAppBar(context),
       body:StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance.collection('User').doc(currentUser.uid).snapshots(),
           builder: (context, snapshot) {

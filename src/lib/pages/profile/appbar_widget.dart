@@ -5,10 +5,9 @@ AppBar buildAppBar(BuildContext context){
 
 
   return AppBar(
+    automaticallyImplyLeading: false,
     backgroundColor: Colors.transparent,
     elevation: 0,
-    actions: [
-    ],
     title: const Text(
       "Perfil",
       style: TextStyle(

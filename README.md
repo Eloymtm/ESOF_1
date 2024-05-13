@@ -151,3 +151,26 @@ In this iteration, we also:
 
 
 <br>
+
+## Iteration 2
+
+### Plans:
+
+### Development Board
+
+Beginning
+
+![Captura de ecrã de 2024-05-01 23-35-29](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/146183808/8f9a00f2-7e7d-4ae8-a69f-e1d2ab818f77)
+
+End
+
+![Captura de ecrã de 2024-05-01 23-37-43](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/146183808/4fc0a363-cc92-43c4-ae11-0727397c7883)
+
+
+### Retrospectives:
+The main focus of our third iteration was integrating Firebase data into our app. We spent time setting up trip creation and list features, making minor design adjustments to the main page, and finalizing everything concerning the profile page, particularly the ability to edit profiles. These improvements streamlined our app and made it more user-friendly.
+In this iteration, we also:
+  - Improved our skills with controllers.
+  - Figured out how to update information in Firebase, the storage system we use for our app's data.
+ <br>
+

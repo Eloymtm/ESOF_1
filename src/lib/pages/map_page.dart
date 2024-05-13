@@ -70,6 +70,7 @@ class _MapPageState extends State<MapPage> {
     return Scaffold(
     
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Padding(
           padding: EdgeInsets.symmetric(),
           child: Text(
@@ -82,12 +83,6 @@ class _MapPageState extends State<MapPage> {
         ),
         centerTitle: true,
         elevation: 2,
-        actions: [
-          IconButton(
-              onPressed: logout,
-              icon: const Icon(FontAwesomeIcons
-                  .arrowRightFromBracket)) // mudar logout para darkmode
-        ],
       ),
       body: GoogleMap(
         onMapCreated: onCreated,
