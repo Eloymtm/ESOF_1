@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:src/pages/auth_page.dart';
+import 'package:src/pages/choose_location_page.dart';
 import 'package:src/pages/login_page.dart';
 import 'package:src/pages/map_page.dart';
 import 'package:src/pages/lift_page.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
           '/login_page': (context) => LoginPage(),
           '/register_page': (context) => RegisterPage(),
           '/main_page':(context) => const MainPage(),
+          '/choose_location_page':(context) => ChooseLocation(),
         });
   }
 }
