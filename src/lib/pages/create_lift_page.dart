@@ -38,6 +38,11 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
   final LocalDestino = TextEditingController();
   final DataPartida = TextEditingController();
 
+  TextEditingController _dateController = TextEditingController();
+  TextEditingController _timeController =TextEditingController();
+
+  double _borderRadius = 15.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,55 +72,135 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
             padding: const EdgeInsets.symmetric(horizontal:20),
             child: Column(
               children: [
-                SizedBox(height: 60,),
+                SizedBox(height: 30,),
                 Text("Local de partida"),
-                EditableNameField(
-                  sufixIcon: FontAwesomeIcons.locationDot,
-                  showSuffixButton: false,
-                  controller: LocalPartida,
+            TextFormField(
+              controller: LocalPartida,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                prefix: Padding(
+                  padding: EdgeInsets.only(right: 15, bottom: 5),
+                  //child: Icon(FontAwesomeIcons.locationDot),
                 ),
-                SizedBox(height: 60,),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(width: 2.0, color: primaryColor),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                suffix: Icon(FontAwesomeIcons.locationDot),
+
+              ),
+              cursorColor: primaryColor,
+            ),
+
+                SizedBox(height: 30,),
                 Text("Local de origem"),
                 EditableNameField(
+                  onEditPressed: (){
+                    Navigator.pushNamed(context, '/choose_location_page');
+                  },
                   sufixIcon: FontAwesomeIcons.locationDot,
                   showSuffixButton: false,
                   controller: LocalDestino,
                 ),
-                SizedBox(height: 60,),
+                SizedBox(height: 30,),
                 Text("Data de partida"),
-                EditableNameField(
-                  sufixIcon: FontAwesomeIcons.clock,
-                  showSuffixButton: false,
-                  controller: DataPartida,
+                TextField(
+                  controller: _dateController,
+                  decoration: InputDecoration(
+                    labelText: 'DATA',
+                    filled: true,
+                    prefixIcon: Icon(Icons.calendar_today),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(_borderRadius),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: primaryColor),
+                      borderRadius: BorderRadius.circular(_borderRadius - 5.0),
+                    ),
+                  ),
+                  readOnly: true,
+                  onTap: () {
+                    _selectDate();
+                  },
                 ),
-                 SizedBox(height: 60,),
+                SizedBox(height: 10), // Adiciona espaçamento entre os campos
+                Text("Hora de partida"),
+                TextField(
+                  controller: _timeController,
+                  decoration: InputDecoration(
+                    labelText: 'HORA',
+                    filled: true,
+                    prefixIcon: Icon(Icons.access_time),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(_borderRadius), // Menos arredondado
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: primaryColor),
+                      borderRadius: BorderRadius.circular(_borderRadius - 5.0), // Menos arredondado
+                    ),
+                  ),
+                  readOnly: true,
+                  onTap: () {
+                    _selectTime();
+                  },
+                ),
+                 SizedBox(height: 30,),
                 Text("Escolhe o teu carro"),
                 EditableNameField(
                   sufixIcon: FontAwesomeIcons.clock,
                   showSuffixButton: false,
                   controller: DataPartida,
                 ),
-                Padding(
-  padding: const EdgeInsets.only(top:20),
-  child: ButtonWidget(
-    text: 'Criar viagem',
-    onClicked: () {
-      createRide(LocalDestino.text, LocalPartida.text, DataPartida.text);
-      // Mostra uma mensagem de sucesso
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Viagem criada com sucesso')),
-      );
-      // Redireciona para outra página
-      //Navigator.pushNamed(context, '');
-    },
-    padH: 100,
-  ),
-),
+                SizedBox(height: 30,),
+                ButtonWidget(
+                    text: 'Criar viagem',
+                    onClicked: () {
+                      createRide(LocalDestino.text, LocalPartida.text, DataPartida.text);
+                      // Mostra uma mensagem de sucesso
+                      ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Viagem criada com sucesso')),
+                      );
+                      // Redireciona para outra página
+                      // Navigator.pushNamed(context, '');
+                    },
+                  padH: 70,
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _selectDate() async {
+    DateTime? _picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2100)
+    );
+
+    if(_picked != null){
+      setState(() {
+        _dateController.text = _picked.toString().split(" ")[0];
+      });
+    }
+  }
+
+  Future<void> _selectTime() async {
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (pickedTime != null) {
+      setState(() {
+        _timeController.text = pickedTime.format(context);
+      });
+    }
   }
 }
