@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:src/helper/globalVariables.dart';
-import 'package:src/pages/profile/appbar_widget.dart';
 import 'package:src/pages/profile/button_widget.dart';
 import 'package:src/pages/profile/edit_field_widget.dart';
 
@@ -16,30 +14,30 @@ class CreateLiftPage extends StatefulWidget {
   State<CreateLiftPage> createState() => _CreateLiftPageState();
 }
 
+Future createRide(String destino, String partida, String dataPartida, String carId) async {
+  final currentUser = FirebaseAuth.instance.currentUser!;
 
- Future createRide(String destino, String partida,String DataPartida) async{
-   final currentUser = FirebaseAuth.instance.currentUser!;
-
-   final rideId = FirebaseFirestore.instance.collection('Ride').doc().id; //gerar id
-    final userRef = FirebaseFirestore.instance.collection('User').doc(currentUser.uid); //ir buscar o user
-    await FirebaseFirestore.instance.collection('Ride').doc(rideId).set(
-        {
-          'Driver' : userRef,
-          'Destino' :destino,
-          'Partida' : partida,
-          
-        }
-    );
- }
+  final rideId = FirebaseFirestore.instance.collection('Ride').doc().id; //gerar id
+  final userRef = FirebaseFirestore.instance.collection('User').doc(currentUser.uid); //ir buscar o user
+  await FirebaseFirestore.instance.collection('Ride').doc(rideId).set(
+    {
+      'Driver': userRef,
+      'Destino': destino,
+      'Partida': partida,
+      'DataPartida': dataPartida,
+      'Carro': FirebaseFirestore.instance.collection('Car').doc(carId),
+    },
+  );
+}
 
 class _CreateLiftPageState extends State<CreateLiftPage> {
-
-  final LocalPartida= TextEditingController();
+  final LocalPartida = TextEditingController();
   final LocalDestino = TextEditingController();
   final DataPartida = TextEditingController();
 
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
+  String? _selectedCar;
 
   double _borderRadius = 15.0;
 
@@ -48,31 +46,30 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      actions: [],
-      title: const Padding(
-        padding: EdgeInsets.symmetric(),
-        child: Text(
-          "UNILIFT",
-          style: TextStyle(
-            color: Color.fromRGBO(246, 161, 86, 1),
-            fontWeight: FontWeight.bold,
-            fontSize: 35,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [],
+        title: const Padding(
+          padding: EdgeInsets.symmetric(),
+          child: Text(
+            "UNILIFT",
+            style: TextStyle(
+              color: Color.fromRGBO(246, 161, 86, 1),
+              fontWeight: FontWeight.bold,
+              fontSize: 35,
+            ),
           ),
         ),
+        centerTitle: true,
       ),
-      centerTitle: true,
-      ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal:20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                const SizedBox(height: 30,),
+                const SizedBox(height: 30),
                 const Text("Local de partida"),
                 GestureDetector(
                   onTap: () => Navigator.pushNamed(context, '/choose_location_page'),
@@ -94,13 +91,13 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 30),
                 const Text("Local de destino"),
                 GestureDetector(
                   onTap: () => Navigator.pushNamed(context, '/choose_location_page'),
                   child: AbsorbPointer(
                     child: TextFormField(
-                      controller: LocalPartida,
+                      controller: LocalDestino,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                         prefix: const Padding(padding: EdgeInsets.only(right: 15, bottom: 5)),
@@ -116,7 +113,7 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 30),
                 const Text("Data de partida"),
                 TextField(
                   controller: _dateController,
@@ -148,11 +145,11 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
                     prefixIcon: const Icon(Icons.access_time),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(_borderRadius), // Menos arredondado
+                      borderRadius: BorderRadius.circular(_borderRadius),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(color: primaryColor),
-                      borderRadius: BorderRadius.circular(_borderRadius - 5.0), // Menos arredondado
+                      borderRadius: BorderRadius.circular(_borderRadius - 5.0),
                     ),
                   ),
                   readOnly: true,
@@ -160,25 +157,65 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
                     _selectTime();
                   },
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 30),
                 const Text("Escolhe o teu carro"),
-                EditableNameField(
-                  sufixIcon: FontAwesomeIcons.car,
-                  showSuffixButton: false,
-                  controller: DataPartida,
+                StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('Car')
+                      .where('user', isEqualTo: FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid))
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Erro ao carregar carros: ${snapshot.error}');
+                    } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return Text('Nenhum carro encontrado');
+                    } else {
+                      List<DropdownMenuItem<String>> carItems = snapshot.data!.docs.map((doc) {
+                        var carData = doc.data() as Map<String, dynamic>;
+                        return DropdownMenuItem<String>(
+                          value: doc.id,
+                          child: Text('${carData['marca']} ${carData['modelo']}'),
+                        );
+                      }).toList();
+
+                      return DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                        value: _selectedCar,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _selectedCar = newValue;
+                          });
+                        },
+                        items: carItems,
+                        validator: (value) => value == null ? 'Escolha um carro' : null,
+                      );
+                    }
+                  },
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 30),
                 ButtonWidget(
-                    text: 'Criar viagem',
-                    onClicked: () {
-                      createRide(LocalDestino.text, LocalPartida.text, DataPartida.text);
+                  text: 'Criar viagem',
+                  onClicked: () {
+                    if (_selectedCar != null) {
+                      createRide(LocalDestino.text, LocalPartida.text, '${_dateController.text} ${_timeController.text}', _selectedCar!);
                       // Mostra uma mensagem de sucesso
                       ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Viagem criada com sucesso')),
+                        SnackBar(content: Text('Viagem criada com sucesso')),
                       );
                       // Redireciona para outra página
                       // Navigator.pushNamed(context, '');
-                    },
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Por favor, escolha um carro')),
+                      );
+                    }
+                  },
                   padH: 70,
                 ),
               ],
@@ -191,13 +228,13 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
 
   Future<void> _selectDate() async {
     DateTime? _picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2100)
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
     );
 
-    if(_picked != null){
+    if (_picked != null) {
       setState(() {
         _dateController.text = _picked.toString().split(" ")[0];
       });
