@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:src/components/autocomplete.dart';
 import 'package:src/helper/globalVariables.dart';
 import 'package:src/pages/profile/appbar_widget.dart';
 import 'package:src/pages/profile/button_widget.dart';
@@ -33,8 +34,7 @@ class CreateLiftPage extends StatefulWidget {
  }
 
 class _CreateLiftPageState extends State<CreateLiftPage> {
-
-  final LocalPartida= TextEditingController();
+  final LocalPartida = TextEditingController();
   final LocalDestino = TextEditingController();
   final DataPartida = TextEditingController();
 
@@ -48,73 +48,40 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      actions: [],
-      title: const Padding(
-        padding: EdgeInsets.symmetric(),
-        child: Text(
-          "UNILIFT",
-          style: TextStyle(
-            color: Color.fromRGBO(246, 161, 86, 1),
-            fontWeight: FontWeight.bold,
-            fontSize: 35,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [],
+        title: const Padding(
+          padding: EdgeInsets.symmetric(),
+          child: Text(
+            "UNILIFT",
+            style: TextStyle(
+              color: Color.fromRGBO(246, 161, 86, 1),
+              fontWeight: FontWeight.bold,
+              fontSize: 35,
+            ),
           ),
         ),
+        centerTitle: true,
       ),
-      centerTitle: true,
-      ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal:20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
                 const SizedBox(height: 30,),
                 const Text("Local de partida"),
-                GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/choose_location_page'),
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: LocalPartida,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        prefix: const Padding(padding: EdgeInsets.only(right: 15, bottom: 5)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(width: 2.0, color: primaryColor),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                        suffixIcon: const Icon(FontAwesomeIcons.locationDot),
-                      ),
-                      readOnly: true,
-                      cursorColor: primaryColor,
-                    ),
-                  ),
+                GooglePlacesAutoCompleteField(
+                  controller: LocalPartida,
+                  googleAPIKey: googleApiKey, 
                 ),
                 const SizedBox(height: 30,),
                 const Text("Local de destino"),
-                GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/choose_location_page'),
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: LocalPartida,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        prefix: const Padding(padding: EdgeInsets.only(right: 15, bottom: 5)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(width: 2.0, color: primaryColor),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                        suffixIcon: const Icon(FontAwesomeIcons.locationDot),
-                      ),
-                      readOnly: true,
-                      cursorColor: primaryColor,
-                    ),
-                  ),
+                GooglePlacesAutoCompleteField(
+                  controller: LocalDestino,
+                  googleAPIKey: googleApiKey, 
                 ),
                 const SizedBox(height: 30,),
                 const Text("Data de partida"),
@@ -161,25 +128,29 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
                   },
                 ),
                 const SizedBox(height: 30,),
-                const Text("Escolhe o teu carro"),
-                EditableNameField(
-                  sufixIcon: FontAwesomeIcons.car,
-                  showSuffixButton: false,
+                const Text("Carro"),
+                TextFormField(
                   controller: DataPartida,
+                  decoration: InputDecoration(
+                    labelText: 'Seleciona o teu carro',
+                    suffixIcon: Icon(FontAwesomeIcons.car),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 30,),
-                ButtonWidget(
-                    text: 'Criar viagem',
-                    onClicked: () {
-                      createRide(LocalDestino.text, LocalPartida.text, DataPartida.text);
-                      // Mostra uma mensagem de sucesso
-                      ScaffoldMessenger.of(context).showSnackBar(
+                ElevatedButton(
+                  onPressed: () {
+                    createRide(LocalDestino.text, LocalPartida.text, DataPartida.text);
+                    // Mostra uma mensagem de sucesso
+                    ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Viagem criada com sucesso')),
-                      );
-                      // Redireciona para outra página
-                      // Navigator.pushNamed(context, '');
-                    },
-                  padH: 70,
+                    );
+                    // Redireciona para outra página
+                    // Navigator.pushNamed(context, '');
+                  },
+                  child: Text('Criar viagem'),
                 ),
               ],
             ),

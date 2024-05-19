@@ -6,7 +6,7 @@ const IconData homeIcon = Icons.house_outlined;
 const IconData pulsIcon = FontAwesomeIcons.plus;
 const IconData eyeIcon = FontAwesomeIcons.eye;
 const IconData profileIcon = FontAwesomeIcons.user;
-const googleApiKey = "AIzaSyDtkaJDxCMIghNIK-OsMCS9nd_FX8izJ3g";
+const googleApiKey = "AIzaSyB6QV64EZpTljpRW55bxIHmf-zii_jr6OQ";
 
 
 //cores
