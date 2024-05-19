@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           '/login_page': (context) => LoginPage(),
           '/register_page': (context) => RegisterPage(),
           '/main_page':(context) => const MainPage(),
-          '/choose_location_page':(context) => ChooseLocation(),
+          '/choose_location_page': (context) => ChooseLocation(),
         });
   }
 }

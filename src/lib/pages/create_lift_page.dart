@@ -39,7 +39,7 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
   final DataPartida = TextEditingController();
 
   TextEditingController _dateController = TextEditingController();
-  TextEditingController _timeController =TextEditingController();
+  TextEditingController _timeController = TextEditingController();
 
   double _borderRadius = 15.0;
 
@@ -72,51 +72,64 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
             padding: const EdgeInsets.symmetric(horizontal:20),
             child: Column(
               children: [
-                SizedBox(height: 30,),
-                Text("Local de partida"),
-            TextFormField(
-              controller: LocalPartida,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                prefix: Padding(
-                  padding: EdgeInsets.only(right: 15, bottom: 5),
-                  //child: Icon(FontAwesomeIcons.locationDot),
+                const SizedBox(height: 30,),
+                const Text("Local de partida"),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/choose_location_page'),
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: LocalPartida,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                        prefix: const Padding(padding: EdgeInsets.only(right: 15, bottom: 5)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(width: 2.0, color: primaryColor),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                        suffixIcon: const Icon(FontAwesomeIcons.locationDot),
+                      ),
+                      readOnly: true,
+                      cursorColor: primaryColor,
+                    ),
+                  ),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(width: 2.0, color: primaryColor),
-                  borderRadius: BorderRadius.circular(5),
+                const SizedBox(height: 30,),
+                const Text("Local de destino"),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/choose_location_page'),
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: LocalPartida,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                        prefix: const Padding(padding: EdgeInsets.only(right: 15, bottom: 5)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(width: 2.0, color: primaryColor),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                        suffixIcon: const Icon(FontAwesomeIcons.locationDot),
+                      ),
+                      readOnly: true,
+                      cursorColor: primaryColor,
+                    ),
+                  ),
                 ),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                suffix: Icon(FontAwesomeIcons.locationDot),
-
-              ),
-              cursorColor: primaryColor,
-            ),
-
-                SizedBox(height: 30,),
-                Text("Local de origem"),
-                EditableNameField(
-                  onEditPressed: (){
-                    Navigator.pushNamed(context, '/choose_location_page');
-                  },
-                  sufixIcon: FontAwesomeIcons.locationDot,
-                  showSuffixButton: false,
-                  controller: LocalDestino,
-                ),
-                SizedBox(height: 30,),
-                Text("Data de partida"),
+                const SizedBox(height: 30,),
+                const Text("Data de partida"),
                 TextField(
                   controller: _dateController,
                   decoration: InputDecoration(
                     labelText: 'DATA',
                     filled: true,
-                    prefixIcon: Icon(Icons.calendar_today),
+                    prefixIcon: const Icon(Icons.calendar_today),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(_borderRadius),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: primaryColor),
+                      borderSide: const BorderSide(color: primaryColor),
                       borderRadius: BorderRadius.circular(_borderRadius - 5.0),
                     ),
                   ),
@@ -125,20 +138,20 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
                     _selectDate();
                   },
                 ),
-                SizedBox(height: 10), // Adiciona espaçamento entre os campos
-                Text("Hora de partida"),
+                const SizedBox(height: 10),
+                const Text("Hora de partida"),
                 TextField(
                   controller: _timeController,
                   decoration: InputDecoration(
                     labelText: 'HORA',
                     filled: true,
-                    prefixIcon: Icon(Icons.access_time),
+                    prefixIcon: const Icon(Icons.access_time),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(_borderRadius), // Menos arredondado
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: primaryColor),
+                      borderSide: const BorderSide(color: primaryColor),
                       borderRadius: BorderRadius.circular(_borderRadius - 5.0), // Menos arredondado
                     ),
                   ),
@@ -147,14 +160,14 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
                     _selectTime();
                   },
                 ),
-                 SizedBox(height: 30,),
-                Text("Escolhe o teu carro"),
+                const SizedBox(height: 30,),
+                const Text("Escolhe o teu carro"),
                 EditableNameField(
-                  sufixIcon: FontAwesomeIcons.clock,
+                  sufixIcon: FontAwesomeIcons.car,
                   showSuffixButton: false,
                   controller: DataPartida,
                 ),
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 ButtonWidget(
                     text: 'Criar viagem',
                     onClicked: () {
