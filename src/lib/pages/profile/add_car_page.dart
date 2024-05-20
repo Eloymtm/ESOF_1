@@ -4,20 +4,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:src/helper/globalVariables.dart';
 
 class AddCarPage extends StatefulWidget {
-  const AddCarPage({Key? key}) : super(key: key);
+  const AddCarPage({super.key});
 
   @override
   State<AddCarPage> createState() => _AddCarPageState();
 }
 
 class _AddCarPageState extends State<AddCarPage> {
-  TextEditingController _anoController = TextEditingController();
-  TextEditingController _capacidadeController = TextEditingController();
-  TextEditingController _corController = TextEditingController();
-  TextEditingController _consumoController = TextEditingController();
-  TextEditingController _marcaController = TextEditingController();
-  TextEditingController _matriculaController = TextEditingController();
-  TextEditingController _modeloController = TextEditingController();
+  final TextEditingController _anoController = TextEditingController();
+  final TextEditingController _capacidadeController = TextEditingController();
+  final TextEditingController _corController = TextEditingController();
+  final TextEditingController _consumoController = TextEditingController();
+  final TextEditingController _marcaController = TextEditingController();
+  final TextEditingController _matriculaController = TextEditingController();
+  final TextEditingController _modeloController = TextEditingController();
   String? _combustivel;
 
   final _formKey = GlobalKey<FormState>();
@@ -47,7 +47,7 @@ class _AddCarPageState extends State<AddCarPage> {
 
         // Exibir mensagem de sucesso ou redirecionar para outra página
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Carro adicionado com sucesso')),
+          const SnackBar(content: Text('Carro adicionado com sucesso')),
         );
       }).catchError((error) {
         // Exibir mensagem de erro se houver problemas ao adicionar o carro
@@ -80,11 +80,11 @@ class _AddCarPageState extends State<AddCarPage> {
               _buildTextField('Cor', _corController),
               _buildTextField('Matrícula', _matriculaController),
               _buildTextField('Consumo (km/L)', _consumoController, keyboardType: TextInputType.number),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _adicionarCarro,
-                child: Text('Adicionar Carro', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17),),
-                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(primaryColor)),
+                style: ButtonStyle(backgroundColor: WidgetStateProperty.all<Color>(primaryColor)),
+                child: const Text('Adicionar Carro', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17),),
               ),
 
             ],
@@ -96,7 +96,7 @@ class _AddCarPageState extends State<AddCarPage> {
 
   Widget _buildTextField(String label, TextEditingController controller, {TextInputType? keyboardType}) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10.0),
+      margin: const EdgeInsets.only(bottom: 10.0),
       child: TextFormField(
         controller: controller,
         keyboardType: keyboardType,
@@ -118,7 +118,7 @@ class _AddCarPageState extends State<AddCarPage> {
 
   Widget _buildDropdownField(String label, List<String> options) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10.0),
+      margin: const EdgeInsets.only(bottom: 10.0),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
           labelText: label,

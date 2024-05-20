@@ -6,7 +6,7 @@ class GooglePlacesAutoCompleteField extends StatelessWidget {
   final TextEditingController controller;
   final String googleAPIKey;
 
-  GooglePlacesAutoCompleteField({
+  const GooglePlacesAutoCompleteField({super.key, 
     required this.controller,
     required this.googleAPIKey,
   });
@@ -17,7 +17,7 @@ class GooglePlacesAutoCompleteField extends StatelessWidget {
       textEditingController: controller,
       googleAPIKey: googleAPIKey,
       debounceTime: 400,
-      countries: ["PT"],
+      countries: const ["PT"],
       isLatLngRequired: true,
       getPlaceDetailWithLatLng: (prediction) {
         

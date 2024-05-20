@@ -5,16 +5,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 class ChatScreen extends StatelessWidget {
   final String chatId;
 
-  ChatScreen({required this.chatId});
+  const ChatScreen({super.key, required this.chatId});
 
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Lift Chat',
           style: TextStyle(
             fontSize: 30,
@@ -23,7 +23,7 @@ class ChatScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Color.fromRGBO(211, 209, 209, 1.0),
+        backgroundColor: const Color.fromRGBO(211, 209, 209, 1.0),
       ),
       body: Column(
         children: [
@@ -37,13 +37,13 @@ class ChatScreen extends StatelessWidget {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 var messages = snapshot.data!.docs;
 
                 if (messages.isEmpty) {
-                  return Center(
+                  return const Center(
                     child: Text(
                       "Este chat ainda não tem mensagens.",
                       style: TextStyle(fontSize: 18),
@@ -57,16 +57,16 @@ class ChatScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     var message = messages[index];
                     bool isMe = message['sender'] == user!.uid;
-                    var refSender = _firestore.collection('User').doc(message['sender']);
+                    var refSender = firestore.collection('User').doc(message['sender']);
 
                     return Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
                       child: FutureBuilder<DocumentSnapshot>(
                         future: refSender.get(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.waiting) {
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator();
                           }
 
                           final senderDocs = snapshot.data!;
@@ -76,7 +76,7 @@ class ChatScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                margin: EdgeInsets.only(bottom: 4.0),
+                                margin: const EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   senderName,
                                   style: TextStyle(color: isMe ? Colors.white : Colors.black),
@@ -84,7 +84,7 @@ class ChatScreen extends StatelessWidget {
                               ),
                               Container(
                                 constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
-                                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                                 decoration: BoxDecoration(
                                   color: isMe ? Colors.blueAccent : Colors.grey[300],
                                   borderRadius: BorderRadius.circular(10),
@@ -114,7 +114,7 @@ class ChatScreen extends StatelessWidget {
 class ChatInputField extends StatefulWidget {
   final String chatId;
 
-  ChatInputField({required this.chatId});
+  const ChatInputField({super.key, required this.chatId});
 
   @override
   _ChatInputFieldState createState() => _ChatInputFieldState();
@@ -165,7 +165,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.send),
+            icon: const Icon(Icons.send),
             onPressed: _sendMessage,
           ),
         ],

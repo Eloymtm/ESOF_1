@@ -7,12 +7,12 @@ class ButtonWidget extends StatelessWidget {
   final double padV;
 
   const ButtonWidget({
-    Key? key,
+    super.key,
     required this.text,
     required this.onClicked,
     this.padH = 110,
     this.padV = 20,
-}) : super(key: key);
+});
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -20,8 +20,8 @@ class ButtonWidget extends StatelessWidget {
     child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white, shape: const StadiumBorder(),
-          backgroundColor: Color.fromRGBO(246, 161, 86, 1),
-          minimumSize: Size(double.infinity, 45),
+          backgroundColor: const Color.fromRGBO(246, 161, 86, 1),
+          minimumSize: const Size(double.infinity, 45),
         ),
         onPressed: onClicked,
         child: Text(
