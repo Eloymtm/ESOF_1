@@ -9,76 +9,104 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lift Chat'),
+        title: Text(
+          'Lift Chat',
+          style: TextStyle(
+            fontSize: 30,
+            color: Color.fromRGBO(246, 161, 86, 1),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(211, 209, 209, 1.0),
       ),
       body: Column(
         children: [
           Expanded(
-            child: ChatMessages(chatId: chatId),
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('chats')
+                  .doc(chatId)
+                  .collection('messages')
+                  .orderBy('timestamp', descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+
+                var messages = snapshot.data!.docs;
+
+                if (messages.isEmpty) {
+                  return Center(
+                    child: Text(
+                      "Este chat ainda não tem mensagens.",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  );
+                }
+
+                return ListView.builder(
+                  reverse: true,
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    var message = messages[index];
+                    bool isMe = message['sender'] == user!.uid;
+                    var refSender = _firestore.collection('User').doc(message['sender']);
+
+                    return Container(
+                      padding: EdgeInsets.all(8.0),
+                      alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
+                      child: FutureBuilder<DocumentSnapshot>(
+                        future: refSender.get(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          }
+
+                          final senderDocs = snapshot.data!;
+                          final senderName = senderDocs['Name'];
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(bottom: 4.0),
+                                child: Text(
+                                  senderName,
+                                  style: TextStyle(color: isMe ? Colors.white : Colors.black),
+                                ),
+                              ),
+                              Container(
+                                constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
+                                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                                decoration: BoxDecoration(
+                                  color: isMe ? Colors.blueAccent : Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Text(
+                                  message['text'],
+                                  style: TextStyle(color: isMe ? Colors.white : Colors.black),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ),
           ChatInputField(chatId: chatId),
         ],
       ),
-    );
-  }
-}
-
-class ChatMessages extends StatelessWidget {
-  final String chatId;
-
-  ChatMessages({required this.chatId});
-
-  @override
-  Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection('chats')
-          .doc(chatId)
-          .collection('messages')
-          .orderBy('timestamp', descending: true)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
-        }
-
-        var messages = snapshot.data!.docs;
-
-        return ListView.builder(
-          reverse: true,
-          itemCount: messages.length,
-          itemBuilder: (context, index) {
-            var message = messages[index];
-            bool isMe = message['sender'] == user!.uid;
-
-            return Container(
-              padding: EdgeInsets.all(8.0),
-              alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
-              child: Container(
-                constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                decoration: BoxDecoration(
-                  color: isMe ? Colors.blueAccent : Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      message['text'],
-                      style: TextStyle(color: isMe ? Colors.white : Colors.black),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
     );
   }
 }
