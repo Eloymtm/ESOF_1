@@ -16,7 +16,6 @@ class LiftPage extends StatefulWidget {
   State<LiftPage> createState() => LiftPageState();
 }
 class LiftPageState extends State<LiftPage> {
-  final LatLng _pGooglePlex = const LatLng(37.422, -122.084);
 
   void logout() {
     FirebaseAuth.instance.signOut();
@@ -44,14 +43,6 @@ class LiftPageState extends State<LiftPage> {
     ),
     body: Column(
       children: [
-        Expanded(
-          child: GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: _pGooglePlex,
-              zoom: 13,
-            ),
-          ),
-        ),
         Expanded(
           child: StreamBuilder(
             stream: FirebaseFirestore.instance.collection('Ride').snapshots(),
