@@ -5,14 +5,14 @@ import 'package:src/helper/globalVariables.dart';
 
 import 'chat/chat_page10.dart';
 
-class MyLiftsPage extends StatefulWidget {
-  const MyLiftsPage({super.key});
+class HistoricPage   extends StatefulWidget {
+  const HistoricPage({super.key});
 
   @override
-  State<MyLiftsPage> createState() => _MyLiftsPageState();
+  State<HistoricPage> createState() => _MyLiftsPageState();
 }
 
-class _MyLiftsPageState extends State<MyLiftsPage> {
+class _MyLiftsPageState extends State<HistoricPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late User _currentUser;
@@ -81,24 +81,6 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
                 Text('Carro: $marcaRide'),
               ],
             ),
-            trailing: IconButton(
-              icon: Icon(isDriver ? Icons.cancel : Icons.exit_to_app, color: Colors.red),
-              onPressed: () {
-                if (isDriver) {
-                  _cancelLift(doc.id);
-                } else {
-                  _leaveLift(doc.id);
-                }
-              },
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChatScreen(chatId: doc.id),
-                ),
-              );
-            },
           );
         },
       ),
@@ -142,7 +124,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
               },
             ),  
           title: const Text(
-          "Meus carros",
+          "Histórico de Viagens",
           style: TextStyle(fontSize: 25, color: Color.fromRGBO(246, 161, 86, 1), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -160,6 +142,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
                 children: [
                   const Padding(
                     padding: EdgeInsets.all(8.0),
+                  
                   ),
                   Expanded(
                     child: StreamBuilder<QuerySnapshot>(
@@ -176,6 +159,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
                 children: [
                   const Padding(
                     padding: EdgeInsets.all(8.0),
+                  
                   ),
                   Expanded(
                     child: StreamBuilder<QuerySnapshot>(

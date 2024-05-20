@@ -6,6 +6,7 @@ import 'package:src/helper/globalVariables.dart';
 import 'package:src/pages/profile/appbar_widget.dart';
 import 'package:src/pages/profile/edit_profile_page.dart';
 import 'package:src/pages/profile/profile_widget.dart';
+import 'package:src/pages/profile/historic_page.dart';
 
 import 'button_widget.dart';
 import 'numbers_widget.dart';
@@ -76,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   profile_widget(title: "Definições", icon: Icons.settings, onPress: (){}),
                   profile_widget(title: "Meus carros", icon: CupertinoIcons.car, onPress: () { Navigator.pushNamed(context, '/my_cars_page');}),
                   profile_widget(title: "Minhas viagens", icon: CupertinoIcons.location_solid, onPress: () { Navigator.pushNamed(context, '/my_lifts_page');}),
-                  profile_widget(title: "Histórico", icon: Icons.history, onPress: (){}),
+                  profile_widget(title: "Histórico", icon: Icons.history, onPress: (){Navigator.pushNamed(context, '/historic_page');}),
                   const Divider(endIndent: 50, indent: 50),
                   profile_widget(title: "Logout", icon: Icons.logout, onPress: logOut, endIcon: false, textColor: Colors.red),
                 ],
