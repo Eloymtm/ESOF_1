@@ -9,6 +9,8 @@ class Lift_card extends StatelessWidget {
   final String horaPartida;
   final String condutor;
   final int NumPassageiros;
+  final VoidCallback onTap;
+  
 
   const Lift_card({
     super.key,
@@ -17,6 +19,7 @@ class Lift_card extends StatelessWidget {
     required this.horaPartida,
     required this.condutor,
     required this.NumPassageiros,
+    required this.onTap,
   });
 
   @override
@@ -39,6 +42,7 @@ class Lift_card extends StatelessWidget {
         ],
       ),
       child: ListTile(
+        onTap: onTap,
         contentPadding: EdgeInsets.all(16.0),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,9 +80,6 @@ class Lift_card extends StatelessWidget {
             */
           ],
         ),
-        onTap: () {
-          // Adicione a lógica onTap, se necessário
-        },
       ),
     );
   }

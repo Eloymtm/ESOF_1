@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:src/components/lift_card.dart';
 import 'package:src/helper/helper_method.dart';
+import 'package:src/pages/map_page.dart';
+import 'package:src/pages/profile/chat/chat_page10.dart';
 
 
 
@@ -74,16 +76,11 @@ class LiftPageState extends State<LiftPage> {
                          horaPartida: horaPartida,
                          condutor: nomeCondutor,
                          NumPassageiros: numPassageiros,
+                         onTap:() => Navigator.pushNamed(context, '/map_page'),
                        ),
-                         onTap: () async {
-                           final currentUser = FirebaseAuth.instance.currentUser!;
-                           final userRef = FirebaseFirestore.instance.collection('User').doc(currentUser.uid);
-
-                           // Adicionar o usuário atual ao array 'passageiros'
-                           await FirebaseFirestore.instance.collection('Ride').doc(ride.id).update({
-                             'passageiros': FieldValue.arrayUnion([userRef]),
-                           });
-                       },);
+                      
+                        
+                      );
 
 
                      });

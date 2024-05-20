@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
           '/my_cars_page': (context) => MyCarsPage(),
           '/add_car_page': (context) => AddCarPage(),
           '/my_lifts_page': (context) => MyLiftsPage(),
+          //'/ride_page': (context) => RidePage(),
         });
   }
 }
