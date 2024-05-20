@@ -42,7 +42,7 @@ class _MapPageState extends State<MapPage> {
     return await Geolocator.getCurrentPosition();
   }
 
-  void setCurrentLocation() async {
+  void setCurrentLocation() {
     setState(() {
       _currentLocation = _getCurrentLocation() as Position;
     });
