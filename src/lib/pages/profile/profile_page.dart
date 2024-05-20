@@ -1,13 +1,10 @@
-import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:src/helper/globalVariables.dart';
-import 'package:src/pages/map_page.dart';
 import 'package:src/pages/profile/appbar_widget.dart';
 import 'package:src/pages/profile/edit_profile_page.dart';
-import 'package:src/pages/profile/get_username.dart';
 import 'package:src/pages/profile/profile_widget.dart';
 
 import 'button_widget.dart';
@@ -101,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
         onClicked: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => EditProfileScreen()),
+            MaterialPageRoute(builder: (context) => const EditProfileScreen()),
           );
         },
   );
@@ -109,13 +106,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
 class profile_widget extends StatelessWidget {
   const profile_widget({
-    Key? key,
+    super.key,
     required this.title,
     required this.icon,
     required this.onPress,
     this.endIcon = true,
     this.textColor,
-  }) : super(key: key);
+  });
 
   final String title;
   final IconData icon;
@@ -143,8 +140,8 @@ class profile_widget extends StatelessWidget {
           ),
         ),
         title: Text(title,
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400)
-                ?.apply(color: textColor)),
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w400)
+                .apply(color: textColor)),
         trailing: endIcon
             ? Container(
                 width: 30,
@@ -153,7 +150,7 @@ class profile_widget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(100),
                   color: Colors.grey.withOpacity(0.1),
                 ),
-                child: Icon(Icons.chevron_right),
+                child: const Icon(Icons.chevron_right),
               )
             : null,
       ),

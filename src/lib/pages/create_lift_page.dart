@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:src/components/autocomplete.dart';
 import 'package:src/helper/globalVariables.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +18,7 @@ class CreateLiftPage extends StatefulWidget {
     final DateFormat dateTimeFormat = DateFormat('yyyy-MM-dd HH:mm');
     DateTime dateTime = dateTimeFormat.parse(dateTimeString);
     // Adjust for UTC+1 (if necessary)
-    dateTime = dateTime.add(Duration(hours: 1));
+    dateTime = dateTime.add(const Duration(hours: 1));
 
     // Return the Timestamp from Firestore
     return Timestamp.fromDate(dateTime);
@@ -55,7 +53,7 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
   String? _selectedCar;
   TextEditingController TimeController = TextEditingController();
   TextEditingController DateController = TextEditingController();
-  double _borderRadius = 15.0;
+  final double _borderRadius = 15.0;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +62,7 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [],
+        actions: const [],
         title: const Padding(
           padding: EdgeInsets.symmetric(),
           child: Text(
@@ -150,11 +148,11 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
                       return Text('Erro ao carregar carros: ${snapshot.error}');
                     } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return Text('Nenhum carro encontrado');
+                      return const Text('Nenhum carro encontrado');
                     } else {
                       List<DropdownMenuItem<String>> carItems = snapshot.data!.docs.map((doc) {
                         var carData = doc.data() as Map<String, dynamic>;
@@ -190,13 +188,13 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
                       createRide(_selectedCar!, LocalDestino.text, LocalPartida.text, DateController.text, TimeController.text);
                       // Mostra uma mensagem de sucesso
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Viagem criada com sucesso')),
+                        const SnackBar(content: Text('Viagem criada com sucesso')),
                       );
                       // Redireciona para outra página
                       // Navigator.pushNamed(context, '');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Por favor, escolha um carro')),
+                        const SnackBar(content: Text('Por favor, escolha um carro')),
                       );
                     }
                   },
@@ -211,16 +209,16 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
   }
 
   Future<void> _selectDate() async {
-    DateTime? _picked = await showDatePicker(
+    DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2100),
     );
 
-    if (_picked != null) {
+    if (picked != null) {
       setState(() {
-        DateController.text = _picked.toString().split(" ")[0];
+        DateController.text = picked.toString().split(" ")[0];
       });
     }
   }

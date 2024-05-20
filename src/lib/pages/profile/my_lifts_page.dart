@@ -61,24 +61,24 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
     final bool isDriver = doc['Driver'] == userRef && como;
     final referenciaCondutor = doc['Car'];
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: FutureBuilder<DocumentSnapshot>(
         future: referenciaCondutor.get(),
         builder: (context, driverSnapshot) {
           if (!driverSnapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           final CarData = driverSnapshot.data!;
           final marcaRide = CarData['marca'];
 
           return ListTile(
-            title: Text(doc['Destino'], style: TextStyle(fontWeight: FontWeight.bold)),
+            title: Text(doc['Destino'], style: const TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Partida: ${doc['Partida']}'),
                 Text('Hora: ${liftTime.toLocal()}'),
-                Text('Carro: ${marcaRide}'),
+                Text('Carro: $marcaRide'),
               ],
             ),
             trailing: IconButton(
@@ -108,7 +108,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
 
   Widget _buildLiftList(AsyncSnapshot<QuerySnapshot> snapshot, bool como) {
     if (!snapshot.hasData) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
 
     final lifts = snapshot.data!.docs.where((doc) {
@@ -117,7 +117,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
     }).toList();
 
     if (lifts.isEmpty) {
-      return Center(child: Text('Não tens nenhuma viagem.'));
+      return const Center(child: Text('Não tens nenhuma viagem.'));
     }
 
     return ListView.builder(
@@ -130,52 +130,75 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Minhas Viagens'),
-        titleTextStyle: const TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 25),
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,  // Número de abas
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),  
+          title: const Text(
+          "Meus carros",
+          style: TextStyle(fontSize: 25, color: Color.fromRGBO(246, 161, 86, 1), fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Como Condutor', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                ),
-                Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: _getLiftsAsDriver(),
-                    builder: (context, snapshot) {
-                      return _buildLiftList(snapshot, true);
-                    },
-                  ),
-                ),
+            bottom: TabBar(
+              tabs: [
+                Tab(text: 'Como Condutor'),
+                Tab(text: 'Como Passageiro'),
               ],
             ),
           ),
-          Expanded(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Como Passageiro', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                ),
-                Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: _getLiftsAsPassenger(),
-                    builder: (context, snapshot) {
-                      return _buildLiftList(snapshot, false);
-                    },
+          body: TabBarView(
+            children: [
+              // Como Condutor
+              Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Como Condutor',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-              ],
-            ),
+                  Expanded(
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: _getLiftsAsDriver(),
+                      builder: (context, snapshot) {
+                        return _buildLiftList(snapshot, true);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              // Como Passageiro
+              Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Como Passageiro',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Expanded(
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: _getLiftsAsPassenger(),
+                      builder: (context, snapshot) {
+                        return _buildLiftList(snapshot, false);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
-  }
+}
 }

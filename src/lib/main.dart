@@ -39,13 +39,13 @@ class MyApp extends StatelessWidget {
           'profile/profile_page': (context) => const ProfilePage(),
           '/map_page': (context) => const MapPage(),
           '/lift_page': (context) => const LiftPage(),
-          '/login_page': (context) => LoginPage(),
-          '/register_page': (context) => RegisterPage(),
+          '/login_page': (context) => const LoginPage(),
+          '/register_page': (context) => const RegisterPage(),
           '/main_page':(context) => const MainPage(),
           '/choose_location_page': (context) => MyPlacePickerPage(),
-          '/my_cars_page': (context) => MyCarsPage(),
-          '/add_car_page': (context) => AddCarPage(),
-          '/my_lifts_page': (context) => MyLiftsPage(),
+          '/my_cars_page': (context) => const MyCarsPage(),
+          '/add_car_page': (context) => const AddCarPage(),
+          '/my_lifts_page': (context) => const MyLiftsPage(),
         });
   }
 }

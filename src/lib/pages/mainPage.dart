@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:src/components/my_bot_bar.dart';
 import 'package:src/pages/create_lift_page.dart';
