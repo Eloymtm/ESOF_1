@@ -31,6 +31,7 @@ class CreateLiftPage extends StatefulWidget {
 
    final rideId = FirebaseFirestore.instance.collection('Ride').doc().id; //gerar id
    final userRef = FirebaseFirestore.instance.collection('User').doc(currentUser.uid); //ir buscar o user
+   final Ref = FirebaseFirestore.instance.collection('Car').doc(Car);
    passageiros.add(userRef);
     await FirebaseFirestore.instance.collection('Ride').doc(rideId).set(
         {
@@ -38,7 +39,7 @@ class CreateLiftPage extends StatefulWidget {
           'Destino' :destino,
           'Partida' : partida,
           'HoraPartida' :DataPartida,
-          'Car' : Car,
+          'Car' : Ref,
           'passageiros': passageiros,
         }
     );

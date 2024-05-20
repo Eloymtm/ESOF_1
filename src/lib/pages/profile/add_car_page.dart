@@ -83,7 +83,7 @@ class _AddCarPageState extends State<AddCarPage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _adicionarCarro,
-                style: ButtonStyle(backgroundColor: WidgetStateProperty.all<Color>(primaryColor)),
+                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(primaryColor)),
                 child: const Text('Adicionar Carro', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17),),
               ),
 
