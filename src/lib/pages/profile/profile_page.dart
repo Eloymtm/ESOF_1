@@ -34,39 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
       print("Erro ao fazer logout: $e");
     }
   }
-  /*
-  List<String> docIDS = [];
 
-  Future getIds(String currentID) async{
-    await FirebaseFirestore.instance.collection('User').get().then(
-          (snapshot) => snapshot.docs.forEach(
-            (document) {
-          docIDS.add(document.reference.id);
-
-          if(GetUsername(documentId: document.reference.id) == currentUser.email){
-            currentID = document.reference.id;
-            return currentID;
-          }
-        },
-      ),
-    );
-  }
-
-
-  @override
-  void initState()async{
-    String currentID = "OLAAAAAA \n";
-    print(currentID);
-    await getIds(currentID);
-    super.initState();
-    init();
-  }
-
-  Future<void> init() async {
-
-    // Agora você pode prosseguir com o restante do código que depende dos IDs
-  }
-*/
   @override
   Widget build(BuildContext context) {
 
@@ -81,7 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
               return ListView(
                 physics: const BouncingScrollPhysics(),
                 children: [
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 10),
                   ProfileWidget(
                     imagePath: userData['ImagePath'],
                     onClicked: () async {},
@@ -109,6 +77,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(height: 10),
 
                   profile_widget(title: "Definições", icon: Icons.settings, onPress: (){}),
+                  profile_widget(title: "Meus carros", icon: CupertinoIcons.car, onPress: () { Navigator.pushNamed(context, '/my_cars_page');}),
+                  profile_widget(title: "Minhas viagens", icon: CupertinoIcons.location_solid, onPress: () { Navigator.pushNamed(context, '/my_lifts_page');}),
                   profile_widget(title: "Histórico", icon: Icons.history, onPress: (){}),
                   const Divider(endIndent: 50, indent: 50),
                   profile_widget(title: "Logout", icon: Icons.logout, onPress: logOut, endIcon: false, textColor: Colors.red),

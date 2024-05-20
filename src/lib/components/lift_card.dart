@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 
@@ -5,11 +7,16 @@ class Lift_card extends StatelessWidget {
   final String partida;
   final String destino;
   final String horaPartida;
+  final String condutor;
+  final int NumPassageiros;
+
   const Lift_card({
     super.key,
     required this.destino,
     required this.partida,
     required this.horaPartida,
+    required this.condutor,
+    required this.NumPassageiros,
   });
 
   @override
@@ -48,6 +55,16 @@ class Lift_card extends StatelessWidget {
             SizedBox(height: 5),
             Text(
               'Hora de Partida: $horaPartida',
+              style: TextStyle(fontSize: 16.0, color: Colors.black87),
+            ),
+            SizedBox(height: 5),
+            Text(
+              'Condutor: $condutor',
+              style: TextStyle(fontSize: 16.0, color: Colors.black87),
+            ),
+            SizedBox(height: 5),
+            Text(
+              'Passageiros: $NumPassageiros / 5',
               style: TextStyle(fontSize: 16.0, color: Colors.black87),
             ),
             /*
