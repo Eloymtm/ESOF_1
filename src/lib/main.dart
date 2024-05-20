@@ -42,19 +42,10 @@ class MyApp extends StatelessWidget {
           '/login_page': (context) => LoginPage(),
           '/register_page': (context) => RegisterPage(),
           '/main_page':(context) => const MainPage(),
-          '/choose_location_page': (context) => ChooseLocation(),
+          '/choose_location_page': (context) => MyPlacePickerPage(),
           '/my_cars_page': (context) => MyCarsPage(),
           '/add_car_page': (context) => AddCarPage(),
           '/my_lifts_page': (context) => MyLiftsPage(),
         });
   }
 }
-/*
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return LoginPage();
-  }
-}*/

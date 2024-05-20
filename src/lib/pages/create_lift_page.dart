@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:src/components/autocomplete.dart';
 import 'package:src/helper/globalVariables.dart';
+import 'package:intl/intl.dart';
 import 'package:src/pages/profile/button_widget.dart';
-import 'package:src/pages/profile/edit_field_widget.dart';
+
 
 class CreateLiftPage extends StatefulWidget {
   const CreateLiftPage({super.key});
@@ -13,32 +15,46 @@ class CreateLiftPage extends StatefulWidget {
   @override
   State<CreateLiftPage> createState() => _CreateLiftPageState();
 }
+  Timestamp createTimestamp(String Date, String Time){
+    final dateTimeString = '$Date $Time';
+    final DateFormat dateTimeFormat = DateFormat('yyyy-MM-dd HH:mm');
+    DateTime dateTime = dateTimeFormat.parse(dateTimeString);
+    // Adjust for UTC+1 (if necessary)
+    dateTime = dateTime.add(Duration(hours: 1));
 
-Future createRide(String destino, String partida, String dataPartida, String carId) async {
-  final currentUser = FirebaseAuth.instance.currentUser!;
+    // Return the Timestamp from Firestore
+    return Timestamp.fromDate(dateTime);
+  }
 
-  final rideId = FirebaseFirestore.instance.collection('Ride').doc().id; //gerar id
-  final userRef = FirebaseFirestore.instance.collection('User').doc(currentUser.uid); //ir buscar o user
-  await FirebaseFirestore.instance.collection('Ride').doc(rideId).set(
-    {
-      'Driver': userRef,
-      'Destino': destino,
-      'Partida': partida,
-      'DataPartida': dataPartida,
-      'Carro': FirebaseFirestore.instance.collection('Car').doc(carId),
-    },
-  );
-}
+ Future createRide(String Car, String destino, String partida,String Date,String Time) async{
+   final currentUser = FirebaseAuth.instance.currentUser!;
+   final DataPartida = createTimestamp(Date, Time);
+    List<DocumentReference> passageiros = [];
+
+   final rideId = FirebaseFirestore.instance.collection('Ride').doc().id; //gerar id
+   final userRef = FirebaseFirestore.instance.collection('User').doc(currentUser.uid); //ir buscar o user
+   passageiros.add(userRef);
+    await FirebaseFirestore.instance.collection('Ride').doc(rideId).set(
+        {
+          'Driver' : userRef,
+          'Destino' :destino,
+          'Partida' : partida,
+          'HoraPartida' :DataPartida,
+          'Car' : Car,
+          'passageiros': passageiros,
+        }
+    );
+ }
 
 class _CreateLiftPageState extends State<CreateLiftPage> {
   final LocalPartida = TextEditingController();
   final LocalDestino = TextEditingController();
   final DataPartida = TextEditingController();
+  final Car = TextEditingController();
 
-  TextEditingController _dateController = TextEditingController();
-  TextEditingController _timeController = TextEditingController();
   String? _selectedCar;
-
+  TextEditingController TimeController = TextEditingController();
+  TextEditingController DateController = TextEditingController();
   double _borderRadius = 15.0;
 
   @override
@@ -71,52 +87,20 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
               children: [
                 const SizedBox(height: 30),
                 const Text("Local de partida"),
-                GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/choose_location_page'),
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: LocalPartida,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        prefix: const Padding(padding: EdgeInsets.only(right: 15, bottom: 5)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(width: 2.0, color: primaryColor),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                        suffixIcon: const Icon(FontAwesomeIcons.locationDot),
-                      ),
-                      readOnly: true,
-                      cursorColor: primaryColor,
-                    ),
-                  ),
+                GooglePlacesAutoCompleteField(
+                  controller: LocalPartida,
+                  googleAPIKey: googleApiKey, 
                 ),
                 const SizedBox(height: 30),
                 const Text("Local de destino"),
-                GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/choose_location_page'),
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: LocalDestino,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        prefix: const Padding(padding: EdgeInsets.only(right: 15, bottom: 5)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(width: 2.0, color: primaryColor),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                        suffixIcon: const Icon(FontAwesomeIcons.locationDot),
-                      ),
-                      readOnly: true,
-                      cursorColor: primaryColor,
-                    ),
-                  ),
+                GooglePlacesAutoCompleteField(
+                  controller: LocalDestino,
+                  googleAPIKey: googleApiKey,
                 ),
                 const SizedBox(height: 30),
                 const Text("Data de partida"),
                 TextField(
-                  controller: _dateController,
+                  controller: DateController,
                   decoration: InputDecoration(
                     labelText: 'DATA',
                     filled: true,
@@ -138,7 +122,7 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
                 const SizedBox(height: 10),
                 const Text("Hora de partida"),
                 TextField(
-                  controller: _timeController,
+                  controller: TimeController,
                   decoration: InputDecoration(
                     labelText: 'HORA',
                     filled: true,
@@ -203,7 +187,7 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
                   text: 'Criar viagem',
                   onClicked: () {
                     if (_selectedCar != null) {
-                      createRide(LocalDestino.text, LocalPartida.text, '${_dateController.text} ${_timeController.text}', _selectedCar!);
+                      createRide(_selectedCar!, LocalDestino.text, LocalPartida.text, DateController.text, TimeController.text);
                       // Mostra uma mensagem de sucesso
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Viagem criada com sucesso')),
@@ -236,7 +220,7 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
 
     if (_picked != null) {
       setState(() {
-        _dateController.text = _picked.toString().split(" ")[0];
+        DateController.text = _picked.toString().split(" ")[0];
       });
     }
   }
@@ -249,7 +233,7 @@ class _CreateLiftPageState extends State<CreateLiftPage> {
 
     if (pickedTime != null) {
       setState(() {
-        _timeController.text = pickedTime.format(context);
+        TimeController.text = pickedTime.format(context);
       });
     }
   }

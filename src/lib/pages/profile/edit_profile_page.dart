@@ -128,7 +128,7 @@ class _EditProfileState extends State<EditProfileScreen> {
       appBar: AppBar(
 
         leading: const BackButton(),
-        title: Text("Editar Perfil", style: Theme.of(context).textTheme.headline4),
+        title: Text("Editar Perfil", style: Theme.of(context).textTheme.headlineMedium),
         centerTitle: true,
       ),
       body: StreamBuilder<DocumentSnapshot>(

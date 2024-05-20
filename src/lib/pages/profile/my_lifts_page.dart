@@ -54,9 +54,9 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
     });
   }
 
-  Widget _buildLiftCard(DocumentSnapshot doc) {
+  Widget _buildLiftCard(DocumentSnapshot doc, bool como) {
     final liftTime = (doc['HoraPartida'] as Timestamp).toDate();
-    final bool isDriver = doc['Driver'] == userRef;
+    final bool isDriver = doc['Driver'] == userRef  && como;
     return Card(
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: ListTile(
@@ -83,7 +83,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
     );
   }
 
-  Widget _buildLiftList(AsyncSnapshot<QuerySnapshot> snapshot) {
+  Widget _buildLiftList(AsyncSnapshot<QuerySnapshot> snapshot, bool como) {
     if (!snapshot.hasData) {
       return Center(child: CircularProgressIndicator());
     }
@@ -100,7 +100,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
     return ListView.builder(
       itemCount: lifts.length,
       itemBuilder: (context, index) {
-        return _buildLiftCard(lifts[index]);
+        return _buildLiftCard(lifts[index], como);
       },
     );
   }
@@ -126,7 +126,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
                   child: StreamBuilder<QuerySnapshot>(
                     stream: _getLiftsAsDriver(),
                     builder: (context, snapshot) {
-                      return _buildLiftList(snapshot);
+                      return _buildLiftList(snapshot, true);
                     },
                   ),
                 ),
@@ -144,7 +144,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
                   child: StreamBuilder<QuerySnapshot>(
                     stream: _getLiftsAsPassenger(),
                     builder: (context, snapshot) {
-                      return _buildLiftList(snapshot);
+                      return _buildLiftList(snapshot, false);
                     },
                   ),
                 ),

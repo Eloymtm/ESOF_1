@@ -65,9 +65,37 @@ class LiftPageState extends State<LiftPage> {
                     final partida = ride['Partida'];
                     final destino = ride['Destino'];
                     final horaPartida = formatData(ride['HoraPartida']);
-                    //final nomeCondutor = ride['Driver'];
-                    
-                    return Lift_card(destino: destino, partida: partida, horaPartida: horaPartida);
+                    final referenciaCondutor = ride['Driver'];
+                    final numPassageiros = ride['passageiros'].length;
+
+                     return FutureBuilder<DocumentSnapshot>(
+                     future: referenciaCondutor.get(),
+                     builder: (context, driverSnapshot) {
+                       if (!driverSnapshot.hasData) {
+                         return Center(child: CircularProgressIndicator());
+                       }
+                       final driverData = driverSnapshot.data!;
+                       final nomeCondutor = driverData['Name'];
+
+                       return GestureDetector(
+                           child: Lift_card(destino: destino,
+                         partida: partida,
+                         horaPartida: horaPartida,
+                         condutor: nomeCondutor,
+                         NumPassageiros: numPassageiros,
+                       ),
+                         onTap: () async {
+                           final currentUser = FirebaseAuth.instance.currentUser!;
+                           final userRef = FirebaseFirestore.instance.collection('User').doc(currentUser.uid);
+
+                           // Adicionar o usuário atual ao array 'passageiros'
+                           await FirebaseFirestore.instance.collection('Ride').doc(ride.id).update({
+                             'passageiros': FieldValue.arrayUnion([userRef]),
+                           });
+                       },);
+
+
+                     });
                   },
                 );
               }
