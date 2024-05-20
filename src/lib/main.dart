@@ -7,6 +7,7 @@ import 'package:src/pages/map_page.dart';
 import 'package:src/pages/lift_page.dart';
 import 'package:src/pages/profile/add_car_page.dart';
 import 'package:src/pages/profile/my_cars_page.dart';
+import 'package:src/pages/profile/my_lifts_page.dart';
 import 'package:src/pages/profile/profile_page.dart';
 import 'package:src/pages/register_page.dart';
 import 'package:src/pages/mainPage.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           '/choose_location_page': (context) => ChooseLocation(),
           '/my_cars_page': (context) => MyCarsPage(),
           '/add_car_page': (context) => AddCarPage(),
+          '/my_lifts_page': (context) => MyLiftsPage(),
         });
   }
 }
