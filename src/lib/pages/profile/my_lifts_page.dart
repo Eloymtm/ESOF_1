@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:src/helper/globalVariables.dart';
 
+import 'chat/chat_page10.dart';
+
 class MyLiftsPage extends StatefulWidget {
   const MyLiftsPage({super.key});
 
@@ -56,32 +58,53 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
 
   Widget _buildLiftCard(DocumentSnapshot doc, bool como) {
     final liftTime = (doc['HoraPartida'] as Timestamp).toDate();
-    final bool isDriver = doc['Driver'] == userRef  && como;
+    final bool isDriver = doc['Driver'] == userRef && como;
+    final referenciaCondutor = doc['Car'];
     return Card(
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: ListTile(
-        title: Text(doc['Destino'], style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Partida: ${doc['Partida']}'),
-            Text('Hora: ${liftTime.toLocal()}'),
-            Text('Carro: ${doc['Car']}'),
-          ],
-        ),
-        trailing: IconButton(
-          icon: Icon(isDriver ? Icons.cancel : Icons.exit_to_app, color: Colors.red),
-          onPressed: () {
-            if (isDriver) {
-              _cancelLift(doc.id);
-            } else {
-              _leaveLift(doc.id);
-            }
-          },
-        ),
+      child: FutureBuilder<DocumentSnapshot>(
+        future: referenciaCondutor.get(),
+        builder: (context, driverSnapshot) {
+          if (!driverSnapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
+          final CarData = driverSnapshot.data!;
+          final marcaRide = CarData['marca'];
+
+          return ListTile(
+            title: Text(doc['Destino'], style: TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Partida: ${doc['Partida']}'),
+                Text('Hora: ${liftTime.toLocal()}'),
+                Text('Carro: ${marcaRide}'),
+              ],
+            ),
+            trailing: IconButton(
+              icon: Icon(isDriver ? Icons.cancel : Icons.exit_to_app, color: Colors.red),
+              onPressed: () {
+                if (isDriver) {
+                  _cancelLift(doc.id);
+                } else {
+                  _leaveLift(doc.id);
+                }
+              },
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatScreen(chatId: doc.id),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
+
 
   Widget _buildLiftList(AsyncSnapshot<QuerySnapshot> snapshot, bool como) {
     if (!snapshot.hasData) {

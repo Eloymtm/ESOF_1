@@ -62,11 +62,11 @@ class LiftPageState extends State<LiftPage> {
                      return FutureBuilder<DocumentSnapshot>(
                      future: referenciaCondutor.get(),
                      builder: (context, driverSnapshot) {
-                       if (!driverSnapshot.hasData) {
-                         return Center(child: CircularProgressIndicator());
-                       }
-                       final driverData = driverSnapshot.data!;
-                       final nomeCondutor = driverData['Name'];
+                         if (!driverSnapshot.hasData) {
+                           return Center(child: CircularProgressIndicator());
+                         }
+                         final driverData = driverSnapshot.data!;
+                         final nomeCondutor = driverData['Name'];
 
                        return GestureDetector(
                            child: Lift_card(destino: destino,
