@@ -8,6 +8,7 @@ import 'package:src/pages/mainPage.dart';
 import 'package:src/pages/profile/profile_page.dart';
 
 import 'package:geocoding/geocoding.dart';
+import 'package:src/pages/trip_details.dart';
 import 'profile/button_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -62,7 +63,7 @@ class _MapPageState extends State<MapPage> {
         Map<String, dynamic> rideData = doc.data() as Map<String, dynamic>;
         String? partida = rideData['Partida'];
         String? destino = rideData['Destino'];
-        if (destino != null) {
+        if (destino != null && partida != null) {
           getLocationFromAddress(destino).then((LatLng? start) {
             if (start != null) {
               // Faça algo com a localização obtida
@@ -71,9 +72,14 @@ class _MapPageState extends State<MapPage> {
                   Marker(
                       markerId: MarkerId('ride_${_markers.length}'),
                       position: start,
-                      onTap: () {
-                        navigateToNextPage();
-                      }
+                      onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TripDetailsPage(
+                                      refRide: doc,
+                                    ),
+                                  ),
+                                )
                       // Outros atributos do marcador
                       ),
                 );
@@ -82,6 +88,33 @@ class _MapPageState extends State<MapPage> {
           }).catchError((error) {
             print('Erro ao obter a localização: $error');
           });
+
+          getLocationFromAddress(partida).then((LatLng? start) {
+            if (start != null) {
+              // Faça algo com a localização obtida
+              setState(() {
+                _markers.add(
+                  Marker(
+                      markerId: MarkerId('ride_${_markers.length}'),
+                      position: start,
+                      onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TripDetailsPage(
+                                      refRide: doc,
+                                    ),
+                                  ),
+                                )
+                      // Outros atributos do marcador
+                      ),
+                );
+              });
+            }
+          }).catchError((error) {
+            print('Erro ao obter a localização: $error');
+          });
+
+
         }
       }
     });
@@ -123,7 +156,7 @@ class _MapPageState extends State<MapPage> {
 
     void onCreated(GoogleMapController controller) {
       _addMarkersForRides();
-      _controllerGoogleMap.complete(controller);
+      controllerGoogleMap.complete(controller);
 
     }
 
