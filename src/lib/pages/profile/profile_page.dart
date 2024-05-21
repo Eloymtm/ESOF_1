@@ -43,7 +43,12 @@ class _ProfilePageState extends State<ProfilePage> {
           stream: FirebaseFirestore.instance.collection('User').doc(currentUser.uid).snapshots(),
           builder: (context, snapshot) {
             if(snapshot.hasData){
+              
               final userData = snapshot.data!.data() as Map<String, dynamic>;
+              double averageRating = 0.0;
+              if (userData['TotalRatings'] != 0) {
+                  averageRating = ((userData['SumRatings']) / (userData['TotalRatings']));
+              }
               return ListView(
                 physics: const BouncingScrollPhysics(),
                 children: [
@@ -67,7 +72,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  NumbersWidget(rating: (userData['Rating'])),
+                  
+                  NumbersWidget(rating: averageRating.toString()),
                   const SizedBox(height: 24),
                   buildEditButton(),
                   ///MENU
