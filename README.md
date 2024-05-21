@@ -174,3 +174,30 @@ In this iteration, we also:
   - Figured out how to update information in Firebase, the storage system we use for our app's data.
  <br>
 
+## Iteration 3
+
+### Plans:
+
+### Development Board
+
+Beginning
+
+![Captura de ecrã de 2024-05-21 08-55-42](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/26440f2d-2d68-4736-9a07-8da1b0ed76cf)
+
+End
+
+![image](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC03T5/assets/160529556/c0dec0da-edf4-48bf-bb52-04778182c860)
+
+
+### Retrospectives:
+This iteration aimed primarily at adding value for the user by implementing the following features:
+
+- Create Trip: Users can now create new trips, specifying details such as destination, departure date, number of passengers.
+
+- Join a Trip: We have added the functionality for users to join trips already created by other members.
+
+- Trip Chat: We implemented a specific chat for each trip. This feature allows participants to communicate with each other, enabling passengers to know the driver's location before being picked up.
+
+- View Trip Details: Users can now view all the important details of a trip in one place. This includes information about the itinerary, number of participants, meeting points, and any other relevant notes. This feature helps keep all members informed and prepared.
+
+- Cancel Trip: We added the ability to cancel trips. Organizers can now cancel a trip.
