@@ -63,7 +63,7 @@ class _MapPageState extends State<MapPage> {
         Map<String, dynamic> rideData = doc.data() as Map<String, dynamic>;
         String? partida = rideData['Partida'];
         String? destino = rideData['Destino'];
-        if (destino != null) {
+        if (destino != null && partida != null) {
           getLocationFromAddress(destino).then((LatLng? start) {
             if (start != null) {
               // Faça algo com a localização obtida
@@ -72,9 +72,14 @@ class _MapPageState extends State<MapPage> {
                   Marker(
                       markerId: MarkerId('ride_${_markers.length}'),
                       position: start,
-                      onTap: () {
-                       TripDetailsPage(refRide: doc,);
-                      }
+                      onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TripDetailsPage(
+                                      refRide: doc,
+                                    ),
+                                  ),
+                                )
                       // Outros atributos do marcador
                       ),
                 );
@@ -83,6 +88,33 @@ class _MapPageState extends State<MapPage> {
           }).catchError((error) {
             print('Erro ao obter a localização: $error');
           });
+
+          getLocationFromAddress(partida).then((LatLng? start) {
+            if (start != null) {
+              // Faça algo com a localização obtida
+              setState(() {
+                _markers.add(
+                  Marker(
+                      markerId: MarkerId('ride_${_markers.length}'),
+                      position: start,
+                      onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TripDetailsPage(
+                                      refRide: doc,
+                                    ),
+                                  ),
+                                )
+                      // Outros atributos do marcador
+                      ),
+                );
+              });
+            }
+          }).catchError((error) {
+            print('Erro ao obter a localização: $error');
+          });
+
+
         }
       }
     });
