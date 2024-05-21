@@ -44,7 +44,7 @@ class _MyLiftsPageState extends State<HistoricPage> {
     final isSameDay = liftTime.year == now.year && liftTime.month == now.month && liftTime.day == now.day;
     final isUpcoming = liftTime.isAfter(now);
     final isRecent = isSameDay && now.difference(liftTime).inMinutes <= 30;
-    return isUpcoming || isRecent;
+    return !(isUpcoming || isRecent);
   }
 
   Future<void> _cancelLift(String liftId) async {
