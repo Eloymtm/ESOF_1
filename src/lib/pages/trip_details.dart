@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:src/helper/globalVariables.dart';
 import 'package:src/helper/helper_method.dart';
 import 'package:src/pages/profile/numbers_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TripDetailsPage extends StatefulWidget {
   final DocumentSnapshot refRide;
@@ -16,6 +17,7 @@ class TripDetailsPage extends StatefulWidget {
 
 class TripDetailsState extends State<TripDetailsPage>{
 
+  final currentUser = FirebaseAuth.instance.currentUser!;
 
   late final DocumentSnapshot refRide;
 
@@ -144,26 +146,65 @@ class TripDetailsState extends State<TripDetailsPage>{
             ),
             const SizedBox(height: 30.0),
             SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Adicione aqui a lógica para participar da viagem
-                },
-                style: ElevatedButton.styleFrom(
-                  textStyle: const TextStyle(fontWeight: FontWeight.w900,fontSize: 25),
-                  foregroundColor: Colors.white, 
-                  backgroundColor: Colors.orange[500],// Cor do botão
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
-                child: const Text(
-                  'ENTRAR NA VIAGEM',
-                  style: TextStyle(fontSize: 18.0),
-                ),
-              ),
-            ),
+  width: double.infinity,
+  child: ElevatedButton(
+    onPressed: () async {
+      if (currentUser != null) {
+        try {
+          // Mostre um indicador de carregamento ou feedback visual ao usuário
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          );
+
+          await FirebaseFirestore.instance.collection('Ride').doc(refRide.id).update({
+            'passageiros': FieldValue.arrayUnion(['/User/${currentUser!.uid}'])
+          });
+
+          // Feche o indicador de carregamento
+          Navigator.of(context).pop();
+
+          // Mostrar uma mensagem de sucesso
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Você entrou na viagem com sucesso!')),
+          );
+        } catch (e) {
+          // Feche o indicador de carregamento em caso de erro
+          Navigator.of(context).pop();
+
+          // Mostrar uma mensagem de erro
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Erro ao entrar na viagem: $e')),
+          );
+        }
+      } else {
+        // Mostrar uma mensagem de erro se currentUser for null
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Usuário não autenticado.')),
+        );
+      }
+    },
+    style: ElevatedButton.styleFrom(
+      textStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
+      foregroundColor: Colors.white,
+      backgroundColor: Colors.orange[500], // Cor do botão
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+    ),
+    child: const Text(
+      'ENTRAR NA VIAGEM',
+      style: TextStyle(fontSize: 18.0),
+    ),
+  ),
+)
+,
           ],
         ),
       ),
