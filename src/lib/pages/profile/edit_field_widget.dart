@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:src/helper/globalVariables.dart';
 
 class EditableNameField extends StatelessWidget {
@@ -17,7 +14,7 @@ class EditableNameField extends StatelessWidget {
   final TextEditingController ?controller;
 
   const EditableNameField({
-    Key? key,
+    super.key,
     this.labelText,
     this.initialValue,
     this.onEditPressed,
@@ -29,7 +26,7 @@ class EditableNameField extends StatelessWidget {
     required this.controller,
     this.initialV,
 
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +36,10 @@ class EditableNameField extends StatelessWidget {
       obscureText: watch,
       //initialValue: initialValue ?? '',
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+        contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         labelText: labelText,
         prefix: Padding(
-          padding: EdgeInsets.only(right: 10, bottom: 5),
+          padding: const EdgeInsets.only(right: 10, bottom: 5),
           child: Icon(prefIcon),
         ),
         focusedBorder: OutlineInputBorder(
@@ -54,7 +51,7 @@ class EditableNameField extends StatelessWidget {
         GestureDetector(
           onTap: onEditPressed,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               border: Border.all(color: Colors.black),

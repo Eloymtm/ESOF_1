@@ -1,14 +1,10 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:src/components/my_bot_bar.dart';
 import 'package:src/pages/lift_page.dart';
 import 'package:src/pages/profile/profile_page.dart';
-import 'profile/button_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MapPage extends StatefulWidget {
@@ -60,11 +56,11 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    Completer<GoogleMapController> _controllerGoogleMap = Completer();
+    Completer<GoogleMapController> controllerGoogleMap = Completer();
     GoogleMapController mapController;
 
     void onCreated(GoogleMapController controller) {
-      _controllerGoogleMap.complete();
+      controllerGoogleMap.complete();
     }
 
     return Scaffold(

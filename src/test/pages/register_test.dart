@@ -11,7 +11,7 @@ void main() {
     late RegisterPage widget;
 
     setUp(() {
-      widget = RegisterPage();
+      widget = const RegisterPage();
     });
 
     testWidgets('Check if all text fields are present', (WidgetTester tester) async {

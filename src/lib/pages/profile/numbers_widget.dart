@@ -3,9 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NumbersWidget extends StatelessWidget {
   const NumbersWidget({
-    Key? key,
+    super.key,
     required this.rating,
-}) : super(key: key);
+});
 
   final String rating;
   @override

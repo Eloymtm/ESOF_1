@@ -4,20 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:src/helper/globalVariables.dart';
 
 class MyCarsPage extends StatefulWidget {
+  const MyCarsPage({super.key});
+
   @override
   State<MyCarsPage> createState() => _MyCarsPageState();
 }
 
 class _MyCarsPageState extends State<MyCarsPage> {
   User currentUser = FirebaseAuth.instance.currentUser!;
-  DocumentReference userRef =
-  FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser?.uid);
+  DocumentReference userRef = FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser?.uid);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
+      appBar: AppBar( 
+        title: const Text(
           "Meus carros",
           style: TextStyle(fontSize: 25, color: Color.fromRGBO(246, 161, 86, 1), fontWeight: FontWeight.bold),
         ),
@@ -29,7 +30,7 @@ class _MyCarsPageState extends State<MyCarsPage> {
           stream: FirebaseFirestore.instance.collection('Car').where('user', isEqualTo: userRef).snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
@@ -42,10 +43,10 @@ class _MyCarsPageState extends State<MyCarsPage> {
                     padding: const EdgeInsets.only(top: 10),
                     child: Card(
                       elevation: 4,
-                      margin: EdgeInsets.all(5),
+                      margin: const EdgeInsets.all(5),
                       color: Colors.orange[200],
                       child: Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -73,10 +74,10 @@ class _MyCarsPageState extends State<MyCarsPage> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: primaryColor,
                                     padding: EdgeInsets.zero,
-                                    shape: CircleBorder(),
+                                    shape: const CircleBorder(),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
                                     child: Icon(Icons.delete, color: Colors.white, size: 20),
                                   ),
                                 ),
@@ -93,7 +94,7 @@ class _MyCarsPageState extends State<MyCarsPage> {
                                     Text('Motor: ${carData['combustivel'] ?? 'No ano data'}'),
                                   ],
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -101,7 +102,7 @@ class _MyCarsPageState extends State<MyCarsPage> {
                                     Text('Modelo: ${carData['modelo'] ?? 'No model data'}'),
                                   ],
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -128,8 +129,8 @@ class _MyCarsPageState extends State<MyCarsPage> {
         onPressed: () {
           Navigator.pushNamed(context, '/add_car_page');
         },
-        child: Icon(Icons.add),
         backgroundColor: primaryColor,
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -138,7 +139,7 @@ class _MyCarsPageState extends State<MyCarsPage> {
   void _excluirCarro(DocumentReference carRef) {
     carRef.delete().then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Carro excluído com sucesso')),
+        const SnackBar(content: Text('Carro excluído com sucesso')),
       );
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(

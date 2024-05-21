@@ -7,10 +7,11 @@ import 'package:src/pages/map_page.dart';
 import 'package:src/pages/login_page.dart';
 
 
+
 void main() {
   group('LoginPage Widget Tests', () {
     testWidgets('Email and Password Fields Render', (WidgetTester tester) async {
-      await tester.pumpWidget(MaterialApp(home: LoginPage()));
+      await tester.pumpWidget(const MaterialApp(home: LoginPage()));
 
       expect(find.byType(TextField), findsNWidgets(2));
     });
@@ -18,9 +19,9 @@ void main() {
     testWidgets('Create Account Button Pressed', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: LoginPage(),
+          home: const LoginPage(),
           routes: {
-            '/register_page': (context) => RegisterPage(), // Mock RegisterPage
+            '/register_page': (context) => const RegisterPage(), // Mock RegisterPage
           },
         ),
       );

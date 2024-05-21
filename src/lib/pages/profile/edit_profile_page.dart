@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:src/helper/globalVariables.dart';
 import 'package:src/pages/profile/profile_widget.dart';
@@ -172,7 +169,7 @@ class _EditProfileState extends State<EditProfileScreen> {
 
                                 const SizedBox(height: 30),
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
                                   decoration: BoxDecoration(
                                     border: Border.all(color: Colors.grey), // Adiciona uma borda cinza
                                     borderRadius: BorderRadius.circular(15), // Borda arredondada

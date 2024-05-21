@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 Future<GeoPoint?> addressToGeoPoint(String address) async {
+  return null;
+
   
     //List<Location> locations = await locationFromAddress("Gronausestraat 710, Enschede");
 
