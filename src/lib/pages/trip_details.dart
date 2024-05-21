@@ -127,103 +127,107 @@ class TripDetailsState extends State<TripDetailsPage> {
                 'Partida',
                 style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
               ),
-              Text(
-                partida,
-                style: const TextStyle(fontSize: 20.0),
-              ),
-              const SizedBox(height: 20.0),
-              const Text(
-                'Destino',
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                destino,
-                style: const TextStyle(fontSize: 20.0),
-              ),
-              const SizedBox(height: 20.0),
-              const Text(
-                'Hora de Partida',
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                horaPartida,
-                style: const TextStyle(fontSize: 20.0),
-              ),
-              const SizedBox(height: 20.0),
-              const SizedBox(height: 20.0),
-              const Text(
-                'Número de Passageiros',
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                numPassageiros.toString(),
-                style: const TextStyle(fontSize: 20.0),
-              ),
-              const SizedBox(height: 30.0),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (currentUser != null) {
-                      try {
-                        // Mostre um indicador de carregamento ou feedback visual ao usuário
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        );
+            ),
+            NumbersWidget(rating: (driver['Rating'])),
+            const SizedBox(height: 20),
+            const Text(
+              'Partida',
+              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              partida,
+              style: const TextStyle(fontSize: 20.0),
+            ),
+            const SizedBox(height: 20.0),
+            const Text(
+              'Destino',
+              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              destino,
+              style: const TextStyle(fontSize: 20.0),
+            ),
+            const SizedBox(height: 20.0),
+            const Text(
+              'Hora de Partida',
+              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              horaPartida,
+              style: const TextStyle(fontSize: 20.0),
+            ),
+            const SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
+            const Text(
+              'Ocupação Atual',
+              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "${numPassageiros.toString()}/5",
+              style: const TextStyle(fontSize: 20.0),
+            ),
+            const SizedBox(height: 30.0),
+            SizedBox(
+  width: double.infinity,
+  child: ElevatedButton(
+    onPressed: () async {
+      if (currentUser != null) {
+        try {
+          // Mostre um indicador de carregamento ou feedback visual ao usuário
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          );
 
-                        await FirebaseFirestore.instance
-                            .collection('Ride')
-                            .doc(refRide.id)
-                            .update({
-                          'passageiros': FieldValue.arrayUnion(['/User/${currentUser.uid}'])
-                        });
+          await FirebaseFirestore.instance.collection('Ride').doc(refRide.id).update({
+            'passageiros': FieldValue.arrayUnion([FirebaseFirestore.instance.collection('User').doc(currentUser.uid)])
+          });
 
-                        // Feche o indicador de carregamento
-                        Navigator.of(context).pop();
+          // Feche o indicador de carregamento
+          Navigator.of(context).pop();
 
-                        // Mostrar uma mensagem de sucesso
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Você entrou na viagem com sucesso!')),
-                        );
-                      } catch (e) {
-                        // Feche o indicador de carregamento em caso de erro
-                        Navigator.of(context).pop();
+          // Mostrar uma mensagem de sucesso
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Você entrou na viagem com sucesso!')),
+          );
+        } catch (e) {
+          // Feche o indicador de carregamento em caso de erro
+          Navigator.of(context).pop();
 
-                        // Mostrar uma mensagem de erro
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Erro ao entrar na viagem: $e')),
-                        );
-                      }
-                    } else {
-                      // Mostrar uma mensagem de erro se currentUser for null
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Usuário não autenticado.')),
-                      );
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.orange[500], // Cor do botão
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'ENTRAR NA VIAGEM',
-                    style: TextStyle(fontSize: 18.0),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Mostrar uma mensagem de erro
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Erro ao entrar na viagem: $e')),
+          );
+        }
+      } else {
+        // Mostrar uma mensagem de erro se currentUser for null
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Usuário não autenticado.')),
+        );
+      }
+    },
+    style: ElevatedButton.styleFrom(
+      textStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
+      foregroundColor: Colors.white,
+      backgroundColor: Colors.orange[500], // Cor do botão
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+    ),
+    child: const Text(
+      'ENTRAR NA VIAGEM',
+      style: TextStyle(fontSize: 18.0),
+    ),
+  ),
+)
+,
+          ],
         ),
       );
     }
