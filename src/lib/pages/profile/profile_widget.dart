@@ -1,6 +1,4 @@
-import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
@@ -9,15 +7,15 @@ class ProfileWidget extends StatelessWidget {
   final bool showIcon;
 
   const ProfileWidget({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.onClicked,
     required this.showIcon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    final color = Color.fromRGBO(246, 161, 86, 1);
+    const color = Color.fromRGBO(246, 161, 86, 1);
 
     return Center(
       child: Stack(

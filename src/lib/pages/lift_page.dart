@@ -66,7 +66,7 @@ class LiftPageState extends State<LiftPage> {
                      future: referenciaCondutor.get(),
                      builder: (context, driverSnapshot) {
                          if (!driverSnapshot.hasData) {
-                           return Center(child: CircularProgressIndicator());
+                           return const Center(child: CircularProgressIndicator());
                          }
                          final driverData = driverSnapshot.data!;
                          final nomeCondutor = driverData['Name'];

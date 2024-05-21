@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:src/helper/globalVariables.dart';
-import 'package:src/pages/map_page.dart';
-import 'package:src/pages/register_page.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -75,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   TextField(
                     controller: emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "Insere o email de estudante...",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(),
@@ -85,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                   TextField(
                     controller: passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "Insere a palavra-passe...",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(),
@@ -99,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: (){
                           Navigator.pushNamed(context, '/register_page');
                           },
-                        child: Align(
+                        child: const Align(
                           alignment: Alignment.centerRight,
                           child: Text("Criar conta",
                               style: TextStyle(color: Colors.grey)),
@@ -118,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
                           sendResetPasswordEmail(email);
                         },
-                        child: Align(
+                        child: const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "Esqueceu a password?",
@@ -159,6 +156,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-    ;
   }
 }
