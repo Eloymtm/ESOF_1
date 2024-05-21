@@ -68,7 +68,7 @@ class Lift_card extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              'Passageiros: $NumPassageiros / 5',
+              'Ocupação: $NumPassageiros / 5',
               style: const TextStyle(fontSize: 16.0, color: Colors.black87),
             ),
             /*
