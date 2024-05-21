@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:src/helper/globalVariables.dart';
+import 'package:src/pages/trip_completed_page.dart';
 
 import 'chat/chat_page10.dart';
 
@@ -81,6 +82,14 @@ class _MyLiftsPageState extends State<HistoricPage> {
                 Text('Carro: $marcaRide'),
               ],
             ),
+            onTap:() => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TripCompletedPage(
+                                      refRide: doc,
+                                    ),
+                                  ),
+                                )
           );
         },
       ),
