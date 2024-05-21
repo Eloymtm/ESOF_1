@@ -12,18 +12,21 @@ class TripDetailsPage extends StatefulWidget {
 
   @override
   TripDetailsState createState() => TripDetailsState();
-}
+  
+  }
 
-class TripDetailsState extends State<TripDetailsPage> {
+class TripDetailsState extends State<TripDetailsPage>{
+
   final currentUser = FirebaseAuth.instance.currentUser!;
+
   late final DocumentSnapshot refRide;
-  late final DocumentReference refCond;
+
+  late final DocumentReference  refCond;
   late final String destino;
-  late final String partida;
+  late final String partida; 
   late final horaPartida;
   late final numPassageiros;
-  Map<String, dynamic>? driver; // Inicializa como nulo
-  bool isLoading = true; // Estado para controlar o carregamento
+  late final Map<String, dynamic> driver;
 
   @override
   void initState() {
@@ -33,99 +36,74 @@ class TripDetailsState extends State<TripDetailsPage> {
     destino = refRide['Destino'];
     partida = refRide['Partida'];
     horaPartida = formatData(refRide['HoraPartida']);
-    numPassageiros = refRide['passageiros'].length;
+    numPassageiros = refRide['passageiros'].length; 
+
     _fetchDriverData();
+
   }
 
-  Future<void> _fetchDriverData() async {
+    Future<void> _fetchDriverData() async {
     try {
       DocumentSnapshot driverSnapshot = await refCond.get();
       if (driverSnapshot.exists) {
         setState(() {
           driver = driverSnapshot.data() as Map<String, dynamic>;
-          isLoading = false; // Marca isLoading como falso quando os dados são carregados
         });
       }
     } catch (e) {
       // Trate o erro apropriadamente, talvez exibindo uma mensagem ao usuário
       print("Erro ao buscar dados do motorista: $e");
-      setState(() {
-        isLoading = false; // Mesmo em caso de erro, para de carregar
-      });
     }
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Detalhes da Viagem',
-            style: TextStyle(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Detalhes da Viagem',
+          style: TextStyle(
               color: Color.fromRGBO(246, 161, 86, 1),
               fontWeight: FontWeight.bold,
               fontSize: 30,
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          iconTheme: const IconThemeData(color: Colors.black87),
+            ), 
         ),
-        body: const Center(child: CircularProgressIndicator()),
-      );
-    } else {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Detalhes da Viagem',
-            style: TextStyle(
-              color: Color.fromRGBO(246, 161, 86, 1),
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
+        centerTitle:true,
+        
+        backgroundColor: Colors.white,
+        elevation: 0, // Remove a sombra do AppBar
+        iconTheme: const IconThemeData(color: Colors.black87),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: ClipOval(
+                child: Material(
+                  child: Ink.image(
+                image:NetworkImage(driver['ImagePath']),
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+              )
+              ),
             ),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          iconTheme: const IconThemeData(color: Colors.black87),
-        ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: ClipOval(
-                  child: Material(
-                    child: Ink.image(
-                      image: NetworkImage(driver!['ImagePath']),
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+            const SizedBox(height: 15),
+            Center(
+              child: Text(
+                driver['Name'],
+                style: const TextStyle(fontSize: 27.0, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 15),
-              Center(
-                child: Text(
-                  driver!['Name'],
-                  style: const TextStyle(fontSize: 27.0, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Center(
-                child: Text(
-                  driver!['Email'],
-                  style: const TextStyle(fontSize: 17.0),
-                ),
-              ),
-              NumbersWidget(rating: (driver!['Rating'])),
-              const SizedBox(height: 20),
-              const Text(
-                'Partida',
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+            ),
+           Center(
+              child: Text(
+                driver['Email'],
+                style: const TextStyle(fontSize: 17.0),
               ),
             ),
             NumbersWidget(rating: (driver['Rating'])),
@@ -229,6 +207,7 @@ class TripDetailsState extends State<TripDetailsPage> {
 ,
           ],
         ),
-      );
-    }
-  }}
+      ),
+    );
+  }
+}
