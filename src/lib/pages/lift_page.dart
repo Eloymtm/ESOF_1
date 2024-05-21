@@ -6,6 +6,7 @@ import 'package:src/components/lift_card.dart';
 import 'package:src/helper/helper_method.dart';
 import 'package:src/pages/map_page.dart';
 import 'package:src/pages/profile/chat/chat_page10.dart';
+import 'package:src/pages/trip_details.dart';
 
 
 
@@ -76,13 +77,20 @@ class LiftPageState extends State<LiftPage> {
                          horaPartida: horaPartida,
                          condutor: nomeCondutor,
                          NumPassageiros: numPassageiros,
-                         onTap:() => Navigator.pushNamed(context, '/map_page'),
-                       ),
-                      
-                        
-                      );
-
-
+                         onTap:() => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TripDetailsPage(
+                                      destino: destino,
+                                      partida: partida,
+                                      horaPartida: horaPartida,
+                                      refCond:  driverData,
+                                      numPassageiros:  numPassageiros,
+                                    ),
+                                  ),
+                                )
+                           )
+                       );
                      });
                   },
                 );
