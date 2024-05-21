@@ -12,6 +12,7 @@ import 'package:src/pages/profile/historic_page.dart';
 import 'package:src/pages/profile/profile_page.dart';
 import 'package:src/pages/register_page.dart';
 import 'package:src/pages/mainPage.dart';
+import 'package:src/pages/trip_details.dart';
 import 'firebase_options.dart';
 
 void main() async {
