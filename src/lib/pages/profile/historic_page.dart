@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:src/helper/globalVariables.dart';
+import 'package:src/pages/trip_completed_page.dart';
 
 import 'chat/chat_page10.dart';
 
@@ -43,7 +44,7 @@ class _MyLiftsPageState extends State<HistoricPage> {
     final isSameDay = liftTime.year == now.year && liftTime.month == now.month && liftTime.day == now.day;
     final isUpcoming = liftTime.isAfter(now);
     final isRecent = isSameDay && now.difference(liftTime).inMinutes <= 30;
-    return isUpcoming || isRecent;
+    return !(isUpcoming || isRecent);
   }
 
   Future<void> _cancelLift(String liftId) async {
@@ -81,6 +82,14 @@ class _MyLiftsPageState extends State<HistoricPage> {
                 Text('Carro: $marcaRide'),
               ],
             ),
+            onTap:() => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TripCompletedPage(
+                                      refRide: doc,
+                                    ),
+                                  ),
+                                )
           );
         },
       ),

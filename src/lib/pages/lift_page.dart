@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:src/components/lift_card.dart';
 import 'package:src/helper/helper_method.dart';
+import 'package:src/pages/map_page.dart';
+import 'package:src/pages/profile/chat/chat_page10.dart';
+import 'package:src/pages/trip_details.dart';
 
 
 
@@ -16,7 +19,6 @@ class LiftPage extends StatefulWidget {
   State<LiftPage> createState() => LiftPageState();
 }
 class LiftPageState extends State<LiftPage> {
-  final LatLng _pGooglePlex = const LatLng(37.422, -122.084);
 
   void logout() {
     FirebaseAuth.instance.signOut();
@@ -44,14 +46,6 @@ class LiftPageState extends State<LiftPage> {
     ),
     body: Column(
       children: [
-        Expanded(
-          child: GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: _pGooglePlex,
-              zoom: 13,
-            ),
-          ),
-        ),
         Expanded(
           child: StreamBuilder(
             stream: FirebaseFirestore.instance.collection('Ride').snapshots(),
@@ -83,18 +77,16 @@ class LiftPageState extends State<LiftPage> {
                          horaPartida: horaPartida,
                          condutor: nomeCondutor,
                          NumPassageiros: numPassageiros,
-                       ),
-                         onTap: () async {
-                           final currentUser = FirebaseAuth.instance.currentUser!;
-                           final userRef = FirebaseFirestore.instance.collection('User').doc(currentUser.uid);
-
-                           // Adicionar o usuário atual ao array 'passageiros'
-                           await FirebaseFirestore.instance.collection('Ride').doc(ride.id).update({
-                             'passageiros': FieldValue.arrayUnion([userRef]),
-                           });
-                       },);
-
-
+                         onTap:() => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TripDetailsPage(
+                                      refRide: ride,  
+                                    ),
+                                  ),
+                                )
+                           )
+                       );
                      });
                   },
                 );
