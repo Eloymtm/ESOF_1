@@ -8,6 +8,7 @@ import 'package:src/pages/mainPage.dart';
 import 'package:src/pages/profile/profile_page.dart';
 
 import 'package:geocoding/geocoding.dart';
+import 'package:src/pages/trip_details.dart';
 import 'profile/button_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -72,7 +73,7 @@ class _MapPageState extends State<MapPage> {
                       markerId: MarkerId('ride_${_markers.length}'),
                       position: start,
                       onTap: () {
-                        navigateToNextPage();
+                       TripDetailsPage(refRide: doc,);
                       }
                       // Outros atributos do marcador
                       ),
@@ -123,7 +124,7 @@ class _MapPageState extends State<MapPage> {
 
     void onCreated(GoogleMapController controller) {
       _addMarkersForRides();
-      _controllerGoogleMap.complete(controller);
+      controllerGoogleMap.complete(controller);
 
     }
 

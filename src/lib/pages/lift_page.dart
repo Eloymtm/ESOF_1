@@ -81,11 +81,7 @@ class LiftPageState extends State<LiftPage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => TripDetailsPage(
-                                      destino: destino,
-                                      partida: partida,
-                                      horaPartida: horaPartida,
-                                      refCond:  driverData,
-                                      numPassageiros:  numPassageiros,
+                                      refRide: ride,
                                     ),
                                   ),
                                 )
