@@ -106,7 +106,7 @@ class TripDetailsState extends State<TripDetailsPage>{
                 style: const TextStyle(fontSize: 17.0),
               ),
             ),
-            NumbersWidget(rating: (driver['Rating'])),
+            NumbersWidget(rating: ((driver['SumRatings']) / (driver['TotalRatings'])).toString()),
             const SizedBox(height: 20),
             const Text(
               'Partida',

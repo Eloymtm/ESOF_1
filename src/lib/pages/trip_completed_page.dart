@@ -23,6 +23,8 @@ class TripCompletedState extends State<TripCompletedPage> {
   late final String partida;
   late final horaPartida;
   late final numPassageiros;
+ late final  hasRatedCurrentRide;
+
   Map<String, dynamic>? driver; // Inicializa como nulo
   bool isLoading = true; // Estado para controlar o carregamento
   double rating = 0.0; // Estado para armazenar a avaliação do usuário
@@ -43,6 +45,7 @@ class TripCompletedState extends State<TripCompletedPage> {
 
   Future<void> _fetchDriverData() async {
     try {
+      
       DocumentSnapshot driverSnapshot = await refCond.get();
       if (driverSnapshot.exists) {
         setState(() {
@@ -109,7 +112,7 @@ class TripCompletedState extends State<TripCompletedPage> {
                       style: const TextStyle(fontSize: 17.0),
                     ),
                   ),
-                  NumbersWidget(rating: (driver!['Rating'])),
+                  NumbersWidget(rating: ((driver!['SumRatings']) / (driver!['TotalRatings'])).toString()),
                   const SizedBox(height: 20),
                   const Text(
                     'Partida',
@@ -146,28 +149,33 @@ class TripCompletedState extends State<TripCompletedPage> {
                     numPassageiros.toString(),
                     style: const TextStyle(fontSize: 20.0),
                   ),
-                  const SizedBox(height: 30.0),
+                  const SizedBox(height: 50.0),
                   if (!ratingUpdated && currentUser.uid! != refCond.id) ...[
-                    const Text(
-                      'Avalie sua viagem',
-                      style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
-                    ),
-                    RatingBar.builder(
-                      initialRating: 0,
-                      minRating: 0,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star,
-                        color: Colors.amber,
+                    Center(
+                      child: const Text(
+                        'Avalia a viagem !',
+                        style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
                       ),
-                      onRatingUpdate: (rating) {
-                        setState(() {
-                          this.rating = rating;
-                        });
-                      },
+                    ),
+                    const SizedBox(height: 5.0),
+                    Center(
+                      child: RatingBar.builder(
+                        initialRating: 0.0,
+                        minRating: 0.0,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (rating) {
+                          setState(() {
+                            this.rating = rating;
+                          });
+                        },
+                      ),
                     ),
                     const SizedBox(height: 20.0),
                     Center(
@@ -185,48 +193,33 @@ class TripCompletedState extends State<TripCompletedPage> {
     );
   }
 
-  bool _isTripCompleted() {
-    // Verifica se a viagem já terminou há mais de 1 dia
-    DateTime tripStartTime = refRide['HoraPartida'].toDate();
-    DateTime now = DateTime.now();
-    return now.isAfter(tripStartTime.add(Duration(days: 1)));
+  
+   Future<void> _submitRating() async {
+  try {
+    // Atualizar o rating do condutor no Firestore
+    double currentSumRating = driver!['SumRatings'] != null ? (driver!['SumRatings'] as num).toDouble() : 0.0;
+    double totalRatings = driver!['TotalRatings'] != null ? (driver!['TotalRatings'] as num).toDouble() : 0.0;
+
+    // Adicionar o novo rating ao total e incrementar o número total de avaliações
+    double updateSumRating = rating + currentSumRating;
+
+    // Atualizar os dados do condutor
+    await refCond.update({
+      'SumRatings': updateSumRating,
+      'TotalRatings': totalRatings + 1,
+    });
+    
+    setState(() {
+      ratingUpdated = true;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Avaliação salva com sucesso!')),
+    );
+  } catch (e) {
+    print("Erro ao salvar avaliação: $e");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Ocorreu um erro ao salvar a avaliação. Tente novamente mais tarde.')),
+    );
   }
-
-    Future<void> _submitRating() async {
-    // Verifica se já passou um dia desde o início da viagem
-    if (!_isTripCompleted()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Você só pode avaliar a viagem após 1 dia do término.')),
-      );
-      return;
-    }
-
-    try {
-      // Atualizar o rating do condutor no Firestore
-      double currentRating = driver!['Rating'] != null ? driver!['Rating'] : 0.0;
-      int totalRatings = driver!['TotalRatings'] != null ? driver!['TotalRatings'] : 0;
-
-      // Adicionar o novo rating ao total e incrementar o número total de avaliações
-      double newRating = ((currentRating * totalRatings) + rating) / (totalRatings + 1);
-
-      // Atualizar os dados do condutor
-      await refCond.update({
-        'Rating': newRating,
-        'TotalRatings': totalRatings + 1,
-      });
-
-      setState(() {
-        ratingUpdated = true;
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Avaliação salva com sucesso!')),
-      );
-    } catch (e) {
-      print("Erro ao salvar avaliação: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ocorreu um erro ao salvar a avaliação. Tente novamente mais tarde.')),
-      );
-    }
-  }
-}
+   }}
