@@ -137,11 +137,11 @@ class TripDetailsState extends State<TripDetailsPage>{
             const SizedBox(height: 20.0),
             const SizedBox(height: 20.0),
             const Text(
-              'Número de Passageiros',
+              'Ocupação Atual',
               style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
             ),
             Text(
-              numPassageiros.toString(),
+              "${numPassageiros.toString()}/5",
               style: const TextStyle(fontSize: 20.0),
             ),
             const SizedBox(height: 30.0),
@@ -163,7 +163,7 @@ class TripDetailsState extends State<TripDetailsPage>{
           );
 
           await FirebaseFirestore.instance.collection('Ride').doc(refRide.id).update({
-            'passageiros': FieldValue.arrayUnion(['/User/${currentUser!.uid}'])
+            'passageiros': FieldValue.arrayUnion([FirebaseFirestore.instance.collection('User').doc(currentUser.uid)])
           });
 
           // Feche o indicador de carregamento

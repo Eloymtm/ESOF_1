@@ -17,21 +17,25 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late User _currentUser;
   late DocumentReference userRef;
+    List<DocumentSnapshot> _passengerLifts = [];
+
 
   @override
   void initState() {
     super.initState();
     _currentUser = _auth.currentUser!;
     userRef = _firestore.collection('User').doc(_currentUser.uid);
+    
+
   }
 
-  Stream<QuerySnapshot> _getLiftsAsDriver() {
+  Stream<QuerySnapshot> getLiftsAsDriver() {
     return _firestore.collection('Ride')
         .where('Driver', isEqualTo: userRef)
         .snapshots();
   }
 
-  Stream<QuerySnapshot> _getLiftsAsPassenger() {
+  Stream<QuerySnapshot> getLiftsAsPassenger() {
     return _firestore.collection('Ride')
         .where('passageiros', arrayContains: userRef)
         .snapshots();
@@ -54,6 +58,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
     await _firestore.collection('Ride').doc(liftId).update({
       'passageiros': FieldValue.arrayRemove([userRef])
     });
+    
   }
 
   Widget _buildLiftCard(DocumentSnapshot doc, bool como) {
@@ -142,7 +147,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
               },
             ),  
           title: const Text(
-          "Meus carros",
+          "Viagens",
           style: TextStyle(fontSize: 25, color: Color.fromRGBO(246, 161, 86, 1), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -163,7 +168,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
                   ),
                   Expanded(
                     child: StreamBuilder<QuerySnapshot>(
-                      stream: _getLiftsAsDriver(),
+                      stream: getLiftsAsDriver(),
                       builder: (context, snapshot) {
                         return _buildLiftList(snapshot, true);
                       },
@@ -179,7 +184,7 @@ class _MyLiftsPageState extends State<MyLiftsPage> {
                   ),
                   Expanded(
                     child: StreamBuilder<QuerySnapshot>(
-                      stream: _getLiftsAsPassenger(),
+                      stream: getLiftsAsPassenger(),
                       builder: (context, snapshot) {
                         return _buildLiftList(snapshot, false);
                       },

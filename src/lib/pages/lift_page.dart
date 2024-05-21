@@ -81,7 +81,7 @@ class LiftPageState extends State<LiftPage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => TripDetailsPage(
-                                      refRide: ride,
+                                      refRide: ride,  
                                     ),
                                   ),
                                 )
